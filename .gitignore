@@ -1,0 +1,19 @@
+# Dependencias y compilación
+node_modules/
+dist/
+
+# Archivos locales y secretos
+.env
+.env.*
+!.env.example
+
+# Cobertura, registros y archivos temporales
+coverage/
+*.log
+*.tmp
+
+# Sistema operativo y editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
