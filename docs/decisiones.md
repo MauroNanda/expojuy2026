@@ -10,3 +10,5 @@
 | D-006 | Definir la integración técnica de las librerías de realidad aumentada en un change específico. | Pendiente | La selección de librerías está aprobada; su composición y comportamiento se definen al abordar esa capacidad. |
 | D-007 | Posponer la elección de tecnología para el mapa interactivo. | Abierta | La implementación debe evaluarse según el plano oficial y la interacción requerida. |
 | D-008 | Usar OpenSpec para especificar capacidades y cambios funcionales. | Aprobada | Mantiene alcance, criterios de aceptación y decisiones técnicas trazables. |
+| D-009 | Adoptar “Vitrina del ecosistema” como propuesta inicial de la página de Inicio. | Aprobada, modificable | Prioriza el descubrimiento de sectores, expositores y actividad del evento; fue seleccionada en el change `propose-initial-experience`. |
+| D-010 | Usar la paleta inicial extraída de los logotipos oficiales RGB: `#820CD0`, `#774FF0`, `#BB8CFF`, `#25C0D4`, `#4B4B4D` y `#BDBFC1`. | Aprobada, sujeta a confirmación | Aporta una base visual trazable hasta que exista un manual de identidad oficial con especificaciones de color que prevalezca. |
