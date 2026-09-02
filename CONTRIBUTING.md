@@ -10,6 +10,20 @@
 - Al completar un cambio, actualizar las especificaciones vigentes y archivar su propuesta.
 - Las correcciones tipográficas, de formato o de enlaces no requieren una propuesta OpenSpec.
 
+## Ramas y commits
+
+- No trabajar directamente sobre `main`.
+- Crear una rama por unidad trazable:
+  - `change/<nombre-del-change>` para un change OpenSpec.
+  - `fix/<descripcion-corta>` para correcciones.
+  - `docs/<descripcion-corta>` para documentación aislada.
+  - `chore/<descripcion-corta>` para mantenimiento no funcional.
+- Un commit contiene una sola intención verificable. No incluir exploraciones, cambios no relacionados ni archivos accidentales.
+- Cuando una capacidad afecta ambos repositorios, realizar commits separados: implementación en el repositorio de código y especificación o estado en el store OpenSpec.
+- Antes de commitear, revisar `git status`, ejecutar las verificaciones pertinentes y validar OpenSpec en modo estricto cuando corresponda.
+- Usar mensajes de una línea en español, con verbo en tercera persona del presente y sin prefijos convencionales. Ejemplo: `Implementa base navegable de la demo ExpoJuy`.
+- Publicar una rama solo cuando el árbol de trabajo esté limpio y las validaciones requeridas finalicen correctamente.
+
 ## Estándares de código
 
 - Usar TypeScript con modo estricto en frontend y C# con nulabilidad habilitada en backend.
@@ -48,6 +62,14 @@
 - Mantener contraste suficiente, semántica HTML, etiquetas comprensibles y textos alternativos para contenido significativo.
 - No depender únicamente de color, cámara, movimiento o gestos para transmitir información esencial.
 - Proveer alternativas para funciones que requieran permisos del dispositivo.
+
+## Diseño de interfaz
+
+- Antes de modificar una interfaz, leer la dirección visual vigente y la especificación o diseño OpenSpec aplicable.
+- Toda decisión visual debe responder al propósito, audiencia y contenido real de la capacidad; no incorporar patrones, recursos o decoración genéricos sin justificación.
+- Usar las guías, skills, herramientas o referencias de diseño disponibles cuando ayuden a evaluar composición, accesibilidad, tipografía, navegación o identidad. Son mecanismos de apoyo; las decisiones resultantes deben quedar trazables en `docs/` o en el artefacto OpenSpec correspondiente.
+- Mantener un único criterio de nombres: la etiqueta de un control de navegación debe coincidir con el nombre visible de su destino.
+- Antes de cerrar un change de interfaz, revisar jerarquía, consistencia visual, responsive, foco, contraste y reducción de movimiento.
 
 ## Inteligencia artificial
 
