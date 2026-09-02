@@ -5,7 +5,7 @@
 ```text
 Inicio
 ├── ExpoJuy 2026
-├── Sectores y experiencias
+├── Sectores
 │   ├── Expositores
 │   ├── Agenda
 │   └── Noticias

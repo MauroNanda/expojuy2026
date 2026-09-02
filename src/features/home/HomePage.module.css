@@ -1,0 +1,294 @@
+.home {
+  display: grid;
+  gap: clamp(3.5rem, 8vw, 6rem);
+}
+.home section {
+  scroll-margin-top: 2rem;
+}
+.hero {
+  display: grid;
+  gap: var(--space-2xl);
+  min-height: 27rem;
+  align-items: center;
+}
+.heroCopy {
+  max-width: 43rem;
+}
+.eyebrow,
+.sectionLabel {
+  margin: 0 0 var(--space-sm);
+  color: var(--color-brand-indigo);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: break-word;
+}
+.hero h1 {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--color-brand-violet);
+  font-size: clamp(3rem, 8vw, 6.25rem);
+  letter-spacing: -0.07em;
+  line-height: 0.85;
+}
+.lead {
+  max-width: 36rem;
+  margin: var(--space-lg) 0 0;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.45;
+}
+.primaryAction,
+.planningActions a,
+.planningActions button {
+  display: inline-flex;
+  gap: var(--space-xs);
+  align-items: center;
+  margin-top: var(--space-lg);
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--color-brand-violet);
+  background: var(--color-brand-violet);
+  color: var(--color-surface);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  cursor: pointer;
+}
+.meshPanel {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: color-mix(
+    in srgb,
+    var(--color-brand-lilac) 20%,
+    var(--color-surface)
+  );
+}
+.meshPanel > p {
+  margin: 0;
+  color: var(--color-brand-indigo);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.meshPanel ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+}
+.meshPanel li::before {
+  content: "•";
+  margin-right: var(--space-2xs);
+  color: var(--color-brand-violet);
+}
+.productiveMesh {
+  position: relative;
+  min-height: 16rem;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    var(--color-brand-lilac),
+    var(--color-surface)
+  );
+}
+.productiveMesh span {
+  position: absolute;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--color-brand-violet);
+  box-shadow: 0 0 0 0.45rem
+    color-mix(in srgb, var(--color-surface) 75%, transparent);
+}
+.nodeOne {
+  top: 23%;
+  left: 17%;
+}
+.nodeTwo {
+  top: 62%;
+  left: 36%;
+}
+.nodeThree {
+  top: 31%;
+  right: 22%;
+}
+.nodeFour {
+  right: 11%;
+  bottom: 18%;
+  background: var(--color-brand-violet) !important;
+}
+.productiveMesh i {
+  position: absolute;
+  height: 2px;
+  transform-origin: left;
+  background: var(--color-brand-indigo);
+}
+.lineOne {
+  top: 27%;
+  left: 21%;
+  width: 43%;
+  transform: rotate(11deg);
+}
+.lineTwo {
+  top: 65%;
+  left: 39%;
+  width: 43%;
+  transform: rotate(-29deg);
+}
+.lineThree {
+  top: 35%;
+  left: 24%;
+  width: 26%;
+  transform: rotate(49deg);
+}
+.home h2 {
+  max-width: 18ch;
+  margin: 0 0 var(--space-lg);
+  font-size: clamp(2rem, 6vw, 3.75rem);
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+.sectorList,
+.compactList,
+.agendaList,
+.newsList,
+.sponsorList {
+  display: grid;
+  gap: var(--space-sm);
+  padding: 0;
+  margin: var(--space-lg) 0;
+  list-style: none;
+}
+.sectorList {
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+.sectorList li,
+.newsList li {
+  padding: var(--space-lg);
+  border-top: 4px solid var(--color-brand-cyan);
+  background: color-mix(
+    in srgb,
+    var(--color-brand-lilac) 18%,
+    var(--color-surface)
+  );
+}
+.sectorList h3,
+.newsList h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.sectorList p,
+.newsList p {
+  margin: var(--space-sm) 0 0;
+  line-height: 1.45;
+}
+.compactList li {
+  display: flex;
+  gap: var(--space-md);
+  align-items: baseline;
+  padding-block: var(--space-sm);
+  border-bottom: 1px solid var(--color-neutral);
+}
+.compactList span {
+  color: var(--color-brand-indigo);
+  font-size: 0.8125rem;
+}
+.compactList strong {
+  font-size: 1.125rem;
+}
+.textAction {
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+}
+.twoColumn {
+  display: grid;
+  gap: var(--space-2xl);
+}
+.agendaList li {
+  display: flex;
+  gap: var(--space-md);
+  padding-block: var(--space-sm);
+  border-bottom: 1px solid var(--color-neutral);
+}
+.agendaList time {
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-bold);
+}
+.raPanel {
+  padding: var(--space-xl);
+  background: var(--color-ink);
+  color: var(--color-surface);
+}
+.raPanel svg {
+  color: var(--color-brand-cyan);
+}
+.raPanel h2 {
+  margin-top: 0;
+}
+.raPanel p:not(.sectionLabel) {
+  line-height: 1.5;
+}
+.raPanel .textAction {
+  color: var(--color-brand-cyan);
+}
+.sponsorList {
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+.sponsorList li {
+  padding: var(--space-lg);
+  border: 1px dashed var(--color-neutral);
+  color: var(--color-ink);
+}
+.planning {
+  padding: var(--space-xl);
+  background: var(--color-brand-lilac);
+}
+.planningActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.planningActions a,
+.planningActions button {
+  margin: 0;
+}
+.planningActions button {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+}
+.contact {
+  padding-bottom: var(--space-2xl);
+}
+.contact p:not(.sectionLabel) {
+  max-width: 40rem;
+  margin: 0;
+  line-height: 1.5;
+}
+@media (min-width: 64rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 0.75fr);
+  }
+  .twoColumn {
+    grid-template-columns: 1fr 1fr;
+  }
+  .productiveMesh {
+    min-height: 30rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .productiveMesh {
+    background: var(--color-brand-lilac);
+  }
+}

@@ -1,0 +1,29 @@
+.application {
+  max-width: 42rem;
+}
+
+.application h1 {
+  max-width: 16ch;
+  margin: 0;
+  color: var(--color-brand-violet);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+}
+
+.application p:not(.eyebrow) {
+  max-width: 38rem;
+  margin: var(--space-lg) 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-sm);
+  color: var(--color-brand-indigo);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

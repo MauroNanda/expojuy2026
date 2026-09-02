@@ -1,0 +1,45 @@
+.dialog {
+  width: min(calc(100% - 2rem), 34rem);
+  padding: 0;
+  border: 0;
+  color: var(--color-ink);
+  background: var(--color-surface);
+}
+.dialog::backdrop {
+  background: color-mix(in srgb, var(--color-ink) 65%, transparent);
+}
+.content {
+  display: grid;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+}
+.content p,
+.content h2 {
+  margin: 0;
+}
+.content h2 {
+  color: var(--color-brand-violet);
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+.content p:not(.label) {
+  line-height: 1.5;
+}
+.label {
+  color: var(--color-brand-indigo);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.content button {
+  width: fit-content;
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--color-brand-violet);
+  color: var(--color-surface);
+  background: var(--color-brand-violet);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
