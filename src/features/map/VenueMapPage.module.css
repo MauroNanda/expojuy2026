@@ -1,0 +1,188 @@
+.mapPage {
+  display: grid;
+  gap: var(--space-md);
+}
+.mapPage h1,
+.mapPage h2,
+.mapPage p {
+  margin: 0;
+}
+.mapPage h1 {
+  color: var(--color-brand-violet);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  letter-spacing: -0.05em;
+}
+.eyebrow {
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+}
+.layout {
+  display: grid;
+  gap: var(--space-md);
+}
+.zoneList {
+  display: grid;
+  gap: var(--space-xs);
+}
+.zoneList button {
+  border: 1px solid var(--color-neutral);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  cursor: pointer;
+  font: inherit;
+  padding: var(--space-sm);
+  text-align: left;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+.zoneList button:hover {
+  transform: translateX(0.25rem);
+}
+.zoneList button[aria-pressed="true"] {
+  border-color: var(--color-brand-violet);
+  box-shadow: inset 0 0 0 2px var(--color-brand-violet);
+}
+.planWrap {
+  position: relative;
+  width: 100%;
+}
+.planViewport {
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-indigo) 36%, transparent);
+  box-shadow: 0 1.25rem 2.5rem
+    color-mix(in srgb, var(--color-ink) 20%, transparent);
+  overflow: hidden;
+  position: relative;
+}
+.planWrap img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+.hotspot {
+  background: color-mix(in srgb, var(--color-brand-cyan) 26%, transparent);
+  border: 2px solid color-mix(in srgb, var(--color-surface) 85%, transparent);
+  border-radius: 0.4rem;
+  cursor: pointer;
+  position: absolute;
+  transition:
+    background 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+.hotspot[data-kind="covered"] {
+  background: color-mix(in srgb, var(--color-brand-indigo) 28%, transparent);
+}
+.hotspot[data-kind="outdoor"] {
+  background: color-mix(in srgb, #ff7a00 36%, transparent);
+}
+.hotspot[data-kind="artisan"] {
+  background: color-mix(in srgb, #ffcf38 42%, transparent);
+}
+.hotspot[data-kind="food"] {
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, var(--color-brand-cyan) 55%, transparent),
+    color-mix(in srgb, #ff7a00 64%, transparent)
+  );
+  border-color: color-mix(in srgb, #fff5c9 90%, transparent);
+}
+.hotspot[data-selected="true"],
+.hotspot:focus-visible {
+  background: color-mix(in srgb, var(--color-brand-violet) 42%, transparent);
+  border-color: var(--color-brand-violet);
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--color-surface) 80%, transparent);
+  outline: 2px solid var(--color-surface);
+}
+.hotspot[data-selected="true"][data-kind="food"] {
+  animation: food-glow 1.5s ease-in-out infinite alternate;
+  background: linear-gradient(105deg, var(--color-brand-cyan), #ff7a00);
+}
+.reference {
+  align-items: center;
+  background: color-mix(in srgb, var(--color-surface) 84%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-indigo) 48%, transparent);
+  color: var(--color-ink);
+  display: flex;
+  font-size: clamp(0.45rem, 1.05vw, 0.85rem);
+  font-weight: var(--font-weight-semibold);
+  justify-content: center;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 0.18rem;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.legend span {
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--color-neutral) 62%, transparent);
+  display: inline-flex;
+  font-size: 0.8rem;
+  gap: 0.4rem;
+  padding: 0.3rem 0.55rem;
+}
+.legend i {
+  background: var(--color-brand-cyan);
+  border-radius: 999px;
+  display: block;
+  height: 0.6rem;
+  width: 0.6rem;
+}
+.legend span[data-kind="covered"] i {
+  background: var(--color-brand-indigo);
+}
+.legend span[data-kind="outdoor"] i {
+  background: #ff7a00;
+}
+.legend span[data-kind="artisan"] i {
+  background: #ffcf38;
+}
+.legend span[data-kind="food"] i {
+  background: linear-gradient(135deg, var(--color-brand-cyan), #ff7a00);
+}
+@keyframes food-glow {
+  from {
+    box-shadow: 0 0 0.35rem color-mix(in srgb, #ff7a00 68%, transparent);
+  }
+  to {
+    box-shadow: 0 0 1.1rem
+      color-mix(in srgb, var(--color-brand-cyan) 88%, transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zoneList button,
+  .hotspot {
+    transition: none;
+  }
+  .hotspot[data-selected="true"][data-kind="food"] {
+    animation: none;
+  }
+}
+.detail {
+  border-top: 2px solid var(--color-brand-indigo);
+  display: grid;
+  gap: var(--space-sm);
+  padding-top: var(--space-md);
+}
+.detail ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+@media (min-width: 64rem) {
+  .layout {
+    grid-template-columns: minmax(14rem, 0.45fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { EntryPage } from "../features/entry/EntryPage";
 import { HomePage } from "../features/home/HomePage";
+import { VenueMapPage } from "../features/map/VenueMapPage";
 import { TicketDialog } from "../features/tickets/TicketDialog";
 import { routePaths } from "../navigation/routePaths";
 import { ApplicationShell } from "../shared/ui/ApplicationShell";
@@ -22,11 +23,6 @@ const entries = {
     description:
       "Las novedades oficiales se incorporarán en un módulo específico.",
   },
-  [routePaths.map]: {
-    title: "Mapa",
-    description:
-      "El mapa interactivo se definirá a partir del plano y la interacción requeridos.",
-  },
   [routePaths.realityAugmented]: {
     title: "Experiencia RA",
     description:
@@ -45,6 +41,7 @@ export function App() {
             <HomePage onOpenTickets={() => setIsTicketDialogOpen(true)} />
           }
         />
+        <Route path={routePaths.map} element={<VenueMapPage />} />
         {Object.entries(entries).map(([path, entry]) => (
           <Route key={path} path={path} element={<EntryPage {...entry} />} />
         ))}
