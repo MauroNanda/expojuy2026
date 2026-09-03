@@ -26,18 +26,16 @@
 
 .brand {
   display: inline-flex;
-  gap: var(--space-xs);
   width: fit-content;
-  color: var(--color-brand-violet);
-  font-size: 1rem;
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.06em;
   line-height: 1;
   text-decoration: none;
 }
 
-.brand span:last-child {
-  color: var(--color-brand-indigo);
+.brand img {
+  display: block;
+  width: clamp(2.75rem, 10vw, 3.75rem);
+  max-width: 100%;
+  height: auto;
 }
 
 .main {
@@ -45,11 +43,20 @@
 }
 
 .footer {
+  display: grid;
+  gap: var(--space-sm);
   padding-block: var(--space-lg);
   border-top: 1px solid
     color-mix(in srgb, var(--color-neutral) 65%, transparent);
   color: var(--color-ink);
   font-size: 0.875rem;
+}
+
+.footerLogo {
+  display: block;
+  width: min(16rem, 100%);
+  max-width: 100%;
+  height: auto;
 }
 
 .footer p {
