@@ -1,0 +1,168 @@
+.agenda {
+  display: grid;
+  gap: var(--space-md);
+}
+.agenda h1,
+.agenda h2,
+.agenda p {
+  margin: 0;
+}
+.agenda h1 {
+  color: var(--color-brand-violet);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  letter-spacing: -0.05em;
+}
+.eyebrow {
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+}
+
+.summary {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border: 1px solid var(--color-neutral);
+  background: var(--color-surface);
+}
+.count {
+  font-weight: var(--font-weight-semibold);
+}
+.hint {
+  color: var(--color-ink);
+  font-size: 0.875rem;
+}
+.primaryAction {
+  display: inline-flex;
+  gap: var(--space-xs);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-brand-violet);
+  background: var(--color-brand-violet);
+  color: var(--color-surface);
+  cursor: pointer;
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+}
+.primaryAction:disabled {
+  border-color: var(--color-neutral);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* El resultado del agendado se anuncia por texto: no depende de color ni de
+   un icono para comprenderse. */
+.status:not(:empty) {
+  padding: var(--space-sm) var(--space-md);
+  border-left: 0.25rem solid var(--color-brand-cyan);
+  background: color-mix(in srgb, var(--color-brand-cyan) 10%, transparent);
+}
+
+.day {
+  margin-top: var(--space-md);
+  color: var(--color-brand-indigo);
+  font-size: 1.125rem;
+  text-transform: capitalize;
+}
+.activityList {
+  display: grid;
+  gap: var(--space-sm);
+  padding: 0;
+  margin: var(--space-sm) 0 0;
+  list-style: none;
+}
+.activity {
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border: 1px solid var(--color-neutral);
+}
+.activity:has(.selectControl[aria-pressed="true"]) {
+  border-color: var(--color-brand-violet);
+  box-shadow: inset 0.25rem 0 0 var(--color-brand-violet);
+}
+
+.selectControl {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+/* La casilla replica el patrón de una casilla de verificación; el estado
+   también se expresa con texto para no depender de la forma ni del color. */
+.marker {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--color-neutral);
+  color: var(--color-surface);
+}
+.selectControl[aria-pressed="true"] .marker {
+  border-color: var(--color-brand-violet);
+  background: var(--color-brand-violet);
+}
+.activityText {
+  display: grid;
+  gap: var(--space-2xs);
+}
+.activityTime {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: baseline;
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+}
+.duration {
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-regular);
+}
+.activityTitle {
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-semibold);
+}
+.activityMeta,
+.activityState {
+  font-size: 0.875rem;
+}
+.activityState {
+  color: var(--color-brand-violet);
+  font-weight: var(--font-weight-semibold);
+}
+
+.linkAction {
+  display: inline-flex;
+  gap: var(--space-xs);
+  align-items: center;
+  color: var(--color-brand-indigo);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+}
+.linkAction svg {
+  flex: none;
+}
+
+@media (min-width: 48rem) {
+  .summary {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+  .hint {
+    grid-column: 1 / -1;
+  }
+  .activity {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}

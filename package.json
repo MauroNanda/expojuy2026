@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "lint": "eslint .",
     "format": "prettier --check \"src/**/*.{ts,tsx,css}\" \"*.{js,ts,json,html,css}\"",
     "format:write": "prettier --write \"src/**/*.{ts,tsx,css}\" \"*.{js,ts,json,html,css}\""
