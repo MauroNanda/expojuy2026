@@ -274,6 +274,13 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
           <Link to={routePaths.map}>
             <MapPinned aria-hidden="true" size={20} /> Mapa
           </Link>
+          <a
+            href="https://www.google.com/maps/dir/?api=1&destination=-24.1822527%2C-65.330159&travelmode=driving&dir_action=navigate"
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            <MapPinned aria-hidden="true" size={20} /> ¿Cómo llegar?
+          </a>
           <button type="button" onClick={onOpenTickets}>
             <Ticket aria-hidden="true" size={20} /> Entradas
           </button>
