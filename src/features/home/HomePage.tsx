@@ -1,9 +1,11 @@
 import { ArrowRight, MapPinned, ScanLine, Ticket } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
   demoAgenda,
   demoExhibitors,
+  demoInterests,
   demoNews,
   demoSectors,
   demoSponsors,
@@ -17,6 +19,34 @@ interface HomePageProps {
 }
 
 export function HomePage({ onOpenTickets }: HomePageProps) {
+  const [selectedSectorId, setSelectedSectorId] = useState(demoSectors[0].id);
+  const selectedSector = demoSectors.find(
+    (sector) => sector.id === selectedSectorId,
+  );
+  const selectedExhibitor = demoExhibitors.find(
+    (exhibitor) => exhibitor.sectorId === selectedSectorId,
+  );
+  const selectedActivity = demoAgenda.find(
+    (activity) => activity.sectorId === selectedSectorId,
+  );
+  const selectedInterest = demoInterests.find(
+    (interest) => interest.sectorId === selectedSectorId,
+  );
+  const relatedInterests = selectedInterest
+    ? demoInterests.filter((interest) =>
+        selectedInterest.relatedInterestIds.includes(interest.id),
+      )
+    : [];
+
+  if (
+    !selectedSector ||
+    !selectedExhibitor ||
+    !selectedActivity ||
+    !selectedInterest
+  ) {
+    return null;
+  }
+
   return (
     <div className={styles.home}>
       <section
@@ -57,15 +87,105 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
       <section id="sectores" aria-labelledby="sectors-title">
         <p className={styles.sectionLabel}>Sectores</p>
         <h2 id="sectors-title">Puntos de partida para descubrir la Expo</h2>
-        <DemoNotice />
-        <ul className={styles.sectorList}>
-          {demoSectors.map((sector) => (
-            <li key={sector.name}>
-              <h3>{sector.name}</h3>
-              <p>{sector.description}</p>
-            </li>
-          ))}
-        </ul>
+        <p className={styles.discoveryLead}>
+          Empezá por lo que te interesa o elegí un sector para conocer un
+          protagonista y una actividad relacionada.
+        </p>
+        <DemoNotice>
+          Intereses, protagonistas y actividades de demostración
+        </DemoNotice>
+        <div className={styles.discoveryControls}>
+          <div className={styles.interestExplorer}>
+            <h3 className={styles.controlTitle}>Lo que te interesa explorar</h3>
+            <ul className={styles.interestList}>
+              {demoInterests.map((interest) => {
+                const isSelected = interest.sectorId === selectedSectorId;
+                const isRelated = selectedInterest.relatedInterestIds.includes(
+                  interest.id,
+                );
+
+                return (
+                  <li key={interest.id}>
+                    <button
+                      aria-pressed={isSelected}
+                      data-related={isRelated || undefined}
+                      type="button"
+                      onClick={() => setSelectedSectorId(interest.sectorId)}
+                    >
+                      <strong>{interest.label}</strong>
+                      <span>{interest.description}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className={styles.sectorExplorer}>
+            <p className={styles.directExplorerLabel}>
+              O explorá directamente un sector
+            </p>
+            <ul className={styles.sectorList}>
+              {demoSectors.map((sector) => (
+                <li key={sector.id}>
+                  <button
+                    aria-pressed={sector.id === selectedSectorId}
+                    type="button"
+                    onClick={() => setSelectedSectorId(sector.id)}
+                  >
+                    {sector.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <section
+          aria-live="polite"
+          aria-labelledby="discovery-route-title"
+          className={styles.discoveryRoute}
+        >
+          <div className={styles.routeHeading}>
+            <p className={styles.sectionLabel}>Ruta de descubrimiento</p>
+            <h3 id="discovery-route-title">{selectedSector.name}</h3>
+            <p>{selectedSector.description}</p>
+          </div>
+          <p className={styles.routeIntro}>
+            Tu interés por {selectedInterest.label.toLocaleLowerCase()} activa
+            estas conexiones.
+          </p>
+          <div className={styles.routeConnections}>
+            <article className={styles.routeConnection}>
+              <span>Sector</span>
+              <strong>{selectedSector.name}</strong>
+              <p>{selectedSector.description}</p>
+            </article>
+            <article className={styles.routeConnection}>
+              <span>Protagonista</span>
+              <strong>{selectedExhibitor.name}</strong>
+              <p>{selectedExhibitor.description}</p>
+            </article>
+            <article className={styles.routeConnection}>
+              <span>Actividad relacionada</span>
+              <strong>{selectedActivity.title}</strong>
+              <p>{selectedActivity.description}</p>
+            </article>
+          </div>
+          <div className={styles.relatedInterests}>
+            <p>También se conecta con</p>
+            <ul>
+              {relatedInterests.map((interest) => (
+                <li key={interest.id}>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSectorId(interest.sectorId)}
+                  >
+                    {interest.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       </section>
 
       <section aria-labelledby="exhibitors-title">

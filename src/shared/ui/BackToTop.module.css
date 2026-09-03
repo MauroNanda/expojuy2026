@@ -1,0 +1,29 @@
+.control {
+  position: fixed;
+  z-index: 3;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 2px solid var(--color-brand-violet);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-brand-violet);
+  box-shadow: 0 0.5rem 1.25rem
+    color-mix(in srgb, var(--color-ink) 18%, transparent);
+  cursor: pointer;
+}
+
+.control:hover {
+  background: var(--color-brand-violet);
+  color: var(--color-surface);
+}
+
+@media (min-width: 64rem) {
+  .control {
+    right: var(--space-xl);
+    bottom: var(--space-xl);
+  }
+}

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Navigation } from "../../navigation/Navigation";
 import styles from "./ApplicationShell.module.css";
+import { BackToTop } from "./BackToTop";
 
 interface ApplicationShellProps {
   children: ReactNode;
@@ -31,6 +32,7 @@ export function ApplicationShell({
       <footer className={styles.footer}>
         <p>ExpoJuy 2026 · Prototipo en evolución</p>
       </footer>
+      <BackToTop />
     </div>
   );
 }
