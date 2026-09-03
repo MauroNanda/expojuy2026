@@ -230,11 +230,11 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
           <p className={styles.sectionLabel}>Experiencia RA</p>
           <h2>Una capa por descubrir</h2>
           <p>
-            La experiencia de realidad aumentada se definirá en un change
-            específico.
+            Simulá el escaneo del isologotipo y descubrí cómo se revela una
+            experiencia audiovisual de ExpoJuy.
           </p>
           <Link className={styles.textAction} to={routePaths.realityAugmented}>
-            Conocer la experiencia RA
+            Iniciar experiencia RA
           </Link>
         </div>
       </section>
