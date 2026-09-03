@@ -1,0 +1,98 @@
+.agenda {
+  display: grid;
+  gap: var(--space-md);
+}
+.agenda h1,
+.agenda h2,
+.agenda h3,
+.agenda p {
+  margin: 0;
+}
+.agenda h1 {
+  color: var(--color-brand-violet);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  letter-spacing: -0.05em;
+}
+.eyebrow {
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+}
+
+.day {
+  margin-top: var(--space-md);
+  color: var(--color-brand-indigo);
+  font-size: 1.125rem;
+  text-transform: capitalize;
+}
+.activityList {
+  display: grid;
+  gap: var(--space-sm);
+  padding: 0;
+  margin: var(--space-sm) 0 0;
+  list-style: none;
+}
+.activity {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border: 1px solid var(--color-neutral);
+}
+
+.activityText {
+  display: grid;
+  gap: var(--space-2xs);
+}
+.activityTime {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: baseline;
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+}
+.duration {
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-regular);
+}
+.activityTitle {
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-semibold);
+}
+.activityMeta,
+.activityDescription {
+  font-size: 0.875rem;
+}
+.activityMeta {
+  color: var(--color-brand-violet);
+  font-weight: var(--font-weight-semibold);
+}
+
+.scheduleAction {
+  display: inline-flex;
+  gap: var(--space-xs);
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-brand-violet);
+  background: var(--color-brand-violet);
+  color: var(--color-surface);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+.scheduleAction:hover {
+  border-color: var(--color-brand-indigo);
+  background: var(--color-brand-indigo);
+  color: var(--color-surface);
+}
+.scheduleAction svg {
+  flex: none;
+}
+
+@media (min-width: 48rem) {
+  .activity {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}

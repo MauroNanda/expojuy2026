@@ -13,9 +13,14 @@ export interface DemoExhibitor {
 }
 
 export interface DemoAgendaItem {
+  /** Fecha local de la actividad en formato `AAAA-MM-DD`. */
+  date: string;
   description: string;
+  durationMinutes: number;
   id: string;
+  location: string;
   sectorId: string;
+  /** Hora local de inicio en formato `HH:MM`. */
   time: string;
   title: string;
 }
@@ -226,24 +231,57 @@ export const demoExhibitors: DemoExhibitor[] = [
   },
 ];
 
+/**
+ * Período demostrativo de la agenda. No corresponde a la programación oficial
+ * de ExpoJuy 2026: sustituir estas fechas por las confirmadas no requiere
+ * alterar la estructura del contenido ni la generación de calendario.
+ */
+export const demoAgendaPeriod = {
+  endDate: "2026-09-20",
+  startDate: "2026-09-18",
+} as const;
+
+/**
+ * Jujuy no aplica horario de verano, por lo que su desplazamiento respecto de
+ * UTC es constante. La generación de calendario depende de este valor para
+ * expresar los horarios sin ambigüedad.
+ */
+export const demoAgendaTimeZone = {
+  name: "America/Argentina/Jujuy",
+  utcOffsetMinutes: -180,
+} as const;
+
+/** Advertencia que acompaña a la agenda dentro y fuera del prototipo. */
+export const demoAgendaNotice =
+  "Programación demostrativa de ExpoJuy 2026. Las fechas, los horarios y los lugares no están confirmados.";
+
 export const demoAgenda: DemoAgendaItem[] = [
   {
     id: "encuentro-apertura",
+    date: "2026-09-18",
     time: "10:00",
+    durationMinutes: 90,
+    location: "Predio ferial de demostración · Escenario central",
     title: "Encuentro de apertura",
     description: "Actividad demostrativa para abrir el recorrido productivo.",
     sectorId: "produccion-local",
   },
   {
     id: "ronda-descubrimiento",
+    date: "2026-09-19",
     time: "14:00",
+    durationMinutes: 120,
+    location: "Predio ferial de demostración · Stands cubiertos",
     title: "Ronda de descubrimiento",
     description: "Actividad demostrativa para conocer tecnología y proyectos.",
     sectorId: "tecnologia-aplicada",
   },
   {
     id: "experiencias-ecosistema",
+    date: "2026-09-20",
     time: "17:00",
+    durationMinutes: 60,
+    location: "Predio ferial de demostración · Espacio de vinculación",
     title: "Experiencias del ecosistema",
     description:
       "Actividad demostrativa orientada a la vinculación empresarial.",
