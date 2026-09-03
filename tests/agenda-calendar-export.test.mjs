@@ -3,8 +3,6 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import {
-  createCalendarFile,
-  createCalendarFileName,
   createCalendarLinkUrl,
   formatDuration,
 } from "../src/shared/calendar/calendarEvents.ts";
@@ -16,151 +14,63 @@ import {
 } from "../src/content/demoContent.ts";
 
 const appRoot = new URL("../", import.meta.url);
-const generatedAt = new Date("2026-09-03T12:00:00Z");
 const notice = "Programación demostrativa. Fechas no confirmadas.";
-
-function buildFile(events) {
-  return createCalendarFile(
-    { events, generatedAt, timeZone: demoAgendaTimeZone },
-    notice,
-  );
-}
-
-/** Revierte el plegado para inspeccionar el valor lógico de cada propiedad. */
-function unfold(file) {
-  return file.replace(/\r\n /g, "");
-}
 
 const baseEvent = {
   date: "2026-09-18",
   description: "Actividad demostrativa.",
   durationMinutes: 90,
-  id: "encuentro-apertura",
   location: "Predio ferial",
   time: "10:00",
   title: "Encuentro de apertura",
 };
 
-test("reúne todas las actividades en un único contenedor iCalendar", () => {
-  const file = buildFile(demoAgenda);
-
-  assert.equal(file.match(/BEGIN:VCALENDAR/g).length, 1);
-  assert.equal(file.match(/END:VCALENDAR/g).length, 1);
-  assert.equal(file.match(/BEGIN:VEVENT/g).length, demoAgenda.length);
-  assert.equal(file.match(/END:VEVENT/g).length, demoAgenda.length);
-});
-
-test("expresa los horarios en UTC a partir de la hora local del evento", () => {
-  // 10:00 en Jujuy (UTC-3) corresponde a las 13:00 UTC; 90 minutos después,
-  // 14:30 UTC.
-  const file = buildFile([baseEvent]);
-
-  assert.match(file, /DTSTART:20260918T130000Z/);
-  assert.match(file, /DTEND:20260918T143000Z/);
-});
-
-test("asigna un identificador estable derivado de la actividad", () => {
-  const first = buildFile([baseEvent]);
-  const second = buildFile([baseEvent]);
-
-  assert.match(first, /UID:encuentro-apertura@agenda\.expojuy2026\.demo/);
-  assert.equal(
-    first.match(/UID:.*/)[0],
-    second.match(/UID:.*/)[0],
-    "reimportar la misma actividad debe conservar el identificador",
-  );
-});
-
-test("escapa los caracteres reservados del formato", () => {
-  const file = buildFile([
-    {
-      ...baseEvent,
-      description: "Primera línea\nSegunda línea",
-      location: "Stand 3; sector A, ala norte",
-      title: "Ronda: proyectos, alianzas y vínculos",
-    },
-  ]);
-
-  const logical = unfold(file);
-
-  assert.match(logical, /SUMMARY:Ronda: proyectos\\, alianzas y vínculos/);
-  assert.match(logical, /LOCATION:Stand 3\\; sector A\\, ala norte/);
-  assert.match(logical, /DESCRIPTION:Primera línea\\nSegunda línea/);
-
-  const description = logical
-    .split("\r\n")
-    .find((line) => line.startsWith("DESCRIPTION:"));
-  assert.ok(
-    !description.includes("\n"),
-    "un salto de línea sin escapar rompería el archivo",
-  );
-});
-
-test("escapa la barra invertida sin duplicar las secuencias introducidas", () => {
-  const file = buildFile([{ ...baseEvent, location: "Pasillo A\\B" }]);
-
-  assert.match(file, /LOCATION:Pasillo A\\\\B/);
-});
-
-test("pliega las líneas largas respetando el límite de octetos", () => {
-  const file = buildFile([
-    {
-      ...baseEvent,
-      description:
-        "Una descripción deliberadamente extensa con acentuación española " +
-        "para comprobar que el plegado mide octetos y no caracteres, " +
-        "manteniendo el archivo dentro del límite del formato.",
-    },
-  ]);
-
-  const encoder = new TextEncoder();
-  for (const line of file.split("\r\n")) {
-    assert.ok(
-      encoder.encode(line).length <= 75,
-      `línea de ${encoder.encode(line).length} octetos supera el límite: ${line}`,
-    );
-  }
-  assert.match(file, /\r\n /, "las líneas plegadas continúan con un espacio");
-});
-
-test("no parte los caracteres multibyte al plegar", () => {
-  const file = buildFile([{ ...baseEvent, description: "á".repeat(120) }]);
-
-  assert.ok(
-    !file.includes("�"),
-    "el plegado no debe producir caracteres inválidos",
-  );
-});
-
-test("termina cada línea con el separador del formato", () => {
-  const file = buildFile([baseEvent]);
-
-  assert.ok(file.endsWith("END:VCALENDAR\r\n"));
-  assert.doesNotMatch(
-    file.replace(/\r\n/g, ""),
-    /\n/,
-    "no deben quedar saltos de línea sueltos",
-  );
-});
-
-test("incorpora la advertencia demostrativa en el evento generado", () => {
-  const file = buildFile([baseEvent]);
-
-  assert.ok(unfold(file).includes(escapeForComparison(notice)));
-});
+function linkFor(event) {
+  return new URL(createCalendarLinkUrl(event, demoAgendaTimeZone, notice));
+}
 
 test("compone el enlace de calendario con los datos de la actividad", () => {
-  const url = new URL(createCalendarLinkUrl(baseEvent, demoAgendaTimeZone, notice));
+  const url = linkFor(baseEvent);
 
-  assert.equal(url.origin + url.pathname, "https://calendar.google.com/calendar/render");
+  assert.equal(
+    url.origin + url.pathname,
+    "https://calendar.google.com/calendar/render",
+  );
   assert.equal(url.searchParams.get("action"), "TEMPLATE");
   assert.equal(url.searchParams.get("text"), baseEvent.title);
   assert.equal(url.searchParams.get("location"), baseEvent.location);
+  assert.ok(url.searchParams.get("details").includes(baseEvent.description));
+});
+
+test("convierte la hora local declarada al instante absoluto correspondiente", () => {
+  // 10:00 en Jujuy (UTC-3) corresponde a las 13:00 UTC; 90 minutos después,
+  // 14:30 UTC.
   assert.equal(
-    url.searchParams.get("dates"),
+    linkFor(baseEvent).searchParams.get("dates"),
     "20260918T130000Z/20260918T143000Z",
   );
-  assert.ok(url.searchParams.get("details").includes(notice));
+});
+
+test("respeta la duración declarada de cada actividad", () => {
+  const dates = linkFor({ ...baseEvent, durationMinutes: 60 }).searchParams.get(
+    "dates",
+  );
+
+  assert.equal(dates, "20260918T130000Z/20260918T140000Z");
+});
+
+test("no desplaza el evento al cruzar la medianoche", () => {
+  const dates = linkFor({
+    ...baseEvent,
+    durationMinutes: 120,
+    time: "23:00",
+  }).searchParams.get("dates");
+
+  assert.equal(dates, "20260919T020000Z/20260919T040000Z");
+});
+
+test("incorpora la advertencia demostrativa en el evento", () => {
+  assert.ok(linkFor(baseEvent).searchParams.get("details").includes(notice));
 });
 
 test("codifica los caracteres especiales del enlace", () => {
@@ -179,14 +89,9 @@ test("codifica los caracteres especiales del enlace", () => {
 
 test("rechaza una actividad sin fecha u hora válidas", () => {
   assert.throws(
-    () => buildFile([{ ...baseEvent, date: "sin-fecha" }]),
+    () => linkFor({ ...baseEvent, date: "sin-fecha" }),
     /no define una fecha y hora válidas/,
   );
-});
-
-test("nombra el archivo según la cantidad de actividades", () => {
-  assert.equal(createCalendarFileName(1), "expojuy2026-actividad.ics");
-  assert.equal(createCalendarFileName(3), "expojuy2026-agenda.ics");
 });
 
 test("presenta la duración de forma legible", () => {
@@ -226,6 +131,14 @@ test("usa el desplazamiento horario de Jujuy sin horario de verano", () => {
   assert.equal(demoAgendaTimeZone.utcOffsetMinutes, -180);
 });
 
+test("compone un enlace para cada actividad de la agenda demostrativa", () => {
+  for (const item of demoAgenda) {
+    const url = linkFor(item);
+    assert.equal(url.searchParams.get("text"), item.title);
+    assert.match(url.searchParams.get("dates"), /^\d{8}T\d{6}Z\/\d{8}T\d{6}Z$/);
+  }
+});
+
 test("la Agenda deja de resolverse como punto de entrada pendiente", async () => {
   const app = await readFile(new URL("src/app/App.tsx", appRoot), "utf8");
   const page = await readFile(
@@ -235,15 +148,6 @@ test("la Agenda deja de resolverse como punto de entrada pendiente", async () =>
 
   assert.match(app, /AgendaPage/);
   assert.doesNotMatch(app, /routePaths\.agenda\]:/);
-  assert.match(page, /aria-live="polite"/);
-  assert.match(page, /aria-pressed/);
+  assert.match(page, /createCalendarLinkUrl/);
+  assert.match(page, /aria-label=/);
 });
-
-/** Reproduce el escapado del módulo para comparar el texto ya transformado. */
-function escapeForComparison(value) {
-  return value
-    .replace(/\\/g, "\\\\")
-    .replace(/;/g, "\\;")
-    .replace(/,/g, "\\,")
-    .replace(/\r\n|\r|\n/g, "\\n");
-}

@@ -4,6 +4,7 @@
 }
 .agenda h1,
 .agenda h2,
+.agenda h3,
 .agenda p {
   margin: 0;
 }
@@ -16,49 +17,6 @@
   color: var(--color-brand-indigo);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
-}
-
-.summary {
-  display: grid;
-  gap: var(--space-sm);
-  padding: var(--space-md);
-  border: 1px solid var(--color-neutral);
-  background: var(--color-surface);
-}
-.count {
-  font-weight: var(--font-weight-semibold);
-}
-.hint {
-  color: var(--color-ink);
-  font-size: 0.875rem;
-}
-.primaryAction {
-  display: inline-flex;
-  gap: var(--space-xs);
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-brand-violet);
-  background: var(--color-brand-violet);
-  color: var(--color-surface);
-  cursor: pointer;
-  font: inherit;
-  font-weight: var(--font-weight-semibold);
-}
-.primaryAction:disabled {
-  border-color: var(--color-neutral);
-  background: var(--color-surface);
-  color: var(--color-ink);
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-/* El resultado del agendado se anuncia por texto: no depende de color ni de
-   un icono para comprenderse. */
-.status:not(:empty) {
-  padding: var(--space-sm) var(--space-md);
-  border-left: 0.25rem solid var(--color-brand-cyan);
-  background: color-mix(in srgb, var(--color-brand-cyan) 10%, transparent);
 }
 
 .day {
@@ -76,42 +34,11 @@
 }
 .activity {
   display: grid;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
   padding: var(--space-md);
   border: 1px solid var(--color-neutral);
 }
-.activity:has(.selectControl[aria-pressed="true"]) {
-  border-color: var(--color-brand-violet);
-  box-shadow: inset 0.25rem 0 0 var(--color-brand-violet);
-}
 
-.selectControl {
-  display: flex;
-  gap: var(--space-sm);
-  align-items: flex-start;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--color-ink);
-  cursor: pointer;
-  font: inherit;
-  text-align: left;
-}
-/* La casilla replica el patrón de una casilla de verificación; el estado
-   también se expresa con texto para no depender de la forma ni del color. */
-.marker {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 1px solid var(--color-neutral);
-  color: var(--color-surface);
-}
-.selectControl[aria-pressed="true"] .marker {
-  border-color: var(--color-brand-violet);
-  background: var(--color-brand-violet);
-}
 .activityText {
   display: grid;
   gap: var(--space-2xs);
@@ -133,34 +60,37 @@
   font-weight: var(--font-weight-semibold);
 }
 .activityMeta,
-.activityState {
+.activityDescription {
   font-size: 0.875rem;
 }
-.activityState {
+.activityMeta {
   color: var(--color-brand-violet);
   font-weight: var(--font-weight-semibold);
 }
 
-.linkAction {
+.scheduleAction {
   display: inline-flex;
   gap: var(--space-xs);
   align-items: center;
-  color: var(--color-brand-indigo);
-  font-size: 0.875rem;
+  justify-content: center;
+  justify-self: start;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-brand-violet);
+  background: var(--color-brand-violet);
+  color: var(--color-surface);
   font-weight: var(--font-weight-semibold);
+  text-decoration: none;
 }
-.linkAction svg {
+.scheduleAction:hover {
+  border-color: var(--color-brand-indigo);
+  background: var(--color-brand-indigo);
+  color: var(--color-surface);
+}
+.scheduleAction svg {
   flex: none;
 }
 
 @media (min-width: 48rem) {
-  .summary {
-    grid-template-columns: 1fr auto;
-    align-items: center;
-  }
-  .hint {
-    grid-column: 1 / -1;
-  }
   .activity {
     grid-template-columns: 1fr auto;
     align-items: center;
