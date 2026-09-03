@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { AgendaPage } from "../features/agenda/AgendaPage";
 import { EntryPage } from "../features/entry/EntryPage";
+import { AugmentedRealityPage } from "../features/ar/AugmentedRealityPage";
 import { HomePage } from "../features/home/HomePage";
 import { VenueMapPage } from "../features/map/VenueMapPage";
 import { TicketDialog } from "../features/tickets/TicketDialog";
@@ -19,11 +20,6 @@ const entries = {
     description:
       "Las novedades oficiales se incorporarán en un módulo específico.",
   },
-  [routePaths.realityAugmented]: {
-    title: "Experiencia RA",
-    description:
-      "No se activa cámara en este prototipo. La integración de MindAR, A-Frame y Three.js se definirá en un change específico.",
-  },
 } as const;
 
 export function App() {
@@ -39,6 +35,10 @@ export function App() {
         />
         <Route path={routePaths.agenda} element={<AgendaPage />} />
         <Route path={routePaths.map} element={<VenueMapPage />} />
+        <Route
+          path={routePaths.realityAugmented}
+          element={<AugmentedRealityPage />}
+        />
         {Object.entries(entries).map(([path, entry]) => (
           <Route key={path} path={path} element={<EntryPage {...entry} />} />
         ))}
