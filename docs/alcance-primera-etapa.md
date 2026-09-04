@@ -13,7 +13,7 @@ La entrega incluye una propuesta navegable publicada en GitHub Pages y la docume
 - Contacto y preguntas frecuentes.
 - Integración visual con redes sociales.
 - Diseño responsive y accesible.
-- Primera experiencia de realidad aumentada basada en image tracking.
+- Simulación visual inicial del recorrido de realidad aumentada, sin cámara ni reconocimiento de imágenes.
 - Propuesta visual de mapa interactivo.
 
 ## Capacidades no implementadas
@@ -25,5 +25,6 @@ La entrega incluye una propuesta navegable publicada en GitHub Pages y la docume
 - Procesamiento de pagos.
 - Integraciones externas definitivas.
 - Mapa definitivo conectado a datos operativos.
+- Realidad aumentada funcional basada en image tracking.
 
 Los datos de demostración deben estar versionados y claramente diferenciados de contenido oficial.

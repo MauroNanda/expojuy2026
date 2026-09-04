@@ -1,4 +1,4 @@
-import { RotateCcw, ScanLine, Sparkles, Volume2 } from "lucide-react";
+import { Pause, Play, RotateCcw, ScanLine, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import arDemoVideo from "../../assets/ar/expojuy-ra-demo.mp4";
@@ -11,13 +11,14 @@ const phaseCopy: Record<ExperiencePhase, string> = {
   idle: "Listo para iniciar la demostración.",
   scanning: "Buscando isologotipo ExpoJuy…",
   detected: "Target detectado.",
-  playing: "Video demostrativo disponible.",
+  playing: "Proyección activa.",
 };
 
 export function AugmentedRealityPage() {
   const [phase, setPhase] = useState<ExperiencePhase>("idle");
   const [hasVideoError, setHasVideoError] = useState(false);
   const [needsManualPlayback, setNeedsManualPlayback] = useState(false);
+  const [isVideoPaused, setIsVideoPaused] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const timersRef = useRef<number[]>([]);
 
@@ -30,6 +31,7 @@ export function AugmentedRealityPage() {
     clearTimers();
     setHasVideoError(false);
     setNeedsManualPlayback(false);
+    setIsVideoPaused(false);
     setPhase("scanning");
 
     timersRef.current = [
@@ -50,6 +52,22 @@ export function AugmentedRealityPage() {
 
     video.currentTime = 0;
     void video.play().catch(() => setNeedsManualPlayback(true));
+  };
+
+  const togglePlayback = () => {
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    if (video.paused) {
+      setNeedsManualPlayback(false);
+      void video.play().catch(() => setNeedsManualPlayback(true));
+      return;
+    }
+
+    video.pause();
   };
 
   useEffect(() => {
@@ -93,21 +111,16 @@ export function AugmentedRealityPage() {
                 <video
                   ref={videoRef}
                   autoPlay
-                  controls
                   muted
                   playsInline
                   onError={() => setHasVideoError(true)}
+                  onPause={() => setIsVideoPaused(true)}
+                  onPlay={() => setIsVideoPaused(false)}
                 >
                   <source src={arDemoVideo} type="video/mp4" />
                   Tu navegador no puede reproducir este video.
                 </video>
               )}
-              <div className={styles.trackingOverlay}>
-                <strong>Tracking activo</strong>
-                <span>
-                  Mantené el isologotipo enfocado para ver la experiencia
-                </span>
-              </div>
             </div>
           ) : (
             <div className={styles.targetCard}>
@@ -148,13 +161,35 @@ export function AugmentedRealityPage() {
           {phase === "detected" && <strong>Target detectado</strong>}
           {phase === "playing" && !hasVideoError && (
             <div className={styles.videoActions}>
+              <p>
+                El video representa la capa audiovisual que aparecería sobre el
+                isologotipo.
+              </p>
               {needsManualPlayback && (
                 <button type="button" onClick={replayVideo}>
-                  <Volume2 aria-hidden="true" size={18} /> Reproducir video
+                  <Play aria-hidden="true" size={18} /> Reproducir video
                 </button>
               )}
-              <button type="button" onClick={startDemo}>
-                <RotateCcw aria-hidden="true" size={18} /> Repetir demostración
+              {!needsManualPlayback && (
+                <button
+                  aria-label={isVideoPaused ? "Reanudar video" : "Pausar video"}
+                  type="button"
+                  onClick={togglePlayback}
+                >
+                  {isVideoPaused ? (
+                    <Play aria-hidden="true" size={18} />
+                  ) : (
+                    <Pause aria-hidden="true" size={18} />
+                  )}
+                  {isVideoPaused ? "Reanudar" : "Pausar"}
+                </button>
+              )}
+              <button
+                aria-label="Repetir demostración"
+                type="button"
+                onClick={startDemo}
+              >
+                <RotateCcw aria-hidden="true" size={18} /> Repetir
               </button>
             </div>
           )}
