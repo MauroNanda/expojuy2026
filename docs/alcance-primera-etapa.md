@@ -28,3 +28,5 @@ La entrega incluye una propuesta navegable publicada en GitHub Pages y la docume
 - Realidad aumentada funcional basada en image tracking.
 
 Los datos de demostración deben estar versionados y claramente diferenciados de contenido oficial.
+
+Los recursos visuales de referencia y las imágenes generadas con IA están autorizados para esta etapa cuando se usen como contenido demostrativo trazable; se reemplazarán por activos institucionales cuando la organización los provea.
