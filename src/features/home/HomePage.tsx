@@ -6,12 +6,15 @@ import {
   demoAgenda,
   demoExhibitors,
   demoInterests,
-  demoNews,
   demoSectors,
   demoSponsors,
+  formatEventPeriod,
+  officialEventPeriod,
+  officialNews,
 } from "../../content/demoContent";
 import { routePaths } from "../../navigation/routePaths";
 import { DemoNotice } from "../../shared/ui/DemoNotice";
+import { PendingData } from "../../shared/ui/PendingData";
 import styles from "./HomePage.module.css";
 
 interface HomePageProps {
@@ -57,6 +60,12 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>ExpoJuy 2026</p>
           <h1 id="hero-title">Donde el ecosistema productivo se encuentra.</h1>
+          <p className={styles.eventPeriod}>
+            <time dateTime={officialEventPeriod.startDate}>
+              {formatEventPeriod(officialEventPeriod)}
+            </time>
+            <span>{officialEventPeriod.venue}</span>
+          </p>
           <p className={styles.lead}>
             Descubrí sectores, protagonistas y experiencias para preparar tu
             recorrido.
@@ -248,12 +257,14 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
       <section aria-labelledby="news-title">
         <p className={styles.sectionLabel}>Noticias</p>
         <h2 id="news-title">Lo que se activa en la Expo</h2>
-        <DemoNotice />
         <ul className={styles.newsList}>
-          {demoNews.map((news) => (
-            <li key={news.title}>
+          {officialNews.slice(0, 2).map((news) => (
+            <li key={news.id}>
               <h3>{news.title}</h3>
               <p>{news.summary}</p>
+              <p className={styles.newsSource}>
+                Publicado por {news.source.name}
+              </p>
             </li>
           ))}
         </ul>
@@ -299,10 +310,14 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         aria-labelledby="contact-title"
       >
         <p className={styles.sectionLabel}>Contacto y preguntas</p>
-        <h2 id="contact-title">Información institucional por confirmar</h2>
+        <h2 id="contact-title">Información institucional</h2>
+        <PendingData>
+          Canales de contacto, teléfono y correo institucional de la
+          organización.
+        </PendingData>
         <p>
           Este prototipo incorporará los canales oficiales cuando sean
-          provistos.
+          provistos. No se completan con datos de fuentes no oficiales.
         </p>
       </section>
     </div>
