@@ -15,15 +15,25 @@ test("renders a dedicated simulated AR experience at the existing route", async 
   assert.match(app, /AugmentedRealityPage/);
 });
 
-test("keeps the AR viewer active while the video replaces the target", async () => {
+test("keeps the AR viewer active while the complete video replaces the target", async () => {
   const page = await readProjectFile(
     "src/features/ar/AugmentedRealityPage.tsx",
   );
 
   assert.match(page, /className={styles\.videoViewport}/);
-  assert.match(page, /Tracking activo/);
-  assert.match(page, /Mantené el isologotipo enfocado para ver la experiencia/);
+  assert.match(page, /Proyección activa/);
+  assert.match(page, /Pausar/);
+  assert.match(page, /Repetir/);
   assert.doesNotMatch(page, /className={styles\.videoPanel}/);
+});
+
+test("keeps the video content unobstructed and exposes playback actions outside the viewer", async () => {
+  const styles = await readProjectFile(
+    "src/features/ar/AugmentedRealityPage.module.css",
+  );
+
+  assert.match(styles, /object-fit: contain/);
+  assert.doesNotMatch(styles, /\.trackingOverlay/);
 });
 
 test("simulates logo detection before presenting a local video without camera access", async () => {
@@ -42,7 +52,7 @@ test("simulates logo detection before presenting a local video without camera ac
   assert.match(page, /Demostración visual: no utiliza la cámara/);
   assert.match(page, /aria-live="polite"/);
   assert.match(page, /playsInline/);
-  assert.match(page, /controls/);
+  assert.doesNotMatch(page, /\bcontrols\b/);
   assert.doesNotMatch(page, /getUserMedia|navigator\.mediaDevices/);
   assert.match(home, /Simulá el escaneo del isologotipo/);
   assert.doesNotMatch(home, /se definirá en un change específico/);

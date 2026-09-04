@@ -1,5 +1,11 @@
 # Realidad aumentada
 
+## Incorporación demostrativa actual
+
+La ruta **Experiencia RA** implementa una simulación visual autocontenida: recrea la detección del isologotipo oficial y proyecta un video local sin solicitar cámara, permisos ni reconocimiento de imágenes. El video se presenta completo dentro del visor y sus acciones de pausa, reanudación y repetición se ubican fuera de la imagen para no interferir con el contenido demostrativo.
+
+Esta incorporación no implementa la capacidad de realidad aumentada definida para el producto. Su finalidad es comunicar el recorrido esperado durante el prototipado.
+
 ## Alcance
 
 La realidad aumentada utiliza exclusivamente seguimiento de imágenes mediante MindAR Image Tracking y emplea MindAR, A-Frame y Three.js. La composición técnica de estas librerías se definirá en un change específico.

@@ -118,31 +118,8 @@
 
 .videoViewport video {
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
-}
-
-.trackingOverlay {
-  background: color-mix(in srgb, var(--ar-ink) 82%, transparent);
-  bottom: 0;
-  display: grid;
-  gap: 0.1rem;
-  left: 0;
-  padding: 0.65rem 0.8rem;
-  position: absolute;
-  right: 0;
-}
-
-.trackingOverlay strong {
-  color: var(--ar-cyan);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.trackingOverlay span {
-  font-size: 0.72rem;
-  line-height: 1.25;
 }
 
 .frame {
@@ -241,23 +218,32 @@
   transform: translateY(-0.12rem);
 }
 
-.videoActions,
+.videoActions {
+  display: grid;
+  gap: var(--space-xs);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .videoFallback {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-xs);
 }
 
+.videoActions p {
+  grid-column: 1 / -1;
+}
+
 .videoActions button:last-child,
 .videoFallback button {
   background: transparent;
-  border: 1px solid var(--ar-ink);
-  color: var(--ar-ink);
+  border: 1px solid color-mix(in srgb, white 76%, transparent);
+  color: white;
 }
 
 .videoFallback {
-  border: 1px solid var(--color-brand-violet);
-  color: var(--ar-ink);
+  border: 1px solid var(--ar-cyan);
+  color: white;
   display: grid;
   gap: var(--space-sm);
   height: 100%;
@@ -291,5 +277,15 @@
   .videoActions button,
   .videoFallback button {
     transition: none;
+  }
+}
+
+@media (max-width: 31.99rem) {
+  .videoActions {
+    grid-template-columns: 1fr;
+  }
+
+  .videoActions p {
+    grid-column: auto;
   }
 }
