@@ -42,10 +42,35 @@ export interface DemoInterest {
   sectorId: string;
 }
 
-export interface DemoNewsItem {
+/**
+ * Canal oficial del que proviene una novedad. El enlace permite verificar la
+ * publicación de origen sin depender de lo que afirme el prototipo.
+ */
+export interface OfficialNewsSource {
+  name: string;
+  url: string;
+}
+
+/**
+ * Novedad compuesta a partir de contenido publicado en canales oficiales. La
+ * procedencia es obligatoria: una novedad sin canal ni enlace no compila.
+ */
+export interface OfficialNewsItem {
+  id: string;
+  /** Fecha de publicación de la fuente en formato `AAAA-MM-DD`. */
+  publishedDate: string;
+  /** Fecha en que se consultó la publicación de origen, formato `AAAA-MM-DD`. */
+  retrievedDate: string;
+  source: OfficialNewsSource;
   summary: string;
   title: string;
 }
+
+/**
+ * Grado de certeza de un dato del prototipo. Distinguirlo en el contenido evita
+ * que la diferencia dependa de cómo se redacte cada sección.
+ */
+export type ContentCertainty = "confirmed" | "demonstrative";
 
 export interface VenueMapZone {
   areas: MapArea[];
@@ -281,10 +306,79 @@ export const demoExhibitors: DemoExhibitor[] = [
  * de ExpoJuy 2026: sustituir estas fechas por las confirmadas no requiere
  * alterar la estructura del contenido ni la generación de calendario.
  */
+/**
+ * Período y sede confirmados de ExpoJuy 2026. Es la única fuente de esta fecha:
+ * su forma legible se deriva con `formatEventPeriod`, nunca se escribe a mano.
+ * Origen registrado en `docs/decisiones.md` (D-015).
+ */
+export const officialEventPeriod = {
+  certainty: "confirmed",
+  edition: 17,
+  endDate: "2026-10-12",
+  startDate: "2026-10-09",
+  venue: "Ciudad Cultural, San Salvador de Jujuy",
+} as const satisfies OfficialEventPeriod;
+
+/**
+ * Período que abarca la programación demostrativa. Se ubica dentro del período
+ * oficial, pero su certeza es distinta: las actividades no están confirmadas.
+ */
 export const demoAgendaPeriod = {
-  endDate: "2026-09-20",
-  startDate: "2026-09-18",
-} as const;
+  certainty: "demonstrative",
+  endDate: "2026-10-11",
+  startDate: "2026-10-09",
+} as const satisfies EventPeriod;
+
+interface EventPeriod {
+  certainty: ContentCertainty;
+  /** Fecha final inclusiva en formato `AAAA-MM-DD`. */
+  endDate: string;
+  /** Fecha inicial en formato `AAAA-MM-DD`. */
+  startDate: string;
+}
+
+/** El período confirmado suma los datos institucionales ya verificados. */
+interface OfficialEventPeriod extends EventPeriod {
+  certainty: "confirmed";
+  edition: number;
+  venue: string;
+}
+
+const monthNames = [
+  "enero",
+  "febrero",
+  "marzo",
+  "abril",
+  "mayo",
+  "junio",
+  "julio",
+  "agosto",
+  "septiembre",
+  "octubre",
+  "noviembre",
+  "diciembre",
+] as const;
+
+/**
+ * Expresa un período como texto legible. Las fechas se descomponen sin `Date`
+ * para que el resultado no dependa de la zona horaria del dispositivo.
+ */
+export function formatEventPeriod(period: EventPeriod): string {
+  const [startYear, startMonth, startDay] = period.startDate.split("-");
+  const [endYear, endMonth, endDay] = period.endDate.split("-");
+
+  const startNumber = Number(startDay);
+  const endNumber = Number(endDay);
+  const endMonthName = monthNames[Number(endMonth) - 1];
+
+  if (startMonth === endMonth && startYear === endYear) {
+    return `${startNumber} al ${endNumber} de ${endMonthName} de ${endYear}`;
+  }
+
+  const startMonthName = monthNames[Number(startMonth) - 1];
+
+  return `${startNumber} de ${startMonthName} al ${endNumber} de ${endMonthName} de ${endYear}`;
+}
 
 /**
  * Jujuy no aplica horario de verano, por lo que su desplazamiento respecto de
@@ -298,12 +392,12 @@ export const demoAgendaTimeZone = {
 
 /** Advertencia que acompaña a la agenda dentro y fuera del prototipo. */
 export const demoAgendaNotice =
-  "Programación demostrativa de ExpoJuy 2026. Las fechas, los horarios y los lugares no están confirmados.";
+  "Programación demostrativa. El período del evento está confirmado; las actividades, sus horarios y sus lugares no están confirmados.";
 
 export const demoAgenda: DemoAgendaItem[] = [
   {
     id: "encuentro-apertura",
-    date: "2026-09-18",
+    date: "2026-10-09",
     time: "10:00",
     durationMinutes: 90,
     location: "Predio ferial de demostración · Escenario central",
@@ -313,7 +407,7 @@ export const demoAgenda: DemoAgendaItem[] = [
   },
   {
     id: "ronda-descubrimiento",
-    date: "2026-09-19",
+    date: "2026-10-10",
     time: "14:00",
     durationMinutes: 120,
     location: "Predio ferial de demostración · Stands cubiertos",
@@ -323,7 +417,7 @@ export const demoAgenda: DemoAgendaItem[] = [
   },
   {
     id: "experiencias-ecosistema",
-    date: "2026-09-20",
+    date: "2026-10-11",
     time: "17:00",
     durationMinutes: 60,
     location: "Predio ferial de demostración · Espacio de vinculación",
@@ -334,12 +428,61 @@ export const demoAgenda: DemoAgendaItem[] = [
   },
 ];
 
-export const demoNews: DemoNewsItem[] = [
+/**
+ * Novedades tomadas de la cobertura pública de ExpoJuy 2026. Cada una conserva
+ * su canal y su enlace de origen para que su contenido pueda verificarse.
+ * No se actualizan solas: ver la decisión D-016 en `docs/decisiones.md`.
+ */
+export const officialNews: OfficialNewsItem[] = [
   {
-    title: "Una experiencia para explorar",
-    summary: "Novedades de demostración.",
+    id: "lanzamiento-nacional-buenos-aires",
+    publishedDate: "2026-08-13",
+    retrievedDate: "2026-09-04",
+    source: {
+      name: "Diario Pregón",
+      url: "https://www.pregon.com.ar/nota/30646/2026/08/el-gobernador-destaco-el-perfil-comercial-de-expojuy-2026-y-convoco-a-las-empresas",
+    },
+    summary:
+      "El gobernador Carlos Sadir presentó ExpoJuy 2026 en Buenos Aires junto a la Cámara de Comercio Exterior de Jujuy, con la presencia de diplomáticos de Brasil, Paraguay, Chile, Bolivia, Perú y Uruguay.",
+    title: "Lanzamiento nacional de ExpoJuy 2026 en Buenos Aires",
   },
-  { title: "Sectores que se conectan", summary: "Contenido de demostración." },
+  {
+    id: "fecha-y-sede-confirmadas",
+    publishedDate: "2026-05-20",
+    retrievedDate: "2026-09-04",
+    source: {
+      name: "Todo Jujuy",
+      url: "https://www.todojujuy.com/jujuy/expojuy-2026-ya-tiene-fecha-y-lugar-confirmado-n290445",
+    },
+    summary:
+      "La muestra se concentra en cuatro jornadas en la Ciudad Cultural, con rondas de negocios por la mañana y exposición comercial por la tarde.",
+    title: "ExpoJuy 2026 confirma fecha y sede",
+  },
+  {
+    id: "eje-corredor-bioceanico",
+    publishedDate: "2026-05-20",
+    retrievedDate: "2026-09-04",
+    source: {
+      name: "Jujuy al Momento",
+      url: "https://www.jujuyalmomento.com/expojuy/lanzaron-la-expojuy-2026-enfoque-el-comercio-internacional-y-el-corredor-bioceanico-n202133",
+    },
+    summary:
+      "La 17° edición organiza sus rondas de negocios internacionales alrededor del Corredor Bioceánico, con participación de Argentina, Chile, Paraguay y Brasil.",
+    title: "La edición 2026 se enfoca en el Corredor Bioceánico",
+  },
+];
+
+/**
+ * Canales donde la organización publica sus actualizaciones. El prototipo no
+ * los consume: ofrece el acceso para que la persona siga la fuente vigente.
+ */
+export const officialChannels: OfficialNewsSource[] = [
+  { name: "Instagram @expojuy", url: "https://www.instagram.com/expojuy/" },
+  { name: "Facebook ExpoJuy", url: "https://www.facebook.com/expojuy/" },
+  {
+    name: "Cámara de Comercio Exterior de Jujuy",
+    url: "https://camcomexjujuy.com.ar/",
+  },
 ];
 
 export const demoSponsors = [

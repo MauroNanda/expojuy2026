@@ -96,3 +96,24 @@
     align-items: center;
   }
 }
+
+.confirmedPeriod {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-sm);
+  align-items: baseline;
+  width: fit-content;
+  padding: var(--space-2xs) var(--space-xs);
+  border-left: 3px solid var(--color-brand-cyan);
+  font-weight: var(--font-weight-semibold);
+}
+.confirmedLabel {
+  color: var(--color-brand-violet);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.confirmedPeriod span:last-child {
+  color: var(--color-ink);
+  font-weight: var(--font-weight-regular);
+}

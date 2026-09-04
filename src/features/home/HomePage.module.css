@@ -494,3 +494,20 @@ p {
     background: var(--color-brand-lilac);
   }
 }
+
+.eventPeriod {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-sm);
+  align-items: baseline;
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+}
+.eventPeriod span {
+  color: var(--color-ink);
+  font-weight: var(--font-weight-regular);
+}
+.newsSource {
+  color: var(--color-brand-indigo);
+  font-size: 0.8125rem;
+}

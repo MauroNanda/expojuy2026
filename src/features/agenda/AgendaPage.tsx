@@ -6,6 +6,8 @@ import {
   demoAgendaNotice,
   demoAgendaTimeZone,
   demoSectors,
+  formatEventPeriod,
+  officialEventPeriod,
 } from "../../content/demoContent";
 import {
   createCalendarLinkUrl,
@@ -39,6 +41,13 @@ export function AgendaPage() {
     <section className={styles.agenda} aria-labelledby="agenda-title">
       <p className={styles.eyebrow}>Agenda</p>
       <h1 id="agenda-title">Planificá tu visita</h1>
+      <p className={styles.confirmedPeriod}>
+        <span className={styles.confirmedLabel}>Fecha confirmada</span>
+        <time dateTime={officialEventPeriod.startDate}>
+          {formatEventPeriod(officialEventPeriod)}
+        </time>
+        <span>{officialEventPeriod.venue}</span>
+      </p>
       <p>
         Agregá al calendario de tu dispositivo las actividades que te interesan.
         Cada una se abre en Google Calendar para que la confirmes.
