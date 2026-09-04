@@ -5,11 +5,20 @@ export interface DemoSector {
 }
 
 export interface DemoExhibitor {
+  agendaItemId: string;
   category: string;
   description: string;
   id: string;
   name: string;
   sectorId: string;
+  venueZoneId: string;
+  visual?: DemoExhibitorVisual;
+}
+
+export interface DemoExhibitorVisual {
+  alt: string;
+  origin: "reference-authorized" | "ai-generated" | "institutional";
+  source: string;
 }
 
 export interface DemoAgendaItem {
@@ -67,7 +76,7 @@ export const venueMapZones: VenueMapZone[] = [
     kind: "covered",
     label: "Stands cubiertos",
     description: "Espacio demostrativo para proyectos de mayor escala.",
-    exhibitors: ["Proyecto del Norte", "Red Emprende"],
+    exhibitors: ["Proyecto del Norte", "Laboratorio Andino", "Red Emprende"],
     areas: [{ left: 42.3, top: 10, width: 50.7, height: 35 }],
     standIds: [],
   },
@@ -212,6 +221,18 @@ export const demoExhibitors: DemoExhibitor[] = [
     category: "Producción local",
     description: "Una propuesta demostrativa vinculada a saberes y territorio.",
     sectorId: "produccion-local",
+    agendaItemId: "encuentro-apertura",
+    venueZoneId: "stands-cubiertos",
+  },
+  {
+    id: "manos-de-la-puna",
+    name: "Manos de la Puna",
+    category: "Producción local",
+    description:
+      "Un recorrido demostrativo de oficios, saberes y producción del territorio.",
+    sectorId: "produccion-local",
+    agendaItemId: "encuentro-apertura",
+    venueZoneId: "artesanos",
   },
   {
     id: "laboratorio-andino",
@@ -220,6 +241,18 @@ export const demoExhibitors: DemoExhibitor[] = [
     description:
       "Un protagonista demostrativo para explorar innovación aplicada.",
     sectorId: "tecnologia-aplicada",
+    agendaItemId: "ronda-descubrimiento",
+    venueZoneId: "stands-cubiertos",
+  },
+  {
+    id: "taller-quebrada",
+    name: "Taller Quebrada",
+    category: "Tecnología aplicada",
+    description:
+      "Una propuesta demostrativa para imaginar herramientas aplicadas a desafíos locales.",
+    sectorId: "tecnologia-aplicada",
+    agendaItemId: "ronda-descubrimiento",
+    venueZoneId: "descubiertos",
   },
   {
     id: "red-emprende",
@@ -228,6 +261,18 @@ export const demoExhibitors: DemoExhibitor[] = [
     description:
       "Un espacio demostrativo de encuentro entre proyectos y oportunidades.",
     sectorId: "vinculacion-empresarial",
+    agendaItemId: "experiencias-ecosistema",
+    venueZoneId: "stands-cubiertos",
+  },
+  {
+    id: "mercado-del-valle",
+    name: "Mercado del Valle",
+    category: "Vinculación empresarial",
+    description:
+      "Un espacio demostrativo para acercar propuestas, redes y oportunidades de intercambio.",
+    sectorId: "vinculacion-empresarial",
+    agendaItemId: "experiencias-ecosistema",
+    venueZoneId: "descubiertos",
   },
 ];
 

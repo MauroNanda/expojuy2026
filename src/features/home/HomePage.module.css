@@ -343,6 +343,13 @@ p {
 .routeConnection strong {
   font-size: 1.25rem;
 }
+.connectionAction {
+  width: fit-content;
+  margin-top: var(--space-xs);
+  color: var(--color-brand-indigo);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-semibold);
+}
 .relatedInterests {
   display: flex;
   flex-wrap: wrap;

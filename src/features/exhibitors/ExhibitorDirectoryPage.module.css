@@ -1,0 +1,237 @@
+.directory {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+  padding-bottom: var(--space-2xl);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-md);
+  max-width: 48rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-brand-indigo);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.intro h1,
+.profile h2 {
+  margin: 0;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+}
+
+.intro h1 {
+  max-width: 14ch;
+  color: var(--color-brand-violet);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+}
+
+.intro > p:not(.eyebrow) {
+  max-width: 39rem;
+  margin: 0;
+  font-size: clamp(1.125rem, 2vw, 1.35rem);
+  line-height: 1.45;
+}
+
+.filters {
+  display: grid;
+  gap: var(--space-sm);
+  padding-block: var(--space-lg);
+  border-block: 1px solid var(--color-neutral);
+}
+
+.filters p,
+.indexLabel {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.filters div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.filters button {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--color-neutral);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.filters button[aria-pressed="true"] {
+  border-color: var(--color-brand-violet);
+  background: var(--color-brand-violet);
+  color: var(--color-surface);
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.index ul {
+  padding: 0;
+  margin: var(--space-sm) 0 0;
+  list-style: none;
+}
+
+.index li {
+  border-bottom: 1px solid var(--color-neutral);
+}
+
+.index button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  width: 100%;
+  gap: var(--space-2xs) var(--space-sm);
+  padding: var(--space-md) 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.index button:hover,
+.index button[aria-current="true"] {
+  color: var(--color-brand-violet);
+}
+
+.index button span {
+  grid-column: 1;
+  color: var(--color-brand-indigo);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.index button strong {
+  grid-column: 1;
+  font-size: 1.25rem;
+}
+
+.index button svg {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: center;
+}
+
+.profile {
+  display: grid;
+  align-content: start;
+  gap: var(--space-md);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-top: 0.3rem solid var(--color-brand-cyan);
+  background: color-mix(
+    in srgb,
+    var(--color-brand-lilac) 22%,
+    var(--color-surface)
+  );
+}
+
+.profile h2 {
+  color: var(--color-brand-violet);
+  font-size: clamp(2.4rem, 5vw, 4.25rem);
+}
+
+.category {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.description {
+  max-width: 43rem;
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.connections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--space-sm);
+  margin: var(--space-sm) 0 0;
+}
+
+.connections div {
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-neutral);
+}
+
+.connections dt {
+  color: var(--color-brand-indigo);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.connections dd {
+  margin: var(--space-2xs) 0 0;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.35;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.actions a,
+.routeAction {
+  display: inline-flex;
+  gap: var(--space-xs);
+  align-items: center;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--color-brand-indigo);
+  background: var(--color-surface);
+  color: var(--color-brand-indigo);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.routeAction {
+  border-color: var(--color-brand-violet);
+  background: var(--color-brand-violet);
+  color: var(--color-surface);
+}
+
+.routeAction[aria-pressed="true"] {
+  border-color: var(--color-brand-cyan);
+  background: var(--color-brand-cyan);
+  color: var(--color-ink);
+}
+
+.empty {
+  margin: 0;
+  padding: var(--space-lg);
+  border-top: 0.3rem solid var(--color-brand-cyan);
+  background: color-mix(
+    in srgb,
+    var(--color-brand-lilac) 22%,
+    var(--color-surface)
+  );
+}
+
+@media (min-width: 64rem) {
+  .layout {
+    grid-template-columns: minmax(16rem, 0.55fr) minmax(0, 1.45fr);
+    align-items: start;
+  }
+}

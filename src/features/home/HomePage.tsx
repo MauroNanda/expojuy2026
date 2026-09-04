@@ -163,6 +163,12 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
               <span>Protagonista</span>
               <strong>{selectedExhibitor.name}</strong>
               <p>{selectedExhibitor.description}</p>
+              <Link
+                className={styles.connectionAction}
+                to={`${routePaths.exhibitors}?actor=${selectedExhibitor.id}`}
+              >
+                Ver {selectedExhibitor.name} en Expositores
+              </Link>
             </article>
             <article className={styles.routeConnection}>
               <span>Actividad relacionada</span>
