@@ -19,8 +19,9 @@ export function ApplicationShell({
     <div className={styles.shell}>
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <Link className={styles.brand} to="/">
-            <img alt="ExpoJuy 2026" src={headerMark} />
+          <Link aria-label="ExpoJuy 2026" className={styles.brand} to="/">
+            <img alt="" src={headerMark} />
+            <span aria-hidden="true">ExpoJuy 2026</span>
           </Link>
           <Navigation onOpenTickets={onOpenTickets} />
         </div>

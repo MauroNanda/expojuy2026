@@ -17,23 +17,29 @@
 }
 
 .headerContent {
-  width: min(100% - 2rem, 84rem);
+  width: min(100% - 2rem, 75rem);
   margin-inline: auto;
   display: grid;
   gap: var(--space-md);
-  padding-block: var(--space-md);
+  padding-block: clamp(var(--space-sm), 2vw, var(--space-md));
 }
 
 .brand {
   display: inline-flex;
+  gap: var(--space-sm);
+  align-items: center;
   width: fit-content;
+  color: var(--color-brand-violet);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.02em;
   line-height: 1;
   text-decoration: none;
 }
 
 .brand img {
   display: block;
-  width: clamp(2.75rem, 10vw, 3.75rem);
+  width: clamp(2.5rem, 6vw, 3.25rem);
   max-width: 100%;
   height: auto;
 }

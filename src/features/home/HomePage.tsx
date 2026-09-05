@@ -15,6 +15,7 @@ import {
 import { routePaths } from "../../navigation/routePaths";
 import { DemoNotice } from "../../shared/ui/DemoNotice";
 import { PendingData } from "../../shared/ui/PendingData";
+import heroIllustration from "../../assets/demostrativos/recorrido-descubrimiento-hero.png";
 import styles from "./HomePage.module.css";
 
 interface HomePageProps {
@@ -57,40 +58,50 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         id="expojuy"
         aria-labelledby="hero-title"
       >
-        <div className={styles.heroCopy}>
+        <div className={styles.heroHeading}>
           <p className={styles.eyebrow}>ExpoJuy 2026</p>
-          <h1 id="hero-title">Donde el ecosistema productivo se encuentra.</h1>
-          <p className={styles.eventPeriod}>
-            <time dateTime={officialEventPeriod.startDate}>
-              {formatEventPeriod(officialEventPeriod)}
-            </time>
-            <span>{officialEventPeriod.venue}</span>
-          </p>
-          <p className={styles.lead}>
-            Descubrí sectores, protagonistas y experiencias para preparar tu
-            recorrido.
-          </p>
-          <a className={styles.primaryAction} href="#sectores">
-            Explorar sectores <ArrowRight aria-hidden="true" size={18} />
-          </a>
+          <h1 id="hero-title">
+            Jujuy conecta producción, ideas y{" "}
+            <span className={styles.heroEmphasis}>oportunidades.</span>
+          </h1>
         </div>
-        <div className={styles.meshPanel}>
-          <div aria-hidden="true" className={styles.productiveMesh}>
-            <span className={styles.nodeOne} />
-            <span className={styles.nodeTwo} />
-            <span className={styles.nodeThree} />
-            <span className={styles.nodeFour} />
-            <i className={styles.lineOne} />
-            <i className={styles.lineTwo} />
-            <i className={styles.lineThree} />
+        <div className={styles.heroDetails}>
+          <dl className={styles.eventPeriod}>
+            <div>
+              <dt>Fecha confirmada</dt>
+              <dd>
+                <time dateTime={officialEventPeriod.startDate}>
+                  {formatEventPeriod(officialEventPeriod)}
+                </time>
+              </dd>
+            </div>
+            <div>
+              <dt>Sede</dt>
+              <dd>{officialEventPeriod.venue}</dd>
+            </div>
+          </dl>
+          <div className={styles.heroCopy}>
+            <p className={styles.lead}>
+              Explorá sectores, protagonistas y actividades para preparar tu
+              recorrido por la Expo.
+            </p>
+            <a className={styles.primaryAction} href="#sectores">
+              Explorar sectores <ArrowRight aria-hidden="true" size={18} />
+            </a>
+            <p className={styles.actionHint}>
+              Desde Sectores podés conocer protagonistas y actividades
+              relacionadas.
+            </p>
           </div>
-          <p>Trama productiva</p>
-          <ul aria-label="Relaciones representadas en la trama">
-            <li>Producción local</li>
-            <li>Tecnología aplicada</li>
-            <li>Vinculación empresarial</li>
-          </ul>
         </div>
+        <figure className={styles.heroVisual} aria-hidden="true">
+          <img alt="" src={heroIllustration} />
+        </figure>
+        <ul className={styles.heroSectors} aria-label="Ámbitos de la Expo">
+          {demoSectors.map((sector) => (
+            <li key={sector.id}>{sector.name}</li>
+          ))}
+        </ul>
       </section>
 
       <section id="sectores" aria-labelledby="sectors-title">
