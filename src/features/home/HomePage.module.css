@@ -3,7 +3,7 @@
   gap: clamp(3.5rem, 8vw, 6rem);
 }
 .home section {
-  scroll-margin-top: 2rem;
+  scroll-margin-top: 4.5rem;
 }
 .hero {
   display: grid;
@@ -124,35 +124,200 @@ p {
   font-size: 1.125rem;
   line-height: 1.5;
 }
-.discoveryControls {
+.intentionGrid {
   display: grid;
-  gap: var(--space-lg);
-  margin-top: var(--space-lg);
-}
-.interestExplorer {
-  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: var(--space-md);
+  margin: var(--space-lg) 0 var(--space-xl);
 }
-.sectorExplorer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm) var(--space-md);
-  align-items: center;
-  padding-top: var(--space-lg);
-  border-top: 1px solid var(--color-neutral);
-}
-.controlTitle {
-  margin: 0;
+.intentionCard {
+  display: grid;
+  align-content: start;
+  gap: var(--space-xs);
+  padding: var(--space-lg);
+  border: 1px solid var(--color-neutral);
+  border-top: 4px solid var(--color-brand-cyan);
+  background: color-mix(
+    in srgb,
+    var(--color-brand-lilac) 14%,
+    var(--color-surface)
+  );
   color: var(--color-ink);
-  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
-.directExplorerLabel {
+.intentionCard:hover {
+  border-color: var(--color-brand-indigo);
+  background: color-mix(
+    in srgb,
+    var(--color-brand-lilac) 24%,
+    var(--color-surface)
+  );
+}
+.intentionCard[data-selected="true"] {
+  border-color: var(--color-brand-violet);
+  border-top-color: var(--color-brand-violet);
+  background: var(--color-brand-violet);
+  color: var(--color-surface);
+}
+.intentionCard[data-selected="true"] .intentionBadge {
+  background: var(--color-surface);
+  color: var(--color-brand-violet);
+}
+.intentionCard[data-selected="true"] p {
+  color: color-mix(
+    in srgb,
+    var(--color-surface) 90%,
+    var(--color-brand-violet)
+  );
+}
+.intentionBadge {
+  width: fit-content;
+  padding: 0.2rem 0.55rem;
+  background: color-mix(
+    in srgb,
+    var(--color-brand-indigo) 15%,
+    var(--color-surface)
+  );
+  color: var(--color-brand-indigo);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.intentionCard strong {
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+}
+.intentionCard p {
   margin: 0;
   font-size: 0.9375rem;
+  line-height: 1.45;
+}
+.suggestedJourney {
+  display: grid;
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+  border: 1px solid var(--color-neutral);
+  border-top: 0.35rem solid var(--color-brand-violet);
+  background: var(--color-surface);
+}
+.journeyHeader {
+  display: grid;
+  gap: var(--space-2xs);
+}
+.journeyEyebrow {
+  margin: 0;
+  color: var(--color-brand-indigo);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.journeyHeader h3 {
+  margin: 0;
+  color: var(--color-brand-violet);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  letter-spacing: -0.03em;
+}
+.journeyLead {
+  max-width: 45rem;
+  margin: var(--space-xs) 0 0;
+  color: var(--color-ink);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.journeySteps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-sm);
+}
+.journeyStep {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-lg);
+  border: 1px solid var(--color-neutral);
+  border-top: 3px solid var(--color-brand-indigo);
+  background: color-mix(
+    in srgb,
+    var(--color-brand-lilac) 10%,
+    var(--color-surface)
+  );
+}
+.journeyStep:nth-child(2) {
+  border-top-color: var(--color-brand-cyan);
+}
+.journeyStep:nth-child(3) {
+  border-top-color: var(--color-brand-violet);
+}
+.stepHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-neutral);
+}
+.stepNumber {
+  color: var(--color-brand-indigo);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.stepHeader h4 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+}
+.stepBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+.stepTag {
+  color: var(--color-brand-indigo);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.stepEntityName {
+  color: var(--color-ink);
+  font-size: 1.25rem;
+}
+.stepMeta {
+  margin: 0;
+  color: var(--color-brand-indigo);
+  font-size: 0.875rem;
   font-weight: var(--font-weight-semibold);
 }
-.interestList,
-.sectorList,
+.stepDescription {
+  flex: 1;
+  margin: var(--space-2xs) 0 var(--space-md);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+.stepLink {
+  display: inline-flex;
+  gap: var(--space-2xs);
+  align-items: center;
+  width: fit-content;
+  margin-top: auto;
+  color: var(--color-brand-indigo);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+.stepLink:hover {
+  color: var(--color-brand-violet);
+  text-decoration: underline;
+}
 .compactList,
 .agendaList,
 .newsList,
@@ -163,68 +328,6 @@ p {
   margin: var(--space-lg) 0;
   list-style: none;
 }
-.interestList {
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  margin: 0;
-}
-.sectorList {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  margin: 0;
-}
-.interestList button {
-  display: grid;
-  width: 100%;
-  min-height: 100%;
-  gap: var(--space-xs);
-  padding: var(--space-lg);
-  border: 1px solid var(--color-neutral);
-  border-top: 4px solid var(--color-brand-cyan);
-  background: color-mix(
-    in srgb,
-    var(--color-brand-lilac) 18%,
-    var(--color-surface)
-  );
-  color: var(--color-ink);
-  text-align: left;
-  cursor: pointer;
-}
-.sectorList button {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--color-neutral);
-  background: var(--color-surface);
-  color: var(--color-ink);
-  font: inherit;
-  font-weight: var(--font-weight-semibold);
-  cursor: pointer;
-}
-.interestList button:hover,
-.sectorList button:hover {
-  border-color: var(--color-brand-indigo);
-}
-.interestList button[aria-pressed="true"],
-.sectorList button[aria-pressed="true"] {
-  border-color: var(--color-brand-violet);
-  background: var(--color-brand-violet);
-  color: var(--color-surface);
-}
-.interestList button[data-related="true"] {
-  border-color: var(--color-brand-cyan);
-  background: color-mix(
-    in srgb,
-    var(--color-brand-cyan) 12%,
-    var(--color-surface)
-  );
-}
-.interestList strong {
-  font-size: 1.125rem;
-}
-.interestList span {
-  line-height: 1.45;
-}
-.sectorList li,
 .newsList li {
   padding: var(--space-lg);
   border-top: 4px solid var(--color-brand-cyan);
@@ -234,122 +337,10 @@ p {
     var(--color-surface)
   );
 }
-.sectorList li {
-  padding: 0;
-  border: 0;
-  background: transparent;
-}
-.discoveryRoute {
-  display: grid;
-  gap: var(--space-xl);
-  margin-top: var(--space-xl);
-  padding: var(--space-xl) 0;
-  border-top: 0.25rem solid var(--color-brand-violet);
-  border-bottom: 1px solid var(--color-neutral);
-}
-.routeHeading h3 {
-  margin: 0;
-  color: var(--color-brand-violet);
-  font-size: clamp(1.75rem, 5vw, 2.75rem);
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-}
-.routeHeading p:not(.sectionLabel),
-.routeConnection p {
-  margin: var(--space-sm) 0 0;
-  line-height: 1.45;
-}
-.routeIntro {
-  max-width: 42rem;
-  padding-top: var(--space-lg);
-  margin: 0;
-  border-top: 1px solid var(--color-neutral);
-  font-size: 1.125rem;
-  line-height: 1.45;
-}
-.routeConnections {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: var(--space-sm);
-  padding: 0;
-  margin: 0;
-}
-.routeConnection {
-  display: grid;
-  gap: var(--space-2xs);
-  padding: var(--space-lg) var(--space-md);
-  border-top: 0.25rem solid var(--color-brand-indigo);
-  background: color-mix(
-    in srgb,
-    var(--color-brand-lilac) 16%,
-    var(--color-surface)
-  );
-}
-.routeConnection:nth-child(2) {
-  border-color: var(--color-brand-cyan);
-}
-.routeConnection:nth-child(3) {
-  border-color: var(--color-brand-violet);
-}
-.routeConnection span {
-  color: var(--color-brand-indigo);
-  font-size: 0.8125rem;
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.routeConnection strong {
-  font-size: 1.25rem;
-}
-.connectionAction {
-  width: fit-content;
-  margin-top: var(--space-xs);
-  color: var(--color-brand-indigo);
-  font-size: 0.9375rem;
-  font-weight: var(--font-weight-semibold);
-}
-.relatedInterests {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm) var(--space-md);
-  align-items: center;
-}
-.relatedInterests > p {
-  margin: 0;
-  font-size: 0.9375rem;
-  font-weight: var(--font-weight-semibold);
-}
-.relatedInterests ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-.relatedInterests button {
-  padding: 0.45rem 0.7rem;
-  border: 1px solid var(--color-brand-indigo);
-  background: var(--color-surface);
-  color: var(--color-brand-indigo);
-  font: inherit;
-  font-size: 0.9375rem;
-  font-weight: var(--font-weight-semibold);
-  cursor: pointer;
-}
-.relatedInterests button:hover {
-  background: color-mix(
-    in srgb,
-    var(--color-brand-lilac) 25%,
-    var(--color-surface)
-  );
-}
-.sectorList h3,
 .newsList h3 {
   margin: 0;
   font-size: 1.25rem;
 }
-.sectorList p,
 .newsList p {
   margin: var(--space-sm) 0 0;
   line-height: 1.45;

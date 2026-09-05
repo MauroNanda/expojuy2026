@@ -36,10 +36,14 @@ export interface DemoAgendaItem {
 
 export interface DemoInterest {
   description: string;
+  highlightActivityId: string;
+  highlightActorId: string;
   id: string;
   label: string;
   relatedInterestIds: string[];
   sectorId: string;
+  sectorName: string;
+  venueZoneId: string;
 }
 
 /**
@@ -217,25 +221,52 @@ export const demoSectors: DemoSector[] = [
 
 export const demoInterests: DemoInterest[] = [
   {
-    id: "saberes-locales",
-    label: "Saberes y productos locales",
-    description: "Conocé propuestas que nacen del territorio.",
-    relatedInterestIds: ["innovacion", "conexiones"],
-    sectorId: "produccion-local",
-  },
-  {
-    id: "innovacion",
-    label: "Innovación y tecnología",
-    description: "Explorá ideas para conectar y transformar.",
-    relatedInterestIds: ["saberes-locales", "conexiones"],
+    id: "innovacion-futuro",
+    label: "Innovación y Futuro",
+    description:
+      "Explorá tecnología aplicada, software y soluciones digitales jujeñas.",
     sectorId: "tecnologia-aplicada",
+    sectorName: "Tecnología aplicada",
+    highlightActorId: "laboratorio-andino",
+    highlightActivityId: "ronda-descubrimiento",
+    venueZoneId: "stands-cubiertos",
+    relatedInterestIds: ["formacion-charlas", "negocios-desarrollo"],
   },
   {
-    id: "conexiones",
-    label: "Conexiones empresariales",
-    description: "Encontrá espacios de encuentro y vinculación.",
-    relatedInterestIds: ["saberes-locales", "innovacion"],
+    id: "identidad-sabores",
+    label: "Identidad y Sabores Regionales",
+    description:
+      "Conocé propuestas que nacen del territorio, oficios y producción local.",
+    sectorId: "produccion-local",
+    sectorName: "Producción local",
+    highlightActorId: "manos-de-la-puna",
+    highlightActivityId: "encuentro-apertura",
+    venueZoneId: "artesanos",
+    relatedInterestIds: ["innovacion-futuro", "negocios-desarrollo"],
+  },
+  {
+    id: "negocios-desarrollo",
+    label: "Negocios y Desarrollo Sostenible",
+    description:
+      "Encontrá oportunidades de inversión, vinculación productiva y cadenas de valor.",
     sectorId: "vinculacion-empresarial",
+    sectorName: "Vinculación empresarial",
+    highlightActorId: "red-emprende",
+    highlightActivityId: "experiencias-ecosistema",
+    venueZoneId: "stands-cubiertos",
+    relatedInterestIds: ["innovacion-futuro", "formacion-charlas"],
+  },
+  {
+    id: "formacion-charlas",
+    label: "Charlas y Formación Profesional",
+    description:
+      "Participá de conferencias, intercambio de experiencias y networking sectorial.",
+    sectorId: "tecnologia-aplicada",
+    sectorName: "Tecnología aplicada",
+    highlightActorId: "taller-quebrada",
+    highlightActivityId: "ronda-descubrimiento",
+    venueZoneId: "descubiertos",
+    relatedInterestIds: ["innovacion-futuro", "negocios-desarrollo"],
   },
 ];
 

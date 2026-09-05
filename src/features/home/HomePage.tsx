@@ -11,6 +11,7 @@ import {
   formatEventPeriod,
   officialEventPeriod,
   officialNews,
+  venueMapZones,
 } from "../../content/demoContent";
 import { routePaths } from "../../navigation/routePaths";
 import { DemoNotice } from "../../shared/ui/DemoNotice";
@@ -23,33 +24,26 @@ interface HomePageProps {
 }
 
 export function HomePage({ onOpenTickets }: HomePageProps) {
-  const [selectedSectorId, setSelectedSectorId] = useState(demoSectors[0].id);
-  const selectedSector = demoSectors.find(
-    (sector) => sector.id === selectedSectorId,
+  const [selectedInterestId, setSelectedInterestId] = useState(
+    demoInterests[0].id,
   );
-  const selectedExhibitor = demoExhibitors.find(
-    (exhibitor) => exhibitor.sectorId === selectedSectorId,
-  );
-  const selectedActivity = demoAgenda.find(
-    (activity) => activity.sectorId === selectedSectorId,
-  );
-  const selectedInterest = demoInterests.find(
-    (interest) => interest.sectorId === selectedSectorId,
-  );
-  const relatedInterests = selectedInterest
-    ? demoInterests.filter((interest) =>
-        selectedInterest.relatedInterestIds.includes(interest.id),
-      )
-    : [];
+  const selectedInterest =
+    demoInterests.find((interest) => interest.id === selectedInterestId) ??
+    demoInterests[0];
 
-  if (
-    !selectedSector ||
-    !selectedExhibitor ||
-    !selectedActivity ||
-    !selectedInterest
-  ) {
-    return null;
-  }
+  const selectedExhibitor =
+    demoExhibitors.find(
+      (exhibitor) => exhibitor.id === selectedInterest.highlightActorId,
+    ) ?? demoExhibitors[0];
+
+  const selectedActivity =
+    demoAgenda.find(
+      (activity) => activity.id === selectedInterest.highlightActivityId,
+    ) ?? demoAgenda[0];
+
+  const selectedZone = venueMapZones.find(
+    (zone) => zone.id === selectedInterest.venueZoneId,
+  );
 
   return (
     <div className={styles.home}>
@@ -105,113 +99,148 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
       </section>
 
       <section id="sectores" aria-labelledby="sectors-title">
-        <p className={styles.sectionLabel}>Sectores</p>
-        <h2 id="sectors-title">Puntos de partida para descubrir la Expo</h2>
+        <p className={styles.sectionLabel}>Sectores y Recorrido</p>
+        <h2 id="sectors-title">¿Qué venís a descubrir en ExpoJuy?</h2>
         <p className={styles.discoveryLead}>
-          Empezá por lo que te interesa o elegí un sector para conocer un
-          protagonista y una actividad relacionada.
+          Elegí tu objetivo de visita para desplegar un recorrido sugerido paso
+          a paso: conocé quién te espera, a qué actividad sumarte y dónde
+          encontrarlo en el predio.
         </p>
         <DemoNotice>
-          Intereses, protagonistas y actividades de demostración
+          Intenciones, protagonistas y actividades de demostración
         </DemoNotice>
-        <div className={styles.discoveryControls}>
-          <div className={styles.interestExplorer}>
-            <h3 className={styles.controlTitle}>Lo que te interesa explorar</h3>
-            <ul className={styles.interestList}>
-              {demoInterests.map((interest) => {
-                const isSelected = interest.sectorId === selectedSectorId;
-                const isRelated = selectedInterest.relatedInterestIds.includes(
-                  interest.id,
-                );
 
-                return (
-                  <li key={interest.id}>
-                    <button
-                      aria-pressed={isSelected}
-                      data-related={isRelated || undefined}
-                      type="button"
-                      onClick={() => setSelectedSectorId(interest.sectorId)}
-                    >
-                      <strong>{interest.label}</strong>
-                      <span>{interest.description}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          <div className={styles.sectorExplorer}>
-            <p className={styles.directExplorerLabel}>
-              O explorá directamente un sector
+        <div
+          className={styles.intentionGrid}
+          role="tablist"
+          aria-label="Objetivos de visita"
+        >
+          {demoInterests.map((interest) => {
+            const isSelected = interest.id === selectedInterest.id;
+            return (
+              <button
+                key={interest.id}
+                role="tab"
+                aria-selected={isSelected}
+                aria-controls={`journey-panel-${interest.id}`}
+                id={`tab-${interest.id}`}
+                type="button"
+                className={styles.intentionCard}
+                data-selected={isSelected || undefined}
+                onClick={() => setSelectedInterestId(interest.id)}
+              >
+                <span className={styles.intentionBadge}>
+                  {interest.sectorName}
+                </span>
+                <strong>{interest.label}</strong>
+                <p>{interest.description}</p>
+              </button>
+            );
+          })}
+        </div>
+
+        <div
+          id={`journey-panel-${selectedInterest.id}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${selectedInterest.id}`}
+          className={styles.suggestedJourney}
+        >
+          <div className={styles.journeyHeader}>
+            <p className={styles.journeyEyebrow}>
+              Recorrido sugerido · {selectedInterest.label}
             </p>
-            <ul className={styles.sectorList}>
-              {demoSectors.map((sector) => (
-                <li key={sector.id}>
-                  <button
-                    aria-pressed={sector.id === selectedSectorId}
-                    type="button"
-                    onClick={() => setSelectedSectorId(sector.id)}
-                  >
-                    {sector.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <h3>Tu itinerario recomendado en 3 pasos</h3>
+            <p className={styles.journeyLead}>
+              Conectamos tu interés con las personas, los horarios y los
+              espacios clave del evento.
+            </p>
+          </div>
+
+          <div className={styles.journeySteps}>
+            {/* Paso 1: Quién te espera */}
+            <article className={styles.journeyStep}>
+              <div className={styles.stepHeader}>
+                <span className={styles.stepNumber}>Paso 1</span>
+                <h4>Quién te espera</h4>
+              </div>
+              <div className={styles.stepBody}>
+                <span className={styles.stepTag}>
+                  {selectedExhibitor.category}
+                </span>
+                <strong className={styles.stepEntityName}>
+                  {selectedExhibitor.name}
+                </strong>
+                <p className={styles.stepDescription}>
+                  {selectedExhibitor.description}
+                </p>
+                <Link
+                  className={styles.stepLink}
+                  to={`${routePaths.exhibitors}?actor=${selectedExhibitor.id}`}
+                >
+                  Ver {selectedExhibitor.name} en Expositores{" "}
+                  <ArrowRight aria-hidden="true" size={16} />
+                </Link>
+              </div>
+            </article>
+
+            {/* Paso 2: A qué hora ir */}
+            <article className={styles.journeyStep}>
+              <div className={styles.stepHeader}>
+                <span className={styles.stepNumber}>Paso 2</span>
+                <h4>A qué hora ir</h4>
+              </div>
+              <div className={styles.stepBody}>
+                <span className={styles.stepTag}>Agenda destacada</span>
+                <strong className={styles.stepEntityName}>
+                  {selectedActivity.title}
+                </strong>
+                <p className={styles.stepMeta}>
+                  <time>{selectedActivity.time} hs</time> ·{" "}
+                  {selectedActivity.durationMinutes} min de duración
+                </p>
+                <p className={styles.stepDescription}>
+                  {selectedActivity.description}
+                </p>
+                <Link className={styles.stepLink} to={routePaths.agenda}>
+                  Consultar agenda completa{" "}
+                  <ArrowRight aria-hidden="true" size={16} />
+                </Link>
+              </div>
+            </article>
+
+            {/* Paso 3: Dónde encontrarlo */}
+            <article className={styles.journeyStep}>
+              <div className={styles.stepHeader}>
+                <span className={styles.stepNumber}>Paso 3</span>
+                <h4>Dónde encontrarlo</h4>
+              </div>
+              <div className={styles.stepBody}>
+                <span className={styles.stepTag}>Ubicación en predio</span>
+                <strong className={styles.stepEntityName}>
+                  {selectedZone
+                    ? selectedZone.label
+                    : selectedActivity.location}
+                </strong>
+                <p className={styles.stepDescription}>
+                  {selectedZone
+                    ? selectedZone.description
+                    : `Sector ${selectedInterest.sectorName} en Ciudad Cultural.`}
+                </p>
+                <Link
+                  className={styles.stepLink}
+                  to={
+                    selectedZone
+                      ? `${routePaths.map}?zone=${selectedZone.id}`
+                      : routePaths.map
+                  }
+                >
+                  Localizar en el mapa{" "}
+                  <ArrowRight aria-hidden="true" size={16} />
+                </Link>
+              </div>
+            </article>
           </div>
         </div>
-        <section
-          aria-live="polite"
-          aria-labelledby="discovery-route-title"
-          className={styles.discoveryRoute}
-        >
-          <div className={styles.routeHeading}>
-            <p className={styles.sectionLabel}>Ruta de descubrimiento</p>
-            <h3 id="discovery-route-title">{selectedSector.name}</h3>
-            <p>{selectedSector.description}</p>
-          </div>
-          <p className={styles.routeIntro}>
-            Tu interés por {selectedInterest.label.toLocaleLowerCase()} activa
-            estas conexiones.
-          </p>
-          <div className={styles.routeConnections}>
-            <article className={styles.routeConnection}>
-              <span>Sector</span>
-              <strong>{selectedSector.name}</strong>
-              <p>{selectedSector.description}</p>
-            </article>
-            <article className={styles.routeConnection}>
-              <span>Protagonista</span>
-              <strong>{selectedExhibitor.name}</strong>
-              <p>{selectedExhibitor.description}</p>
-              <Link
-                className={styles.connectionAction}
-                to={`${routePaths.exhibitors}?actor=${selectedExhibitor.id}`}
-              >
-                Ver {selectedExhibitor.name} en Expositores
-              </Link>
-            </article>
-            <article className={styles.routeConnection}>
-              <span>Actividad relacionada</span>
-              <strong>{selectedActivity.title}</strong>
-              <p>{selectedActivity.description}</p>
-            </article>
-          </div>
-          <div className={styles.relatedInterests}>
-            <p>También se conecta con</p>
-            <ul>
-              {relatedInterests.map((interest) => (
-                <li key={interest.id}>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedSectorId(interest.sectorId)}
-                  >
-                    {interest.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
       </section>
 
       <section aria-labelledby="exhibitors-title">
