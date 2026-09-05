@@ -27,14 +27,25 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
   const [selectedInterestId, setSelectedInterestId] = useState(
     demoInterests[0].id,
   );
+  const [activeActorIdByInterest, setActiveActorIdByInterest] = useState<
+    Record<string, string>
+  >({});
+
   const selectedInterest =
     demoInterests.find((interest) => interest.id === selectedInterestId) ??
     demoInterests[0];
 
+  const sectorExhibitors = demoExhibitors.filter(
+    (exhibitor) => exhibitor.sectorId === selectedInterest.sectorId,
+  );
+
+  const currentActorId =
+    activeActorIdByInterest[selectedInterest.id] ??
+    selectedInterest.highlightActorId;
+
   const selectedExhibitor =
-    demoExhibitors.find(
-      (exhibitor) => exhibitor.id === selectedInterest.highlightActorId,
-    ) ?? demoExhibitors[0];
+    demoExhibitors.find((exhibitor) => exhibitor.id === currentActorId) ??
+    demoExhibitors[0];
 
   const selectedActivity =
     demoAgenda.find(
@@ -42,7 +53,7 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
     ) ?? demoAgenda[0];
 
   const selectedZone = venueMapZones.find(
-    (zone) => zone.id === selectedInterest.venueZoneId,
+    (zone) => zone.id === selectedExhibitor.venueZoneId,
   );
 
   return (
@@ -164,6 +175,40 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
                 <h4>Quién te espera</h4>
               </div>
               <div className={styles.stepBody}>
+                {sectorExhibitors.length > 1 && (
+                  <div
+                    className={styles.actorSwitcher}
+                    role="group"
+                    aria-label="Referentes disponibles del sector"
+                  >
+                    <span className={styles.switcherLabel}>
+                      Referentes del sector:
+                    </span>
+                    <div className={styles.actorChips}>
+                      {sectorExhibitors.map((exhibitor) => {
+                        const isActorSelected =
+                          exhibitor.id === selectedExhibitor.id;
+                        return (
+                          <button
+                            key={exhibitor.id}
+                            type="button"
+                            aria-pressed={isActorSelected}
+                            className={styles.actorChip}
+                            data-active={isActorSelected || undefined}
+                            onClick={() =>
+                              setActiveActorIdByInterest((prev) => ({
+                                ...prev,
+                                [selectedInterest.id]: exhibitor.id,
+                              }))
+                            }
+                          >
+                            {exhibitor.name}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
                 <span className={styles.stepTag}>
                   {selectedExhibitor.category}
                 </span>
@@ -173,13 +218,21 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
                 <p className={styles.stepDescription}>
                   {selectedExhibitor.description}
                 </p>
-                <Link
-                  className={styles.stepLink}
-                  to={`${routePaths.exhibitors}?actor=${selectedExhibitor.id}`}
-                >
-                  Ver {selectedExhibitor.name} en Expositores{" "}
-                  <ArrowRight aria-hidden="true" size={16} />
-                </Link>
+                <div className={styles.stepActionsCol}>
+                  <Link
+                    className={styles.stepLink}
+                    to={`${routePaths.exhibitors}?actor=${selectedExhibitor.id}`}
+                  >
+                    Ver {selectedExhibitor.name} en Expositores{" "}
+                    <ArrowRight aria-hidden="true" size={16} />
+                  </Link>
+                  <Link
+                    className={styles.sectorAllLink}
+                    to={`${routePaths.exhibitors}?sector=${selectedInterest.sectorId}`}
+                  >
+                    Ver los {sectorExhibitors.length} expositores del sector →
+                  </Link>
+                </div>
               </div>
             </article>
 

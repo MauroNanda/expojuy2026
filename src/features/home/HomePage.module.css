@@ -308,13 +308,71 @@ p {
   gap: var(--space-2xs);
   align-items: center;
   width: fit-content;
-  margin-top: auto;
   color: var(--color-brand-indigo);
   font-size: 0.9375rem;
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
 }
 .stepLink:hover {
+  color: var(--color-brand-violet);
+  text-decoration: underline;
+}
+.actorSwitcher {
+  display: grid;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-xs);
+}
+.switcherLabel {
+  color: var(--color-brand-indigo);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.actorChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+.actorChip {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--color-neutral);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.actorChip:hover {
+  border-color: var(--color-brand-indigo);
+  background: color-mix(
+    in srgb,
+    var(--color-brand-lilac) 18%,
+    var(--color-surface)
+  );
+}
+.actorChip[data-active="true"] {
+  border-color: var(--color-brand-indigo);
+  background: var(--color-brand-indigo);
+  color: var(--color-surface);
+}
+.stepActionsCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: auto;
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-neutral);
+}
+.sectorAllLink {
+  color: var(--color-brand-indigo);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+.sectorAllLink:hover {
   color: var(--color-brand-violet);
   text-decoration: underline;
 }

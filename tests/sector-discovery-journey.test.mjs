@@ -88,3 +88,21 @@ test("presenta la ficha de recorrido sugerido en 3 pasos con enlaces directos", 
   assert.match(home, /Dónde encontrarlo/);
   assert.match(home, /\?zone=\$\{selectedZone\.id\}/);
 });
+
+test("permite alternar entre los referentes del sector y enlazar a todos los expositores del sector", async () => {
+  const home = await readProjectFile("src/features/home/HomePage.tsx");
+  const homeCss = await readProjectFile(
+    "src/features/home/HomePage.module.css",
+  );
+
+  assert.match(home, /Referentes del sector:/);
+  assert.match(home, /actorChips/);
+  assert.match(home, /actorChip/);
+  assert.match(home, /Ver los \{sectorExhibitors\.length\} expositores/);
+  assert.match(
+    home,
+    /routePaths\.exhibitors\}\?sector=\$\{selectedInterest\.sectorId\}/,
+  );
+  assert.match(homeCss, /\.actorSwitcher/);
+  assert.match(homeCss, /\.actorChip/);
+});
