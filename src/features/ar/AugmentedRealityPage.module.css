@@ -122,6 +122,39 @@
   width: 100%;
 }
 
+.arViewport {
+  background: black;
+  height: min(79vw, 24rem);
+  width: min(79vw, 24rem);
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 0 0 0.75rem color-mix(in srgb, white 12%, transparent),
+    0 1.5rem 4rem rgb(0 0 0 / 35%);
+}
+
+.arViewport video,
+.arViewport canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+}
+
+.arViewport > a-scene,
+.arViewport > a-scene canvas {
+  height: 100% !important;
+  inset: 0;
+  position: absolute;
+  width: 100% !important;
+}
+
+.arViewport > a-scene {
+  z-index: 1;
+}
+
 .frame {
   border: 2px solid var(--ar-cyan);
   box-shadow:
@@ -216,6 +249,33 @@
 .videoFallback button:hover {
   background: white;
   transform: translateY(-0.12rem);
+}
+
+.modeActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.secondaryAction {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--ar-cyan);
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  gap: 0.55rem;
+  justify-content: center;
+  padding: 0.8rem 1rem;
+  width: fit-content;
+  transition: all 0.2s ease;
+}
+
+.secondaryAction:hover {
+  background: color-mix(in srgb, var(--ar-cyan) 15%, transparent);
 }
 
 .videoActions {
