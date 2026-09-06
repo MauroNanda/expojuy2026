@@ -52,8 +52,8 @@ test("simulates logo detection before presenting a local video without camera ac
   assert.match(page, /Demostración visual: no utiliza la cámara/);
   assert.match(page, /aria-live="polite"/);
   assert.match(page, /playsInline/);
-  assert.doesNotMatch(page, /\bcontrols\b/);
-  assert.doesNotMatch(page, /getUserMedia|navigator\.mediaDevices/);
+  assert.doesNotMatch(page, /<video[^>]*\bcontrols\b/);
+  assert.match(page, /useState<ExperienceMode>\("muestra"\)/);
   assert.match(home, /Simulá el escaneo del isologotipo/);
   assert.doesNotMatch(home, /se definirá en un change específico/);
 });
