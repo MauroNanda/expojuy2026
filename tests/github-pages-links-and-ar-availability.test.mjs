@@ -1,0 +1,45 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+
+const appRoot = new URL("../", import.meta.url);
+
+test("usa la base de Vite para resolver rutas del router", async () => {
+  const main = await readFile(new URL("src/main.tsx", appRoot), "utf8");
+
+  assert.match(main, /<BrowserRouter basename=\{import\.meta\.env\.BASE_URL\}>/);
+});
+
+test("conserva las anclas dentro de la base pública del proyecto", async () => {
+  const navigation = await readFile(
+    new URL("src/navigation/Navigation.tsx", appRoot),
+    "utf8",
+  );
+
+  assert.doesNotMatch(navigation, /href=\{`\/#\$\{/);
+  assert.match(navigation, /to=\{\{ pathname: "\/", hash: `#\$\{anchor\}` \}\}/);
+  assert.match(
+    navigation,
+    /to=\{\{ pathname: "\/", hash: `#\$\{homeAnchors\.sponsors\}` \}\}/,
+  );
+});
+
+test("mantiene los accesos a RA e inhabilita solo la cámara real", async () => {
+  const navigation = await readFile(
+    new URL("src/navigation/Navigation.tsx", appRoot),
+    "utf8",
+  );
+  const home = await readFile(
+    new URL("src/features/home/HomePage.tsx", appRoot),
+    "utf8",
+  );
+  const arPage = await readFile(
+    new URL("src/features/ar/AugmentedRealityPage.tsx", appRoot),
+    "utf8",
+  );
+
+  assert.match(navigation, /<Link onClick=\{closeMenu\} to=\{path\}>/);
+  assert.match(home, /to=\{routePaths\.realityAugmented\}/);
+  assert.match(arPage, /disabled/);
+  assert.match(arPage, /Cámara real temporalmente no disponible/);
+});

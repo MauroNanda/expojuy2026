@@ -339,14 +339,12 @@ export function AugmentedRealityPage() {
                 <ScanLine aria-hidden="true" size={19} /> Iniciar demostración
               </button>
               <button
+                aria-label="Activar cámara real (temporalmente no disponible)"
                 className={styles.secondaryAction}
+                disabled
                 type="button"
-                onClick={() => {
-                  setMode("camara");
-                  setPhase("scanning");
-                }}
               >
-                <Camera aria-hidden="true" size={19} /> Activar cámara real
+                <Camera aria-hidden="true" size={19} /> Cámara real temporalmente no disponible
               </button>
             </div>
           )}
