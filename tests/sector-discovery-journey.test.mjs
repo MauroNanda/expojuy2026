@@ -27,7 +27,10 @@ test("configura desplazamiento suave accesible y encuadre hacia Sectores", async
     globalCss,
     /@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*?html\s*\{\s*scroll-behavior:\s*auto;/,
   );
-  assert.match(homeCss, /\.home\s+section\s*\{\s*scroll-margin-top:\s*4\.5rem;/);
+  assert.match(
+    homeCss,
+    /\.home\s+section\s*\{\s*scroll-margin-top:\s*var\(--header-offset\);/,
+  );
 });
 
 test("ofrece cuatro intenciones de visita demostrativas vinculadas a la propuesta de valor", () => {

@@ -3,7 +3,7 @@
   gap: clamp(3.5rem, 8vw, 6rem);
 }
 .home section {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: var(--header-offset);
 }
 .hero {
   display: grid;
