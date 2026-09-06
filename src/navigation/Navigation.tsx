@@ -2,11 +2,14 @@ import {
   CalendarDays,
   ChevronDown,
   MapPinned,
+  Menu,
   Newspaper,
   ScanLine,
   Store,
   Ticket,
+  X,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { homeAnchors, routePaths } from "./routePaths";
@@ -37,49 +40,104 @@ interface NavigationProps {
 }
 
 export function Navigation({ onOpenTickets }: NavigationProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleOpenTickets = () => {
+    closeMenu();
+    onOpenTickets();
+  };
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMenu();
+        menuButtonRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMenuOpen]);
+
   return (
     <nav aria-label="Navegación principal" className={styles.navigation}>
-      <ul className={styles.primaryLinks}>
-        {editorialNavigation.map(({ label, anchor }) => (
-          <li key={anchor}>
-            <a href={`/#${anchor}`}>{label}</a>
-          </li>
-        ))}
-        {discoveryNavigation.map(({ label, path }) => (
-          <li key={path}>
-            <Link to={path}>{label}</Link>
-          </li>
-        ))}
-      </ul>
-      <ul aria-label="Planificar visita" className={styles.visitLinks}>
-        {visitNavigation.map(({ label, icon: Icon, path }) => (
-          <li key={path}>
-            <Link to={path}>
-              <Icon aria-hidden="true" size={16} strokeWidth={1.8} />
-              <span>{label}</span>
-            </Link>
-          </li>
-        ))}
-        <li>
-          <button type="button" onClick={onOpenTickets}>
-            <Ticket aria-hidden="true" size={16} strokeWidth={1.8} />
-            <span>Entradas</span>
-          </button>
-        </li>
-      </ul>
-      <details className={styles.moreLinks}>
-        <summary>
-          Más <ChevronDown aria-hidden="true" size={15} strokeWidth={2} />
-        </summary>
-        <ul>
+      <button
+        aria-controls="mobile-navigation-panel"
+        aria-expanded={isMenuOpen}
+        aria-label={
+          isMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"
+        }
+        className={styles.menuToggle}
+        onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
+        ref={menuButtonRef}
+        type="button"
+      >
+        {isMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+      </button>
+      <div
+        className={styles.navigationPanel}
+        data-open={isMenuOpen}
+        id="mobile-navigation-panel"
+      >
+        <ul className={styles.primaryLinks}>
+          {editorialNavigation.map(({ label, anchor }) => (
+            <li key={anchor}>
+              <a href={`/#${anchor}`} onClick={closeMenu}>
+                {label}
+              </a>
+            </li>
+          ))}
+          {discoveryNavigation.map(({ label, path }) => (
+            <li key={path}>
+              <Link onClick={closeMenu} to={path}>
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <ul aria-label="Planificar visita" className={styles.visitLinks}>
+          {visitNavigation.map(({ label, icon: Icon, path }) => (
+            <li key={path}>
+              <Link onClick={closeMenu} to={path}>
+                <Icon aria-hidden="true" size={16} strokeWidth={1.8} />
+                <span>{label}</span>
+              </Link>
+            </li>
+          ))}
           <li>
-            <a href={`/#${homeAnchors.sponsors}`}>Sponsors</a>
-          </li>
-          <li>
-            <a href={`/#${homeAnchors.contact}`}>Contacto</a>
+            <button type="button" onClick={handleOpenTickets}>
+              <Ticket aria-hidden="true" size={16} strokeWidth={1.8} />
+              <span>Entradas</span>
+            </button>
           </li>
         </ul>
-      </details>
+        <details className={styles.moreLinks}>
+          <summary>
+            Más <ChevronDown aria-hidden="true" size={15} strokeWidth={2} />
+          </summary>
+          <ul>
+            <li>
+              <a href={`/#${homeAnchors.sponsors}`} onClick={closeMenu}>
+                Sponsors
+              </a>
+            </li>
+            <li>
+              <a href={`/#${homeAnchors.contact}`} onClick={closeMenu}>
+                Contacto
+              </a>
+            </li>
+          </ul>
+        </details>
+      </div>
     </nav>
   );
 }

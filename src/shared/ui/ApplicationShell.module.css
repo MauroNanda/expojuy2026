@@ -1,4 +1,8 @@
 .shell {
+  --header-offset: calc(
+    clamp(2.5rem, 6vw, 3.25rem) +
+      (2 * clamp(var(--space-sm), 2vw, var(--space-md))) + var(--space-xs)
+  );
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100dvh;
@@ -8,6 +12,9 @@
   border-bottom: 1px solid
     color-mix(in srgb, var(--color-neutral) 65%, transparent);
   background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
 .main,
@@ -20,6 +27,8 @@
   width: min(100% - 2rem, 75rem);
   margin-inline: auto;
   display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   gap: var(--space-md);
   padding-block: clamp(var(--space-sm), 2vw, var(--space-md));
 }
