@@ -91,9 +91,12 @@ export function Navigation({ onOpenTickets }: NavigationProps) {
         <ul className={styles.primaryLinks}>
           {editorialNavigation.map(({ label, anchor }) => (
             <li key={anchor}>
-              <a href={`/#${anchor}`} onClick={closeMenu}>
+              <Link
+                onClick={closeMenu}
+                to={{ pathname: "/", hash: `#${anchor}` }}
+              >
                 {label}
-              </a>
+              </Link>
             </li>
           ))}
           {discoveryNavigation.map(({ label, path }) => (
@@ -126,14 +129,20 @@ export function Navigation({ onOpenTickets }: NavigationProps) {
           </summary>
           <ul>
             <li>
-              <a href={`/#${homeAnchors.sponsors}`} onClick={closeMenu}>
+              <Link
+                onClick={closeMenu}
+                to={{ pathname: "/", hash: `#${homeAnchors.sponsors}` }}
+              >
                 Sponsors
-              </a>
+              </Link>
             </li>
             <li>
-              <a href={`/#${homeAnchors.contact}`} onClick={closeMenu}>
+              <Link
+                onClick={closeMenu}
+                to={{ pathname: "/", hash: `#${homeAnchors.contact}` }}
+              >
                 Contacto
-              </a>
+              </Link>
             </li>
           </ul>
         </details>
