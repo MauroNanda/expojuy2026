@@ -2,6 +2,7 @@ import { Camera, Pause, Play, RotateCcw, ScanLine, Sparkles, X } from "lucide-re
 import { useCallback, useEffect, useRef, useState } from "react";
 
 // Register A-Frame and MindAR components
+import "mind-ar/dist/mindar-image.prod.js";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
 
@@ -94,6 +95,16 @@ export function AugmentedRealityPage() {
     setHasCameraError(false);
     setPhase("idle");
     cleanupCamera();
+  };
+
+  const activateCamera = () => {
+    clearTimers();
+    setHasCameraError(false);
+    setHasVideoError(false);
+    setNeedsManualPlayback(false);
+    setIsVideoPaused(false);
+    setMode("camara");
+    setPhase("scanning");
   };
 
   const startDemo = () => {
@@ -251,6 +262,7 @@ export function AugmentedRealityPage() {
                     src={arDemoVideo}
                     loop={false}
                     crossOrigin="anonymous"
+                    muted
                     playsInline
                     style={{ display: "none" }}
                     onError={() => setHasVideoError(true)}
@@ -260,6 +272,7 @@ export function AugmentedRealityPage() {
                   {/* @ts-expect-error a-scene is a custom element */}
                   <a-scene
                     ref={sceneRef}
+                    embedded
                     mindar-image={`imageTargetSrc: ${arTarget}; autoStart: false; uiLoading: no; uiScanning: no; uiError: no;`}
                     color-space="sRGB"
                     renderer="alpha: true, colorManagement: true, physicallyCorrectLights"
@@ -339,12 +352,11 @@ export function AugmentedRealityPage() {
                 <ScanLine aria-hidden="true" size={19} /> Iniciar demostración
               </button>
               <button
-                aria-label="Activar cámara real (temporalmente no disponible)"
                 className={styles.secondaryAction}
-                disabled
                 type="button"
+                onClick={activateCamera}
               >
-                <Camera aria-hidden="true" size={19} /> Cámara real temporalmente no disponible
+                <Camera aria-hidden="true" size={19} /> Activar cámara real
               </button>
             </div>
           )}
