@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirigiendo a ExpoJuy 2026</title>
+    <script>
+      const redirect = location.pathname + location.search + location.hash;
+      location.replace(`/expojuy2026/?redirect=${encodeURIComponent(redirect)}`);
+    </script>
+  </head>
+  <body></body>
+</html>

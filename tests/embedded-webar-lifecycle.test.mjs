@@ -15,7 +15,7 @@ test("carga el núcleo de MindAR antes de A-Frame y arranca una escena embebida"
   assert.match(page, /system\.controller && stream instanceof MediaStream/);
   assert.match(page, /stream\.getTracks\(\)\.forEach\(\(track\) => track\.stop\(\)\)/);
   assert.match(page, /!window\.isSecureContext \|\| !navigator\.mediaDevices\?\.getUserMedia/);
-  assert.match(page, /renderer="alpha: true, colorManagement: true, physicallyCorrectLights"/);
+  assert.match(page, /renderer="alpha: true; colorManagement: true; physicallyCorrectLights: true"/);
   assert.match(page, /makeMindarStopSafe\(system\);\s*[\s\S]*system\.start\(\)/);
 });
 

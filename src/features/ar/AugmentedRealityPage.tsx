@@ -275,7 +275,7 @@ export function AugmentedRealityPage() {
                     embedded
                     mindar-image={`imageTargetSrc: ${arTarget}; autoStart: false; uiLoading: no; uiScanning: no; uiError: no;`}
                     color-space="sRGB"
-                    renderer="alpha: true, colorManagement: true, physicallyCorrectLights"
+                    renderer="alpha: true; colorManagement: true; physicallyCorrectLights: true"
                     vr-mode-ui="enabled: false"
                     device-orientation-permission-ui="enabled: false"
                   >
