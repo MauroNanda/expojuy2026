@@ -18,3 +18,19 @@ test("carga el núcleo de MindAR antes de A-Frame y arranca una escena embebida"
   assert.match(page, /renderer="alpha: true, colorManagement: true, physicallyCorrectLights"/);
   assert.match(page, /makeMindarStopSafe\(system\);\s*[\s\S]*system\.start\(\)/);
 });
+
+test("mantiene visible el feed que MindAR agrega detrás de la escena", async () => {
+  const stylesheet = await readFile(
+    new URL("src/features/ar/AugmentedRealityPage.module.css", appRoot),
+    "utf8",
+  );
+
+  assert.match(
+    stylesheet,
+    /\.arViewport video,[\s\S]*z-index:\s*0\s*!important/,
+  );
+  assert.match(
+    stylesheet,
+    /\.arViewport > a-scene\s*\{[\s\S]*z-index:\s*1/,
+  );
+});
