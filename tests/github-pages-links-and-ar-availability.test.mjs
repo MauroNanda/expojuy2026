@@ -24,7 +24,7 @@ test("conserva las anclas dentro de la base pública del proyecto", async () => 
   );
 });
 
-test("mantiene los accesos a RA e inhabilita solo la cámara real", async () => {
+test("mantiene los accesos a RA y permite activar la cámara real", async () => {
   const navigation = await readFile(
     new URL("src/navigation/Navigation.tsx", appRoot),
     "utf8",
@@ -40,6 +40,7 @@ test("mantiene los accesos a RA e inhabilita solo la cámara real", async () => 
 
   assert.match(navigation, /<Link onClick=\{closeMenu\} to=\{path\}>/);
   assert.match(home, /to=\{routePaths\.realityAugmented\}/);
-  assert.match(arPage, /disabled/);
-  assert.match(arPage, /Cámara real temporalmente no disponible/);
+  assert.match(arPage, /onClick=\{activateCamera\}/);
+  assert.match(arPage, /Activar cámara real/);
+  assert.doesNotMatch(arPage, /Cámara real temporalmente no disponible/);
 });
