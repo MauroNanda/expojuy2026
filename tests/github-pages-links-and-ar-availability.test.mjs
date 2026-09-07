@@ -10,6 +10,16 @@ test("usa la base de Vite para resolver rutas del router", async () => {
   assert.match(main, /<BrowserRouter basename=\{import\.meta\.env\.BASE_URL\}>/);
 });
 
+test("recupera rutas internas abiertas directamente en GitHub Pages", async () => {
+  const fallback = await readFile(new URL("public/404.html", appRoot), "utf8");
+  const main = await readFile(new URL("src/main.tsx", appRoot), "utf8");
+
+  assert.match(fallback, /location\.pathname \+ location\.search \+ location\.hash/);
+  assert.match(fallback, /location\.replace/);
+  assert.match(main, /new URLSearchParams\(window\.location\.search\)\.get\("redirect"\)/);
+  assert.match(main, /window\.history\.replaceState/);
+});
+
 test("conserva las anclas dentro de la base pública del proyecto", async () => {
   const navigation = await readFile(
     new URL("src/navigation/Navigation.tsx", appRoot),
