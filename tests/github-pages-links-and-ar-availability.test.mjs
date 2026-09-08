@@ -59,3 +59,13 @@ test("mantiene los accesos a RA y permite activar la cámara real", async () => 
   assert.match(arPage, /Activar cámara real/);
   assert.doesNotMatch(arPage, /Cámara real temporalmente no disponible/);
 });
+
+test("mantiene la muestra alineada con el target que reconoce la cámara", async () => {
+  const arPage = await readFile(
+    new URL("src/features/ar/AugmentedRealityPage.tsx", appRoot),
+    "utf8",
+  );
+
+  assert.doesNotMatch(arPage, /assets\/brand\/expojuy26_isologotipo\.png/);
+  assert.match(arPage, /assets\/ar\/expojuy26_isologotipo\.jpg/);
+});
