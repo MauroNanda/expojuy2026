@@ -18,7 +18,7 @@
 
 .control:hover {
   background: var(--color-brand-violet);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
 }
 
 @media (min-width: 64rem) {

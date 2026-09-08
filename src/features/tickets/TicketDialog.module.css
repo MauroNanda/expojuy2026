@@ -37,7 +37,7 @@
   width: fit-content;
   padding: 0.8rem 1rem;
   border: 2px solid var(--color-brand-violet);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
   background: var(--color-brand-violet);
   font: inherit;
   font-weight: var(--font-weight-semibold);

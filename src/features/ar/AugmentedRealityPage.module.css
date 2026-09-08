@@ -1,5 +1,6 @@
 .page {
-  --ar-ink: #10233e;
+  --ar-surface: #10233e;
+  --ar-text: var(--color-ink);
   --ar-cyan: #22bdd2;
   --ar-signal: #df4fff;
   display: grid;
@@ -18,7 +19,7 @@
 }
 
 .intro h1 {
-  color: var(--ar-ink);
+  color: var(--ar-text);
   font-size: clamp(2.5rem, 7vw, 5.5rem);
   letter-spacing: -0.06em;
   line-height: 0.9;
@@ -41,16 +42,17 @@
   background:
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--ar-ink) 96%, black),
-      var(--ar-ink)
+      color-mix(in srgb, var(--ar-surface) 96%, black),
+      var(--ar-surface)
     ),
     radial-gradient(
       circle at 80% 20%,
       color-mix(in srgb, var(--ar-signal) 36%, transparent),
       transparent 28rem
     );
-  box-shadow: 0 1.5rem 3.5rem color-mix(in srgb, var(--ar-ink) 32%, transparent);
-  color: white;
+  box-shadow: 0 1.5rem 3.5rem
+    color-mix(in srgb, var(--ar-surface) 32%, transparent);
+  color: var(--color-on-dark);
   display: grid;
   gap: clamp(1rem, 4vw, 3rem);
   grid-template-columns: 1fr;
@@ -205,7 +207,7 @@
   align-items: center;
   background: var(--ar-cyan);
   border-radius: 999px;
-  color: var(--ar-ink);
+  color: var(--ar-surface);
   display: grid;
   height: 3.4rem;
   justify-items: center;
@@ -236,7 +238,7 @@
   align-items: center;
   background: var(--ar-cyan);
   border: 0;
-  color: var(--ar-ink);
+  color: var(--ar-surface);
   cursor: pointer;
   display: inline-flex;
   font: inherit;
@@ -265,7 +267,7 @@
   align-items: center;
   background: transparent;
   border: 1px solid var(--ar-cyan);
-  color: white;
+  color: var(--color-on-dark);
   cursor: pointer;
   display: inline-flex;
   font: inherit;
@@ -301,12 +303,12 @@
 .videoFallback button {
   background: transparent;
   border: 1px solid color-mix(in srgb, white 76%, transparent);
-  color: white;
+  color: var(--color-on-dark);
 }
 
 .videoFallback {
   border: 1px solid var(--ar-cyan);
-  color: white;
+  color: var(--color-on-dark);
   display: grid;
   gap: var(--space-sm);
   height: 100%;

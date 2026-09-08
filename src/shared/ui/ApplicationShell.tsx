@@ -5,6 +5,7 @@ import headerMark from "../../assets/brand/expojuy26_isologotipo.png";
 import { Navigation } from "../../navigation/Navigation";
 import styles from "./ApplicationShell.module.css";
 import { BackToTop } from "./BackToTop";
+import { useTheme } from "./useTheme";
 
 interface ApplicationShellProps {
   children: ReactNode;
@@ -15,6 +16,8 @@ export function ApplicationShell({
   children,
   onOpenTickets,
 }: ApplicationShellProps) {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <div className={styles.shell}>
       <header className={styles.header}>
@@ -23,7 +26,11 @@ export function ApplicationShell({
             <img alt="" src={headerMark} />
             <span aria-hidden="true">ExpoJuy 2026</span>
           </Link>
-          <Navigation onOpenTickets={onOpenTickets} />
+          <Navigation
+            onOpenTickets={onOpenTickets}
+            onToggleTheme={toggleTheme}
+            theme={theme}
+          />
         </div>
       </header>
       <main className={styles.main}>{children}</main>

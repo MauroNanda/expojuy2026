@@ -73,7 +73,7 @@ p {
   padding: 0.8rem 1rem;
   border: 2px solid var(--color-brand-violet);
   background: var(--color-brand-violet);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
   font: inherit;
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
@@ -161,7 +161,7 @@ p {
   border-color: var(--color-brand-violet);
   border-top-color: var(--color-brand-violet);
   background: var(--color-brand-violet);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
 }
 .intentionCard[data-selected="true"] .intentionBadge {
   background: var(--color-surface);
@@ -356,7 +356,7 @@ p {
 .actorChip[data-active="true"] {
   border-color: var(--color-brand-indigo);
   background: var(--color-brand-indigo);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
 }
 .stepActionsCol {
   display: flex;
@@ -549,9 +549,9 @@ p {
   .polePanel[data-active="true"] .poleDuoToneOverlay {
     background: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.93) 0%,
-      rgba(255, 255, 255, 0.97) 35%,
-      #ffffff 100%
+      color-mix(in srgb, var(--color-surface-raised) 93%, transparent) 0%,
+      color-mix(in srgb, var(--color-surface-raised) 97%, transparent) 35%,
+      var(--color-surface-raised) 100%
     );
   }
   .polePanel[data-active="true"] .polePatternOverlay {
@@ -590,9 +590,9 @@ p {
   .polePanel[data-active="true"] .poleDuoToneOverlay {
     background: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.94) 0%,
-      rgba(255, 255, 255, 0.98) 35%,
-      #ffffff 100%
+      color-mix(in srgb, var(--color-surface-raised) 94%, transparent) 0%,
+      color-mix(in srgb, var(--color-surface-raised) 98%, transparent) 35%,
+      var(--color-surface-raised) 100%
     );
   }
   .polePanel:not([data-active="true"]) .poleDuoToneOverlay {
@@ -1020,8 +1020,8 @@ p {
 }
 .raPanel {
   padding: var(--space-xl);
-  background: var(--color-ink);
-  color: var(--color-surface);
+  background: var(--color-surface-inverse);
+  color: var(--color-on-dark);
 }
 .raPanel svg {
   color: var(--color-brand-cyan);
@@ -1037,7 +1037,7 @@ p {
 }
 .planning {
   padding: var(--space-xl);
-  background: var(--color-brand-lilac);
+  background: var(--color-surface-feature);
 }
 .planningActions {
   display: flex;
@@ -1049,8 +1049,9 @@ p {
   margin: 0;
 }
 .planningActions button {
-  border-color: var(--color-ink);
-  background: var(--color-ink);
+  border-color: var(--color-surface-inverse);
+  background: var(--color-surface-inverse);
+  color: var(--color-on-dark);
 }
 @media (min-width: 64rem) {
   .hero {

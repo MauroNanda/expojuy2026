@@ -72,7 +72,7 @@
 .filters button[aria-pressed="true"] {
   border-color: var(--color-brand-violet);
   background: var(--color-brand-violet);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
 }
 
 .layout {
@@ -209,7 +209,7 @@
 .routeAction {
   border-color: var(--color-brand-violet);
   background: var(--color-brand-violet);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
 }
 
 .routeAction[aria-pressed="true"] {
