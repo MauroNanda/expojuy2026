@@ -33,6 +33,13 @@ export interface DemoAgendaItem {
   /** Hora local de inicio en formato `HH:MM`. */
   time: string;
   title: string;
+  visual: DemoEditorialVisual;
+}
+
+export interface DemoEditorialVisual {
+  alt: string;
+  caption: string;
+  src: string;
 }
 
 export interface DemoInterest {
@@ -82,6 +89,8 @@ export interface OfficialNewsItem {
   source: OfficialNewsSource;
   summary: string;
   title: string;
+  context: string;
+  visual: DemoEditorialVisual;
 }
 
 /**
@@ -457,7 +466,7 @@ export const officialEventPeriod = {
  */
 export const demoAgendaPeriod = {
   certainty: "demonstrative",
-  endDate: "2026-10-11",
+  endDate: "2026-10-12",
   startDate: "2026-10-09",
 } as const satisfies EventPeriod;
 
@@ -529,6 +538,11 @@ export const demoAgendaNotice =
 export const demoAgenda: DemoAgendaItem[] = [
   {
     id: "encuentro-apertura",
+    visual: {
+      src: "/editorial/photos/produccion-local.webp",
+      alt: "Manos acomodan muestras textiles junto a una mesa de encuentro",
+      caption: "Escena conceptual: oficio, producto local y bienvenida.",
+    },
     date: "2026-10-09",
     time: "10:00",
     durationMinutes: 90,
@@ -538,7 +552,28 @@ export const demoAgenda: DemoAgendaItem[] = [
     sectorId: "produccion-local",
   },
   {
+    id: "laboratorio-abierto",
+    visual: {
+      src: "/editorial/photos/tecnologia.webp",
+      alt: "Persona observa una demostración de sensores y materiales sobre una mesa",
+      caption: "Escena conceptual: tecnología aplicada y prototipos locales.",
+    },
+    date: "2026-10-09",
+    time: "15:30",
+    durationMinutes: 75,
+    location: "Predio ferial de demostración · Stands cubiertos",
+    title: "Laboratorio abierto",
+    description:
+      "Actividad demostrativa para observar soluciones y prototipos en acción.",
+    sectorId: "tecnologia-aplicada",
+  },
+  {
     id: "ronda-descubrimiento",
+    visual: {
+      src: "/editorial/photos/tecnologia.webp",
+      alt: "Persona observa una demostración tecnológica junto a materiales sobre una mesa",
+      caption: "Escena conceptual: intercambio de tecnología y proyectos.",
+    },
     date: "2026-10-10",
     time: "14:00",
     durationMinutes: 120,
@@ -548,7 +583,28 @@ export const demoAgenda: DemoAgendaItem[] = [
     sectorId: "tecnologia-aplicada",
   },
   {
+    id: "mesa-de-origen",
+    visual: {
+      src: "/editorial/photos/produccion-local.webp",
+      alt: "Muestras de productos regionales preparadas para una conversación de origen",
+      caption: "Escena conceptual: territorio, oficio y producción local.",
+    },
+    date: "2026-10-10",
+    time: "10:30",
+    durationMinutes: 60,
+    location: "Predio ferial de demostración · Espacio de producción local",
+    title: "Mesa de origen",
+    description:
+      "Actividad demostrativa para conocer saberes y productos nacidos del territorio.",
+    sectorId: "produccion-local",
+  },
+  {
     id: "experiencias-ecosistema",
+    visual: {
+      src: "/editorial/photos/conexiones.webp",
+      alt: "Personas conectan tarjetas de proyectos alrededor de una mesa",
+      caption: "Escena conceptual: conversación y oportunidades compartidas.",
+    },
     date: "2026-10-11",
     time: "17:00",
     durationMinutes: 60,
@@ -556,6 +612,55 @@ export const demoAgenda: DemoAgendaItem[] = [
     title: "Experiencias del ecosistema",
     description:
       "Actividad demostrativa orientada a la vinculación empresarial.",
+    sectorId: "vinculacion-empresarial",
+  },
+  {
+    id: "ronda-de-negocios",
+    visual: {
+      src: "/editorial/photos/conexiones.webp",
+      alt: "Dos personas conversan frente a muestras de proyectos y una libreta de trabajo",
+      caption: "Escena conceptual: conversación empresarial y oportunidades.",
+    },
+    date: "2026-10-11",
+    time: "11:30",
+    durationMinutes: 90,
+    location: "Predio ferial de demostración · Espacio de vinculación",
+    title: "Ronda de negocios",
+    description:
+      "Actividad demostrativa para encontrar puntos de contacto entre proyectos.",
+    sectorId: "vinculacion-empresarial",
+  },
+  {
+    id: "cierre-de-recorrido",
+    visual: {
+      src: "/editorial/photos/conexiones.webp",
+      alt: "Personas comparten impresiones al cierre de un recorrido entre proyectos",
+      caption: "Escena conceptual: síntesis, encuentro y próximos pasos.",
+    },
+    date: "2026-10-12",
+    time: "16:00",
+    durationMinutes: 60,
+    location: "Predio ferial de demostración · Escenario central",
+    title: "Cierre de recorrido",
+    description:
+      "Actividad demostrativa para reunir aprendizajes y conexiones de la visita.",
+    sectorId: "vinculacion-empresarial",
+  },
+  {
+    id: "visita-de-sintesis",
+    visual: {
+      src: "/editorial/photos/produccion-local.webp",
+      alt: "Muestras regionales reunidas sobre una mesa para sintetizar la visita",
+      caption:
+        "Escena conceptual: aprendizajes que continúan después de la Expo.",
+    },
+    date: "2026-10-12",
+    time: "18:00",
+    durationMinutes: 45,
+    location: "Predio ferial de demostración · Espacio de vinculación",
+    title: "Visita de síntesis",
+    description:
+      "Actividad demostrativa para ordenar hallazgos y próximos contactos.",
     sectorId: "vinculacion-empresarial",
   },
 ];
@@ -577,6 +682,14 @@ export const officialNews: OfficialNewsItem[] = [
     summary:
       "El gobernador Carlos Sadir presentó ExpoJuy 2026 en Buenos Aires junto a la Cámara de Comercio Exterior de Jujuy, con la presencia de diplomáticos de Brasil, Paraguay, Chile, Bolivia, Perú y Uruguay.",
     title: "Lanzamiento nacional de ExpoJuy 2026 en Buenos Aires",
+    context:
+      "La presentación nacional ayuda a entender por qué la Expo reúne producción local, tecnología y vínculos comerciales en una misma visita.",
+    visual: {
+      src: "/editorial/photos/conexiones.webp",
+      alt: "Composición editorial de una invitación institucional y una mesa de encuentro",
+      caption:
+        "Escena conceptual generada con IA; no es una fotografía del lanzamiento.",
+    },
   },
   {
     id: "fecha-y-sede-confirmadas",
@@ -589,6 +702,14 @@ export const officialNews: OfficialNewsItem[] = [
     summary:
       "La muestra se concentra en cuatro jornadas en la Ciudad Cultural, con rondas de negocios por la mañana y exposición comercial por la tarde.",
     title: "ExpoJuy 2026 confirma fecha y sede",
+    context:
+      "Con la fecha y la sede identificadas, el visitante puede empezar a ordenar su recorrido y consultar la agenda demostrativa.",
+    visual: {
+      src: "/editorial/photos/produccion-local.webp",
+      alt: "Calendario editorial con cuatro marcas de jornada y una entrada",
+      caption:
+        "Escena conceptual generada con IA; no es una fotografía del predio.",
+    },
   },
   {
     id: "eje-corredor-bioceanico",
@@ -601,6 +722,14 @@ export const officialNews: OfficialNewsItem[] = [
     summary:
       "La 17° edición organiza sus rondas de negocios internacionales alrededor del Corredor Bioceánico, con participación de Argentina, Chile, Paraguay y Brasil.",
     title: "La edición 2026 se enfoca en el Corredor Bioceánico",
+    context:
+      "El eje bioceánico aporta una puerta de entrada para explorar sectores, territorios y relaciones productivas que atraviesan la muestra.",
+    visual: {
+      src: "/editorial/photos/tecnologia.webp",
+      alt: "Líneas editoriales unen puertos, rutas y una cordillera estilizada",
+      caption:
+        "Escena conceptual generada con IA; no representa un mapa operativo.",
+    },
   },
 ];
 

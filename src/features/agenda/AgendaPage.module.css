@@ -13,90 +13,16 @@
   font-size: clamp(2.5rem, 8vw, 5rem);
   letter-spacing: -0.05em;
 }
-.eyebrow {
+.eyebrow,
+.kicker {
   color: var(--color-brand-indigo);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
 }
-
-.day {
-  margin-top: var(--space-md);
-  color: var(--color-brand-indigo);
-  font-size: 1.125rem;
-  text-transform: capitalize;
+.lead {
+  max-width: 58ch;
+  font-size: 1.15rem;
 }
-.activityList {
-  display: grid;
-  gap: var(--space-sm);
-  padding: 0;
-  margin: var(--space-sm) 0 0;
-  list-style: none;
-}
-.activity {
-  display: grid;
-  gap: var(--space-sm);
-  padding: var(--space-md);
-  border: 1px solid var(--color-neutral);
-}
-
-.activityText {
-  display: grid;
-  gap: var(--space-2xs);
-}
-.activityTime {
-  display: flex;
-  gap: var(--space-xs);
-  align-items: baseline;
-  color: var(--color-brand-indigo);
-  font-weight: var(--font-weight-semibold);
-}
-.duration {
-  color: var(--color-ink);
-  font-size: 0.8125rem;
-  font-weight: var(--font-weight-regular);
-}
-.activityTitle {
-  font-size: 1.125rem;
-  font-weight: var(--font-weight-semibold);
-}
-.activityMeta,
-.activityDescription {
-  font-size: 0.875rem;
-}
-.activityMeta {
-  color: var(--color-brand-violet);
-  font-weight: var(--font-weight-semibold);
-}
-
-.scheduleAction {
-  display: inline-flex;
-  gap: var(--space-xs);
-  align-items: center;
-  justify-content: center;
-  justify-self: start;
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-brand-violet);
-  background: var(--color-brand-violet);
-  color: var(--color-on-brand);
-  font-weight: var(--font-weight-semibold);
-  text-decoration: none;
-}
-.scheduleAction:hover {
-  border-color: var(--color-brand-indigo);
-  background: var(--color-brand-indigo);
-  color: var(--color-on-brand);
-}
-.scheduleAction svg {
-  flex: none;
-}
-
-@media (min-width: 48rem) {
-  .activity {
-    grid-template-columns: 1fr auto;
-    align-items: center;
-  }
-}
-
 .confirmedPeriod {
   display: flex;
   flex-wrap: wrap;
@@ -111,9 +37,198 @@
   color: var(--color-brand-violet);
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 .confirmedPeriod span:last-child {
   color: var(--color-ink);
   font-weight: var(--font-weight-regular);
+}
+.daySelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  padding-block: var(--space-sm);
+  border-block: 1px solid var(--color-neutral);
+}
+.dayButton,
+.dayButtonActive {
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-brand-indigo);
+  background: transparent;
+  color: var(--color-brand-indigo);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-transform: capitalize;
+  cursor: pointer;
+}
+.dayButtonActive {
+  background: var(--color-brand-indigo);
+  color: var(--color-on-brand);
+}
+.timeline {
+  display: grid;
+  gap: var(--space-xl);
+}
+.dayGroup {
+  display: grid;
+  gap: var(--space-sm);
+}
+.day {
+  color: var(--color-brand-indigo);
+  font-size: 1.2rem;
+  text-transform: capitalize;
+}
+.activityList {
+  display: grid;
+  gap: var(--space-md);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.activity {
+  display: grid;
+  grid-template-columns: 5.25rem minmax(0, 1fr) minmax(10rem, 25%);
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-top: 1px solid var(--color-neutral);
+}
+.activityTime {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2xs);
+  color: var(--color-brand-violet);
+  font-weight: var(--font-weight-bold);
+  font-size: 1.35rem;
+}
+.activityTime span {
+  color: var(--color-ink);
+  font-size: 0.78rem;
+  font-weight: var(--font-weight-regular);
+}
+.scene {
+  margin: 0;
+  grid-column: 3;
+  grid-row: 1;
+  align-self: start;
+}
+.scene img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.scene figcaption {
+  padding-top: var(--space-2xs);
+  font-size: 0.75rem;
+  color: var(--color-ink);
+}
+.activityContent {
+  display: grid;
+  align-content: start;
+  gap: var(--space-xs);
+  grid-column: 2;
+  grid-row: 1;
+}
+.activityContent h3 {
+  font-size: 1.4rem;
+}
+.activityDescription {
+  max-width: 50ch;
+}
+.activityMeta {
+  font-size: 0.9rem;
+}
+.activityMeta strong {
+  color: var(--color-brand-violet);
+}
+.detailButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-brand-indigo);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.details {
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  border-left: 3px solid var(--color-brand-lilac);
+  background: color-mix(
+    in srgb,
+    var(--color-brand-lilac) 14%,
+    var(--color-surface)
+  );
+}
+.details[hidden] {
+  display: none;
+}
+.related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.related span {
+  width: 100%;
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+}
+.related a,
+.secondaryAction {
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  align-items: center;
+}
+.scheduleAction {
+  display: inline-flex;
+  gap: var(--space-xs);
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-brand-violet);
+  color: var(--color-on-brand);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+.secondaryAction {
+  display: inline-flex;
+  gap: var(--space-2xs);
+  align-items: center;
+}
+.empty {
+  padding: var(--space-md);
+  border: 1px dashed var(--color-neutral);
+}
+@media (max-width: 48rem) {
+  .activity {
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: var(--space-sm);
+  }
+  .scene {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .activityContent {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .activityContent h3 {
+    font-size: 1.25rem;
+  }
+  .dayButton,
+  .dayButtonActive {
+    flex: 1;
+    min-width: 8rem;
+  }
 }

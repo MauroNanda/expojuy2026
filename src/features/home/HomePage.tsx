@@ -51,6 +51,17 @@ function getPoleImage(theme: DemoPole["theme"]) {
       return poloVallesImg;
   }
 }
+const homeDateFormatter = new Intl.DateTimeFormat("es-AR", {
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+});
+const featuredAgenda = [...demoAgenda]
+  .sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`))
+  .filter(
+    (item, index, items) =>
+      index === items.findIndex((candidate) => candidate.date === item.date),
+  );
 
 export function HomePage({ onOpenTickets }: HomePageProps) {
   const [activePoleId, setActivePoleId] = useState<string>(demoPoles[0].id);
@@ -509,10 +520,27 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
           <h2>Momentos para compartir</h2>
           <DemoNotice />
           <ul className={styles.agendaList}>
-            {demoAgenda.map((item) => (
-              <li key={item.time}>
-                <time>{item.time}</time>
-                <span>{item.title}</span>
+            {featuredAgenda.map((item) => (
+              <li key={item.id}>
+                <img
+                  className={styles.agendaThumb}
+                  src={`${import.meta.env.BASE_URL}${item.visual.src.replace(/^\//, "")}`}
+                  alt=""
+                  width="1536"
+                  height="1024"
+                  loading="lazy"
+                />
+                <time dateTime={`${item.date}T${item.time}`}>
+                  <span className={styles.agendaDate}>
+                    {homeDateFormatter.format(
+                      new Date(`${item.date}T00:00:00Z`),
+                    )}
+                  </span>
+                  {item.time}
+                </time>
+                <Link to={`${routePaths.agenda}?day=${item.date}#${item.id}`}>
+                  {item.title}
+                </Link>
               </li>
             ))}
           </ul>
@@ -544,10 +572,25 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         <ul className={styles.newsList}>
           {officialNews.slice(0, 2).map((news) => (
             <li key={news.id}>
-              <h3>{news.title}</h3>
+              <img
+                className={styles.newsThumb}
+                src={`${import.meta.env.BASE_URL}${news.visual.src.replace(/^\//, "")}`}
+                alt=""
+                width="1536"
+                height="1024"
+                loading="lazy"
+              />
+              <h3>
+                <Link to={`${routePaths.news}#news-${news.id}`}>
+                  {news.title}
+                </Link>
+              </h3>
               <p>{news.summary}</p>
               <p className={styles.newsSource}>
-                Publicado por {news.source.name}
+                Imagen conceptual generada con IA; no es una foto del hecho.
+              </p>
+              <p className={styles.newsDate}>
+                {news.publishedDate} · {news.source.name}
               </p>
             </li>
           ))}

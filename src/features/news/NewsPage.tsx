@@ -1,5 +1,4 @@
 import { ArrowUpRight } from "lucide-react";
-
 import {
   officialChannels,
   officialNews,
@@ -13,71 +12,90 @@ const dateFormatter = new Intl.DateTimeFormat("es-AR", {
   year: "numeric",
   timeZone: "UTC",
 });
-
-/**
- * Las fechas se interpretan en UTC para que el día publicado no se desplace
- * según la zona horaria del dispositivo.
- */
 function formatDate(isoDate: string) {
   return dateFormatter.format(new Date(`${isoDate}T00:00:00Z`));
 }
 
-function NewsArticle({ item }: { item: OfficialNewsItem }) {
+function NewsArticle({
+  item,
+  featured = false,
+}: {
+  item: OfficialNewsItem;
+  featured?: boolean;
+}) {
   const titleId = `news-${item.id}`;
-
   return (
-    <article aria-labelledby={titleId} className={styles.article}>
-      <p className={styles.date}>
-        <time dateTime={item.publishedDate}>
-          {formatDate(item.publishedDate)}
-        </time>
-      </p>
-      <h2 id={titleId}>{item.title}</h2>
-      <p className={styles.summary}>{item.summary}</p>
-      <p className={styles.source}>
-        <span>Publicado por {item.source.name}</span>
-        <a href={item.source.url} rel="noreferrer" target="_blank">
-          Leer la publicación de origen
-          <span className={styles.visuallyHidden}>
-            {` de “${item.title}”. Se abre en un sitio externo.`}
-          </span>
-          <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.8} />
-        </a>
-      </p>
-      <p className={styles.retrieved}>
-        Consultado el {formatDate(item.retrievedDate)}
-      </p>
+    <article
+      id={item.id}
+      aria-labelledby={titleId}
+      className={featured ? styles.featuredArticle : styles.article}
+    >
+      {featured && (
+        <figure className={styles.visual}>
+          <img
+            src={`${import.meta.env.BASE_URL}${item.visual.src.replace(/^\//, "")}`}
+            alt={item.visual.alt}
+            width="1536"
+            height="1024"
+            loading={featured ? "eager" : "lazy"}
+          />
+          <figcaption>{item.visual.caption}</figcaption>
+        </figure>
+      )}
+      <div className={styles.articleContent}>
+        <p className={styles.date}>
+          <time dateTime={item.publishedDate}>
+            {formatDate(item.publishedDate)}
+          </time>
+        </p>
+        <h2 id={titleId}>{item.title}</h2>
+        <p className={styles.summary}>{item.summary}</p>
+        <p className={styles.context}>{item.context}</p>
+        <p className={styles.source}>
+          <span>Fuente:</span>
+          <a href={item.source.url} rel="noreferrer" target="_blank">
+            {item.source.name} <ArrowUpRight aria-hidden="true" size={15} />
+            <span className={styles.visuallyHidden}>
+              de “{item.title}”. Se abre en un sitio externo.
+            </span>
+          </a>
+        </p>
+        <p className={styles.retrieved}>
+          Consultado el {formatDate(item.retrievedDate)}
+        </p>
+      </div>
     </article>
   );
 }
 
 export function NewsPage() {
+  const [featured, ...rest] = [...officialNews].sort((a, b) =>
+    b.publishedDate.localeCompare(a.publishedDate),
+  );
   return (
     <div className={styles.page} role="region" aria-labelledby="news-page-name">
       <header className={styles.header}>
         <p id="news-page-name" className={styles.sectionLabel}>
           Noticias
         </p>
-        <h1>Novedades de ExpoJuy 2026</h1>
+        <h1>La Expo toma forma</h1>
         <p className={styles.intro}>
-          Una selección de novedades publicadas sobre la Expo. Cada una enlaza a
-          su publicación de origen para que puedas verificarla.
+          Una lectura editorial de novedades publicadas sobre ExpoJuy: qué
+          ocurrió, por qué importa y dónde verificarlo.
         </p>
       </header>
-
-      {officialNews.length > 0 ? (
+      {featured ? (
         <div className={styles.articles}>
-          {officialNews.map((item) => (
+          <NewsArticle item={featured} featured />
+          {rest.map((item) => (
             <NewsArticle key={item.id} item={item} />
           ))}
         </div>
       ) : (
         <p className={styles.empty}>
-          Todavía no hay novedades incorporadas a este prototipo. Las
-          actualizaciones se publican en los canales oficiales.
+          Todavía no hay novedades incorporadas. Consultá los canales oficiales.
         </p>
       )}
-
       <section
         id="canales-oficiales"
         aria-labelledby="channels-title"
@@ -94,10 +112,7 @@ export function NewsPage() {
             <li key={channel.url}>
               <a href={channel.url} rel="noreferrer" target="_blank">
                 {channel.name}
-                <span className={styles.visuallyHidden}>
-                  . Se abre en un sitio externo.
-                </span>
-                <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.8} />
+                <ArrowUpRight aria-hidden="true" size={15} />
               </a>
             </li>
           ))}

@@ -6,7 +6,11 @@ Las herramientas de inteligencia artificial pueden utilizarse como apoyo para in
 
 Codex asistió en investigación de referencias, implementación React/CSS modular, documentación OpenSpec y pruebas con Playwright. La skill frontend-design orientó jerarquía, equilibrio óptico e iconografía. El equipo validó visualmente la entrega. Los logos son recursos de referencia, no generados por IA; su procedencia y límites constan en `src/assets/sponsors/README.md`.
 
-## Criterios de revisión
+## Registro de entrega: Agenda y Noticias
+
+GPT-5.6 Luna implementa la revisión fotográfica compacta en React y CSS Modules. Las guías frontend-design y web-development orientan la conservación de Ambit, tokens y accesibilidad existentes. La herramienta integrada image_gen genera tres fotografías ilustrativas originales; las escenas y prompts constan en `recursos-editoriales.md`. No representan hechos periodísticos ni programación oficial. Se comprueban filtros, teclado y vistas móviles y de escritorio en ambos temas.
+
+## Criterios generales
 
 - Toda salida generada debe recibir revisión humana antes de incorporarse.
 - Las herramientas usadas y su finalidad deben registrarse cuando formen parte de una entrega.
