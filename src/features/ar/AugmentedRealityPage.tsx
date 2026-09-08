@@ -1,4 +1,12 @@
-import { Camera, Pause, Play, RotateCcw, ScanLine, Sparkles, X } from "lucide-react";
+import {
+  Camera,
+  Pause,
+  Play,
+  RotateCcw,
+  ScanLine,
+  Sparkles,
+  X,
+} from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 // Register A-Frame and MindAR components
@@ -67,7 +75,7 @@ export function AugmentedRealityPage() {
   const [hasCameraError, setHasCameraError] = useState(false);
   const [isAudioPlaybackBlocked, setIsAudioPlaybackBlocked] = useState(false);
   const [isVideoPaused, setIsVideoPaused] = useState(false);
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const arVideoRef = useRef<HTMLVideoElement>(null);
   const sceneRef = useRef<MindarScene>(null);
@@ -114,13 +122,15 @@ export function AugmentedRealityPage() {
     setHasVideoError(false);
     setIsAudioPlaybackBlocked(false);
     setIsVideoPaused(false);
-    
+
     if (mode === "muestra") {
       setPhase("scanning");
       timersRef.current = [
         window.setTimeout(() => {
           setPhase("detected");
-          timersRef.current = [window.setTimeout(() => setPhase("playing"), 650)];
+          timersRef.current = [
+            window.setTimeout(() => setPhase("playing"), 650),
+          ];
         }, 1800),
       ];
     } else {
@@ -246,7 +256,7 @@ export function AugmentedRealityPage() {
           pantalla recrea ese momento para la muestra.
         </p>
         <p className={styles.demoNotice}>
-          {mode === "muestra" 
+          {mode === "muestra"
             ? "Demostración visual: no utiliza la cámara."
             : "Requiere HTTPS, cámara web, WebGL y navegador compatible."}
         </p>
@@ -269,9 +279,9 @@ export function AugmentedRealityPage() {
                 </div>
               ) : (
                 <>
-                  <video 
+                  <video
                     ref={arVideoRef}
-                    id="ar-video-asset" 
+                    id="ar-video-asset"
                     src={arDemoVideo}
                     loop={false}
                     crossOrigin="anonymous"
@@ -292,14 +302,17 @@ export function AugmentedRealityPage() {
                     device-orientation-permission-ui="enabled: false"
                   >
                     {/* @ts-expect-error a-camera is a custom element */}
-                    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+                    <a-camera position="0 0 0" look-controls="enabled: false" />
                     {/* @ts-expect-error a-entity is a custom element */}
-                    <a-entity id="ar-target" mindar-image-target="targetIndex: 0">
+                    <a-entity
+                      id="ar-target"
+                      mindar-image-target="targetIndex: 0"
+                    >
                       {/* @ts-expect-error a-video is a custom element */}
                       <a-video src="#ar-video-asset" position="0 0 0" width="0.5625" height="1"></a-video>
                     {/* @ts-expect-error a-entity is a custom element */}
                     </a-entity>
-                  {/* @ts-expect-error a-scene is a custom element */}
+                    {/* @ts-expect-error a-scene is a custom element */}
                   </a-scene>
                 </>
               )}
@@ -335,7 +348,7 @@ export function AugmentedRealityPage() {
               />
             </div>
           )}
-          
+
           <div aria-hidden="true" className={styles.frame} />
           {phase === "scanning" && (
             <div aria-hidden="true" className={styles.scanLine} />
@@ -414,16 +427,16 @@ export function AugmentedRealityPage() {
               </button>
             </div>
           )}
-          
+
           {mode === "camara" && (
-             <button
-             className={styles.secondaryAction}
-             style={{ marginTop: '1rem' }}
-             type="button"
-             onClick={switchToMuestra}
-           >
-             <X aria-hidden="true" size={19} /> Volver a modo muestra
-           </button>
+            <button
+              className={styles.secondaryAction}
+              style={{ marginTop: "1rem" }}
+              type="button"
+              onClick={switchToMuestra}
+            >
+              <X aria-hidden="true" size={19} /> Volver a modo muestra
+            </button>
           )}
         </div>
       </div>
