@@ -7,7 +7,10 @@ const appRoot = new URL("../", import.meta.url);
 test("usa la base de Vite para resolver rutas del router", async () => {
   const main = await readFile(new URL("src/main.tsx", appRoot), "utf8");
 
-  assert.match(main, /<BrowserRouter basename=\{import\.meta\.env\.BASE_URL\}>/);
+  assert.match(
+    main,
+    /<BrowserRouter basename=\{import\.meta\.env\.BASE_URL\}>/,
+  );
 });
 
 test("recupera rutas internas abiertas directamente en GitHub Pages", async () => {
@@ -18,10 +21,16 @@ test("recupera rutas internas abiertas directamente en GitHub Pages", async () =
   );
   const main = await readFile(new URL("src/main.tsx", appRoot), "utf8");
 
-  assert.match(fallback, /location\.pathname \+ location\.search \+ location\.hash/);
+  assert.match(
+    fallback,
+    /location\.pathname \+ location\.search \+ location\.hash/,
+  );
   assert.match(fallback, /location\.replace/);
   assert.match(arRedirect, /location\.replace/);
-  assert.match(main, /new URLSearchParams\(window\.location\.search\)\.get\("redirect"\)/);
+  assert.match(
+    main,
+    /new URLSearchParams\(window\.location\.search\)\.get\("redirect"\)/,
+  );
   assert.match(main, /window\.history\.replaceState/);
 });
 
@@ -32,11 +41,12 @@ test("conserva las anclas dentro de la base pública del proyecto", async () => 
   );
 
   assert.doesNotMatch(navigation, /href=\{`\/#\$\{/);
-  assert.match(navigation, /to=\{\{ pathname: "\/", hash: `#\$\{anchor\}` \}\}/);
   assert.match(
     navigation,
-    /to=\{\{ pathname: "\/", hash: `#\$\{homeAnchors\.sponsors\}` \}\}/,
+    /to=\{\{ pathname: "\/", hash: `#\$\{anchor\}` \}\}/,
   );
+  assert.match(navigation, /label: "Sponsors", to: "\/#sponsors"/);
+  assert.match(navigation, /label: "Contacto", to: "\/#contacto"/);
 });
 
 test("mantiene los accesos a RA y permite activar la cámara real", async () => {

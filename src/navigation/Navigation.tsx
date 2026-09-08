@@ -1,44 +1,45 @@
 import {
   CalendarDays,
-  ChevronDown,
   MapPinned,
   Menu,
   Moon,
   Newspaper,
   ScanLine,
   Store,
-  Ticket,
   Sun,
+  Ticket,
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { homeAnchors, routePaths } from "./routePaths";
 import type { Theme } from "../shared/ui/theme";
 import styles from "./Navigation.module.css";
 import { SectionLinks } from "./SectionLinks";
 
 const homeSections = [
-  { label: "Sectores", to: "/#sectores" },
   { label: "Protagonistas del Ecosistema", to: "/#polos-productivos" },
-  { label: "Agenda", to: "/#agenda" },
-  { label: "Experiencia RA", to: "/#experiencia-ra" },
-  { label: "Noticias", to: "/#noticias" },
+  { label: "Agenda destacada", to: "/#agenda" },
+  { label: "Últimas noticias", to: "/#noticias" },
+  { label: "Conocé la Experiencia RA", to: "/#experiencia-ra" },
   { label: "Planificá tu visita", to: "/#planifica" },
+  { label: "Sponsors", to: "/#sponsors" },
+  { label: "Contacto", to: "/#contacto" },
 ] as const;
-
+const homeSectionGroups = [
+  { label: "Descubrí la Expo", links: homeSections.slice(0, 4) },
+  { label: "Prepará tu visita", links: homeSections.slice(4, 5) },
+  { label: "Institucional", links: homeSections.slice(5) },
+] as const;
 const editorialNavigation = [
   { label: "ExpoJuy", anchor: homeAnchors.expo },
   { label: "Sectores", anchor: homeAnchors.sectors },
 ] as const;
-
 const discoveryNavigation = [
   { label: "Expositores", icon: Store, path: routePaths.exhibitors },
   { label: "Agenda", icon: CalendarDays, path: routePaths.agenda },
   { label: "Noticias", icon: Newspaper, path: routePaths.news },
 ] as const;
-
 const visitNavigation = [
   { label: "Mapa", icon: MapPinned, path: routePaths.map },
   {
@@ -62,51 +63,37 @@ export function Navigation({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const navigationRef = useRef<HTMLElement>(null);
-
   useEffect(() => {
     const dismissOutside = (event: PointerEvent) => {
       if (navigationRef.current?.contains(event.target as Node)) return;
       navigationRef.current
         ?.querySelectorAll("details[open]")
-        .forEach((details) => {
-          if (!details.contains(event.target as Node))
-            details.removeAttribute("open");
-        });
+        .forEach((details) => details.removeAttribute("open"));
     };
     document.addEventListener("pointerdown", dismissOutside);
     return () => document.removeEventListener("pointerdown", dismissOutside);
   }, []);
-
   const closeMenu = () => {
     navigationRef.current
       ?.querySelectorAll("details[open]")
-      .forEach((details) => {
-        details.removeAttribute("open");
-      });
+      .forEach((details) => details.removeAttribute("open"));
     setIsMenuOpen(false);
   };
-
   const handleOpenTickets = () => {
     closeMenu();
     onOpenTickets();
   };
-
   useEffect(() => {
-    if (!isMenuOpen) {
-      return;
-    }
-
+    if (!isMenuOpen) return;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         closeMenu();
         menuButtonRef.current?.focus();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isMenuOpen]);
-
   return (
     <nav
       aria-label="Navegación principal"
@@ -114,12 +101,11 @@ export function Navigation({
       ref={navigationRef}
       onBlur={(event) => {
         const details = (event.target as HTMLElement).closest("details[open]");
-        if (details && !details.contains(event.relatedTarget as Node | null)) {
+        if (details && !details.contains(event.relatedTarget as Node | null))
           requestAnimationFrame(() => {
             if (!details.contains(document.activeElement))
               details.removeAttribute("open");
           });
-        }
       }}
       onKeyDown={(event) => {
         if (event.key !== "Escape") return;
@@ -138,7 +124,7 @@ export function Navigation({
           isMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"
         }
         className={styles.menuToggle}
-        onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
+        onClick={() => setIsMenuOpen((open) => !open)}
         ref={menuButtonRef}
         type="button"
       >
@@ -179,7 +165,8 @@ export function Navigation({
               {anchor === homeAnchors.expo && (
                 <SectionLinks
                   label="Secciones de ExpoJuy"
-                  links={homeSections}
+                  links={[]}
+                  groups={homeSectionGroups}
                   onNavigate={closeMenu}
                 />
               )}
@@ -233,29 +220,6 @@ export function Navigation({
             </button>
           </li>
         </ul>
-        <details className={styles.moreLinks} name="global-navigation-sections">
-          <summary>
-            Más <ChevronDown aria-hidden="true" size={15} strokeWidth={2} />
-          </summary>
-          <ul>
-            <li>
-              <Link
-                onClick={closeMenu}
-                to={{ pathname: "/", hash: `#${homeAnchors.sponsors}` }}
-              >
-                Sponsors
-              </Link>
-            </li>
-            <li>
-              <Link
-                onClick={closeMenu}
-                to={{ pathname: "/", hash: `#${homeAnchors.contact}` }}
-              >
-                Contacto
-              </Link>
-            </li>
-          </ul>
-        </details>
       </div>
     </nav>
   );

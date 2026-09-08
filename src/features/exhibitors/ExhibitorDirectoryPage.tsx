@@ -5,7 +5,12 @@ import {
   Route as RouteIcon,
 } from "lucide-react";
 import { useMemo } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useSearchParams,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import {
   demoAgenda,
@@ -23,7 +28,9 @@ const allSectorsId = "todos";
 
 export function ExhibitorDirectoryPage() {
   const { actorIds, addActor, removeActor } = useConnectionRoute();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const requestedSectorId = searchParams.get("sector") ?? allSectorsId;
   const selectedSectorId = demoSectors.some(
     (sector) => sector.id === requestedSectorId,
@@ -62,7 +69,14 @@ export function ExhibitorDirectoryPage() {
       nextParams.set("actor", actorId);
     }
 
-    setSearchParams(nextParams);
+    if (nextParams.toString() === searchParams.toString()) return;
+
+    // Selection is local to the directory; preserve the arrival anchor.
+    navigate({
+      pathname: location.pathname,
+      search: nextParams.toString(),
+      hash: location.hash,
+    });
   }
 
   return (
@@ -85,7 +99,7 @@ export function ExhibitorDirectoryPage() {
         className={styles.filters}
         aria-label="Filtrar expositores por sector"
       >
-        <p>Elegí un sector</p>
+        <p>Filtrar expositores por sector</p>
         <div>
           <button
             aria-pressed={selectedSectorId === allSectorsId}

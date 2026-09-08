@@ -504,7 +504,7 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
       >
         <div>
           <p id="agenda" tabIndex={-1} className={styles.sectionLabel}>
-            Agenda
+            Agenda destacada
           </p>
           <h2>Momentos para compartir</h2>
           <DemoNotice />
@@ -523,7 +523,7 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         <div className={styles.raPanel}>
           <ScanLine aria-hidden="true" size={32} />
           <p id="experiencia-ra" tabIndex={-1} className={styles.sectionLabel}>
-            Experiencia RA
+            Conocé la Experiencia RA
           </p>
           <h2>Una capa por descubrir</h2>
           <p>
@@ -538,7 +538,7 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
 
       <section id="noticias" aria-labelledby="news-name">
         <p id="news-name" className={styles.sectionLabel}>
-          Noticias
+          Últimas noticias
         </p>
         <h2 id="news-title">Lo que se activa en la Expo</h2>
         <ul className={styles.newsList}>

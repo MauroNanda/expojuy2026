@@ -1,5 +1,3 @@
-// Run with PLAYWRIGHT_MODULE pointing to an external Playwright installation,
-// or with Playwright available locally. Start Vite before running this script.
 import assert from "node:assert/strict";
 const { chromium } = await import(
   process.env.PLAYWRIGHT_MODULE || "playwright"
@@ -41,41 +39,58 @@ try {
       assert.equal(await nav.locator("details[open]").count(), 0);
     }
     await openNavigation();
-    for (const group of [
-      "Secciones de ExpoJuy",
-      "Subsecciones de Expositores",
-      "Subsecciones de Noticias",
-    ]) {
-      await nav.locator(`summary[aria-label="${group}"]`).click();
-      assert.equal(await nav.locator("details[open]").count(), 1);
-    }
+    const homeIndex = nav.locator('summary[aria-label="Secciones de ExpoJuy"]');
+    const closedHeaderHeight = await page
+      .locator("header")
+      .first()
+      .evaluate((el) => el.getBoundingClientRect().height);
+    await homeIndex.click();
+    assert.equal(
+      await page
+        .locator("header")
+        .first()
+        .evaluate((el) => el.getBoundingClientRect().height),
+      closedHeaderHeight,
+    );
+    const panelBounds = await homeIndex
+      .locator("..")
+      .locator("div")
+      .first()
+      .boundingBox();
+    assert(panelBounds.x >= 0 && panelBounds.x + panelBounds.width <= width);
+    assert.equal(
+      await nav.getByText("Descubrí la Expo", { exact: true }).count(),
+      1,
+    );
+    assert.equal(
+      await nav.getByText("Prepará tu visita", { exact: true }).count(),
+      1,
+    );
+    assert.equal(
+      await nav.getByText("Institucional", { exact: true }).count(),
+      1,
+    );
+    assert.equal(
+      await nav.getByRole("link", { name: "Sectores", exact: true }).count(),
+      1,
+    );
+    assert.equal(
+      await nav.locator("summary").filter({ hasText: "Más" }).count(),
+      0,
+    );
     await page.mouse.click(2, 880);
-    assert.equal(await nav.locator("details[open]").count(), 0);
     for (const [label, id] of [
       ["Sectores", "sectores"],
+      ["Agenda destacada", "agenda"],
+      ["Últimas noticias", "noticias"],
       ["Sponsors", "sponsors"],
       ["Contacto", "contacto"],
     ]) {
       for (const start of [base, `${base}agenda`]) {
         await page.goto(start);
         await openNavigation();
-        if (label !== "Sectores")
-          await nav.locator("summary").filter({ hasText: "Más" }).click();
-        await nav
-          .getByRole("link", { name: label, exact: true })
-          .filter({ visible: true })
-          .click();
-        await checkTarget(id);
-        await page.evaluate(() =>
-          window.scrollTo({ top: 0, behavior: "instant" }),
-        );
-        await openNavigation();
-        if (label !== "Sectores")
-          await nav.locator("summary").filter({ hasText: "Más" }).click();
-        await nav
-          .getByRole("link", { name: label, exact: true })
-          .filter({ visible: true })
-          .click();
+        await nav.locator('summary[aria-label="Secciones de ExpoJuy"]').click();
+        await nav.getByRole("link", { name: label, exact: true }).click();
         await checkTarget(id);
       }
     }
@@ -85,9 +100,7 @@ try {
         "Protagonistas del Ecosistema",
         "polos-productivos",
       ],
-      ["Secciones de ExpoJuy", "Agenda", "agenda"],
-      ["Secciones de ExpoJuy", "Experiencia RA", "experiencia-ra"],
-      ["Secciones de ExpoJuy", "Noticias", "noticias"],
+      ["Secciones de ExpoJuy", "Conocé la Experiencia RA", "experiencia-ra"],
       ["Secciones de ExpoJuy", "Planificá tu visita", "planifica"],
       [
         "Subsecciones de Expositores",
@@ -122,26 +135,29 @@ try {
       "Experiencia RA",
     ]) {
       await openNavigation();
-      await nav
-        .getByRole("link", { name: label, exact: true })
-        .filter({ visible: true })
-        .click();
+      await nav.getByRole("link", { name: label, exact: true }).click();
       await page.getByRole("region", { name: label, exact: true }).waitFor();
-      assert(
-        await page
-          .getByRole("region", { name: label, exact: true })
-          .isVisible(),
-      );
     }
     await openNavigation();
-    const more = nav.locator("summary").filter({ hasText: "Más" });
-    await more.focus();
-    await page.keyboard.press("Enter");
-    await page.keyboard.press("Escape");
-    assert(
-      await more.evaluate((element) => element === document.activeElement),
+    assert.equal(
+      await nav.locator("summary").filter({ hasText: "Más" }).count(),
+      0,
     );
-    assert.equal(await nav.locator("details[open]").count(), 0);
+    await page.goto(`${base}expositores#ruta-de-conexiones`);
+    const actor = page.getByRole("button", { name: /Taller Quebrada/ });
+    await actor.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+    const selectionScroll = await page.evaluate(() => window.scrollY);
+    for (let repeat = 0; repeat < 2; repeat++) {
+      await actor.click();
+      await page.waitForTimeout(300);
+      assert.equal(new URL(page.url()).hash, "#ruta-de-conexiones");
+      assert(
+        Math.abs(
+          (await page.evaluate(() => window.scrollY)) - selectionScroll,
+        ) < 3,
+      );
+    }
     console.log(`Navigation browser checks passed: ${width}px`);
     await page.close();
   }
