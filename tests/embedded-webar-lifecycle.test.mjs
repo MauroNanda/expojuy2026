@@ -27,7 +27,11 @@ test("mantiene visible el feed que MindAR agrega detrás de la escena", async ()
 
   assert.match(
     stylesheet,
-    /\.arViewport video,[\s\S]*z-index:\s*0\s*!important/,
+    /\.arViewport > video\s*\{[^}]*z-index:\s*0\s*!important/,
+  );
+  assert.doesNotMatch(
+    stylesheet,
+    /\.arViewport > video\s*\{[^}]*object-fit/,
   );
   assert.match(
     stylesheet,

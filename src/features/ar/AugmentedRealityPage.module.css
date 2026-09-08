@@ -138,16 +138,9 @@
     0 1.5rem 4rem rgb(0 0 0 / 35%);
 }
 
-.arViewport video,
-.arViewport canvas {
-  /* MindAR injects its camera video with z-index: -2; keep it above this black viewport. */
+.arViewport > video {
+  /* MindAR calculates this video's dimensions and offset to keep tracking aligned. */
   z-index: 0 !important;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100% !important;
-  width: 100% !important;
-  object-fit: contain !important;
 }
 
 .arViewport > a-scene,
