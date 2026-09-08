@@ -124,11 +124,15 @@ try {
   );
   await dark.close();
   const page = await browser.newPage();
-  await page.route("**/assets/sponsors/banco-comafi.jpg", (route) =>
-    route.abort(),
-  );
   await page.goto("http://127.0.0.1:5173/expojuy2026/#sponsors");
   await page.locator("#sponsors").scrollIntoViewIfNeeded();
+  await page
+    .locator("#sponsors img")
+    .first()
+    .evaluate((img) => {
+      img.loading = "eager";
+      img.src = "data:image/png;base64,invalid";
+    });
   await page
     .locator("#sponsors")
     .getByText("Banco Comafi", { exact: true })
