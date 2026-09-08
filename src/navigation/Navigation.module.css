@@ -48,6 +48,19 @@
   min-width: 2.75rem;
 }
 
+.themeToggle {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  cursor: pointer;
+  display: inline-flex;
+  gap: var(--space-xs);
+  justify-content: center;
+  min-height: 2.75rem;
+  padding-inline: var(--space-sm);
+}
+
 .navigationPanel {
   display: none;
 }
@@ -184,6 +197,10 @@
     padding: 0;
     position: static;
     width: auto;
+  }
+
+  .themeToggle {
+    min-height: auto;
   }
 
   .primaryLinks,

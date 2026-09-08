@@ -3,16 +3,19 @@ import {
   ChevronDown,
   MapPinned,
   Menu,
+  Moon,
   Newspaper,
   ScanLine,
   Store,
   Ticket,
+  Sun,
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { homeAnchors, routePaths } from "./routePaths";
+import type { Theme } from "../shared/ui/theme";
 import styles from "./Navigation.module.css";
 import { SectionLinks } from "./SectionLinks";
 
@@ -47,9 +50,15 @@ const visitNavigation = [
 
 interface NavigationProps {
   onOpenTickets: () => void;
+  onToggleTheme: () => void;
+  theme: Theme;
 }
 
-export function Navigation({ onOpenTickets }: NavigationProps) {
+export function Navigation({
+  onOpenTickets,
+  onToggleTheme,
+  theme,
+}: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const navigationRef = useRef<HTMLElement>(null);
@@ -140,6 +149,22 @@ export function Navigation({ onOpenTickets }: NavigationProps) {
         data-open={isMenuOpen}
         id="mobile-navigation-panel"
       >
+        <button
+          aria-label={
+            theme === "dark" ? "Activar modo claro" : "Activar modo oscuro"
+          }
+          aria-pressed={theme === "dark"}
+          className={styles.themeToggle}
+          onClick={onToggleTheme}
+          type="button"
+        >
+          {theme === "dark" ? (
+            <Sun aria-hidden="true" size={18} />
+          ) : (
+            <Moon aria-hidden="true" size={18} />
+          )}
+          <span>{theme === "dark" ? "Modo claro" : "Modo oscuro"}</span>
+        </button>
         <ul className={styles.primaryLinks}>
           {editorialNavigation.map(({ label, anchor }) => (
             <li key={anchor} className={styles.parentLink}>

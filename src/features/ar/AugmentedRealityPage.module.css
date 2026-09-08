@@ -50,7 +50,7 @@
       transparent 28rem
     );
   box-shadow: 0 1.5rem 3.5rem color-mix(in srgb, var(--ar-ink) 32%, transparent);
-  color: white;
+  color: var(--color-on-dark);
   display: grid;
   gap: clamp(1rem, 4vw, 3rem);
   grid-template-columns: 1fr;
@@ -265,7 +265,7 @@
   align-items: center;
   background: transparent;
   border: 1px solid var(--ar-cyan);
-  color: white;
+  color: var(--color-on-dark);
   cursor: pointer;
   display: inline-flex;
   font: inherit;
@@ -301,12 +301,12 @@
 .videoFallback button {
   background: transparent;
   border: 1px solid color-mix(in srgb, white 76%, transparent);
-  color: white;
+  color: var(--color-on-dark);
 }
 
 .videoFallback {
   border: 1px solid var(--ar-cyan);
-  color: white;
+  color: var(--color-on-dark);
   display: grid;
   gap: var(--space-sm);
   height: 100%;
