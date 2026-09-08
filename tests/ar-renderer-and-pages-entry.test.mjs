@@ -39,3 +39,27 @@ test("preserva el encuadre de la cámara y apila el visor antes de escritorio", 
     /@media \(min-width:\s*64rem\)[\s\S]*\.experience\s*\{[\s\S]*grid-template-columns:/,
   );
 });
+
+test("mantiene el Reel vertical sin alterar el target ni el encuadre de cámara", async () => {
+  const stylesheet = await readFile(
+    new URL("src/features/ar/AugmentedRealityPage.module.css", appRoot),
+    "utf8",
+  );
+  const page = await readFile(
+    new URL("src/features/ar/AugmentedRealityPage.tsx", appRoot),
+    "utf8",
+  );
+
+  assert.match(
+    stylesheet,
+    /\.targetCard\s*\{[\s\S]*aspect-ratio:\s*16\s*\/\s*9/,
+  );
+  assert.match(
+    stylesheet,
+    /\.videoViewport\s*\{[\s\S]*aspect-ratio:\s*9\s*\/\s*16[\s\S]*width:\s*min\(100%,\s*20rem\)/,
+  );
+  assert.match(
+    page,
+    /<a-video src="#ar-video-asset" position="0 0 0" width="0\.5625" height="1">/,
+  );
+});

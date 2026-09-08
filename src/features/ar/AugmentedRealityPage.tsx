@@ -292,7 +292,7 @@ export function AugmentedRealityPage() {
                     {/* @ts-expect-error a-entity is a custom element */}
                     <a-entity id="ar-target" mindar-image-target="targetIndex: 0">
                       {/* @ts-expect-error a-video is a custom element */}
-                      <a-video src="#ar-video-asset" position="0 0 0" width="1" height="0.55"></a-video>
+                      <a-video src="#ar-video-asset" position="0 0 0" width="0.5625" height="1"></a-video>
                     {/* @ts-expect-error a-entity is a custom element */}
                     </a-entity>
                   {/* @ts-expect-error a-scene is a custom element */}
