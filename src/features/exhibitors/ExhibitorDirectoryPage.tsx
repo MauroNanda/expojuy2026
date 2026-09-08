@@ -66,9 +66,11 @@ export function ExhibitorDirectoryPage() {
   }
 
   return (
-    <section className={styles.directory} aria-labelledby="exhibitors-title">
+    <section className={styles.directory} aria-labelledby="exhibitors-name">
       <div className={styles.intro}>
-        <p className={styles.eyebrow}>Expositores</p>
+        <p id="exhibitors-name" className={styles.eyebrow}>
+          Expositores
+        </p>
         <h1 id="exhibitors-title">Encontrá quién activa cada recorrido.</h1>
         <p>
           Explorá protagonistas de demostración y seguí sus conexiones con un

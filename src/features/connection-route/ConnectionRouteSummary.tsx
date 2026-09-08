@@ -24,7 +24,11 @@ export function ConnectionRouteSummary() {
   });
 
   return (
-    <aside className={styles.route} aria-labelledby="connection-route-title">
+    <aside
+      id="ruta-de-conexiones"
+      className={styles.route}
+      aria-labelledby="connection-route-title"
+    >
       <div className={styles.heading}>
         <div>
           <p className={styles.eyebrow}>Tu recorrido</p>

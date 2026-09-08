@@ -247,9 +247,11 @@ export function AugmentedRealityPage() {
   }, [hasVideoError, mode, phase]);
 
   return (
-    <section className={styles.page} aria-labelledby="ar-title">
+    <section className={styles.page} aria-labelledby="ar-name">
       <header className={styles.intro}>
-        <p className={styles.eyebrow}>Experiencia RA</p>
+        <p id="ar-name" className={styles.eyebrow}>
+          Experiencia RA
+        </p>
         <h1 id="ar-title">Una capa que aparece al enfocar la Expo</h1>
         <p>
           En una experiencia real, la cámara reconocería el isologotipo. Esta
@@ -308,9 +310,13 @@ export function AugmentedRealityPage() {
                       id="ar-target"
                       mindar-image-target="targetIndex: 0"
                     >
-                      {/* @ts-expect-error a-video is a custom element */}
-                      <a-video src="#ar-video-asset" position="0 0 0" width="0.5625" height="1"></a-video>
-                    {/* @ts-expect-error a-entity is a custom element */}
+                      <a-video
+                        src="#ar-video-asset"
+                        position="0 0 0"
+                        width="0.5625"
+                        height="1"
+                      ></a-video>
+                      {/* @ts-expect-error a-entity is a custom element */}
                     </a-entity>
                     {/* @ts-expect-error a-scene is a custom element */}
                   </a-scene>

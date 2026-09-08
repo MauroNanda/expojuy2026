@@ -10,12 +10,14 @@ import { VenueMapPage } from "../features/map/VenueMapPage";
 import { TicketDialog } from "../features/tickets/TicketDialog";
 import { routePaths } from "../navigation/routePaths";
 import { ApplicationShell } from "../shared/ui/ApplicationShell";
+import { NavigationArrival } from "../navigation/NavigationArrival";
 
 export function App() {
   const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
   return (
     <ConnectionRouteProvider>
       <ApplicationShell onOpenTickets={() => setIsTicketDialogOpen(true)}>
+        <NavigationArrival />
         <Routes>
           <Route
             path="/"

@@ -74,7 +74,7 @@ test("mantiene el Reel vertical sin alterar el target ni el encuadre de cámara"
   );
   assert.match(
     page,
-    /<a-video src="#ar-video-asset" position="0 0 0" width="0\.5625" height="1">/,
+    /<a-video\s+src="#ar-video-asset"\s+position="0 0 0"\s+width="0\.5625"\s+height="1"\s*(?:\/>|><\/a-video>)/,
   );
 });
 

@@ -25,8 +25,8 @@ export function TicketDialog({ isOpen, onClose }: TicketDialogProps) {
       aria-labelledby="ticket-title"
     >
       <div className={styles.content}>
-        <p className={styles.label}>Entradas</p>
-        <h2 id="ticket-title">Información en preparación</h2>
+        <p className={styles.label}>Información en preparación</p>
+        <h2 id="ticket-title">Entradas</h2>
         <p>
           La disponibilidad y el canal oficial de entradas se comunicarán cuando
           estén definidos.

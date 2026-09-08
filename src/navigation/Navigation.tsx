@@ -14,6 +14,16 @@ import { Link } from "react-router-dom";
 
 import { homeAnchors, routePaths } from "./routePaths";
 import styles from "./Navigation.module.css";
+import { SectionLinks } from "./SectionLinks";
+
+const homeSections = [
+  { label: "Sectores", to: "/#sectores" },
+  { label: "Protagonistas del Ecosistema", to: "/#polos-productivos" },
+  { label: "Agenda", to: "/#agenda" },
+  { label: "Experiencia RA", to: "/#experiencia-ra" },
+  { label: "Noticias", to: "/#noticias" },
+  { label: "Planificá tu visita", to: "/#planifica" },
+] as const;
 
 const editorialNavigation = [
   { label: "ExpoJuy", anchor: homeAnchors.expo },
@@ -42,8 +52,28 @@ interface NavigationProps {
 export function Navigation({ onOpenTickets }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const navigationRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const dismissOutside = (event: PointerEvent) => {
+      if (navigationRef.current?.contains(event.target as Node)) return;
+      navigationRef.current
+        ?.querySelectorAll("details[open]")
+        .forEach((details) => {
+          if (!details.contains(event.target as Node))
+            details.removeAttribute("open");
+        });
+    };
+    document.addEventListener("pointerdown", dismissOutside);
+    return () => document.removeEventListener("pointerdown", dismissOutside);
+  }, []);
 
   const closeMenu = () => {
+    navigationRef.current
+      ?.querySelectorAll("details[open]")
+      .forEach((details) => {
+        details.removeAttribute("open");
+      });
     setIsMenuOpen(false);
   };
 
@@ -69,7 +99,29 @@ export function Navigation({ onOpenTickets }: NavigationProps) {
   }, [isMenuOpen]);
 
   return (
-    <nav aria-label="Navegación principal" className={styles.navigation}>
+    <nav
+      aria-label="Navegación principal"
+      className={styles.navigation}
+      ref={navigationRef}
+      onBlur={(event) => {
+        const details = (event.target as HTMLElement).closest("details[open]");
+        if (details && !details.contains(event.relatedTarget as Node | null)) {
+          requestAnimationFrame(() => {
+            if (!details.contains(document.activeElement))
+              details.removeAttribute("open");
+          });
+        }
+      }}
+      onKeyDown={(event) => {
+        if (event.key !== "Escape") return;
+        const details = (event.target as HTMLElement).closest("details[open]");
+        if (details) {
+          event.stopPropagation();
+          details.removeAttribute("open");
+          details.querySelector("summary")?.focus();
+        }
+      }}
+    >
       <button
         aria-controls="mobile-navigation-panel"
         aria-expanded={isMenuOpen}
@@ -90,20 +142,51 @@ export function Navigation({ onOpenTickets }: NavigationProps) {
       >
         <ul className={styles.primaryLinks}>
           {editorialNavigation.map(({ label, anchor }) => (
-            <li key={anchor}>
+            <li key={anchor} className={styles.parentLink}>
               <Link
                 onClick={closeMenu}
                 to={{ pathname: "/", hash: `#${anchor}` }}
               >
                 {label}
               </Link>
+              {anchor === homeAnchors.expo && (
+                <SectionLinks
+                  label="Secciones de ExpoJuy"
+                  links={homeSections}
+                  onNavigate={closeMenu}
+                />
+              )}
             </li>
           ))}
           {discoveryNavigation.map(({ label, path }) => (
-            <li key={path}>
+            <li key={path} className={styles.parentLink}>
               <Link onClick={closeMenu} to={path}>
                 {label}
               </Link>
+              {path === routePaths.news && (
+                <SectionLinks
+                  label="Subsecciones de Noticias"
+                  links={[
+                    {
+                      label: "Canales oficiales",
+                      to: "/noticias#canales-oficiales",
+                    },
+                  ]}
+                  onNavigate={closeMenu}
+                />
+              )}
+              {path === routePaths.exhibitors && (
+                <SectionLinks
+                  label="Subsecciones de Expositores"
+                  links={[
+                    {
+                      label: "Ruta de conexiones",
+                      to: "/expositores#ruta-de-conexiones",
+                    },
+                  ]}
+                  onNavigate={closeMenu}
+                />
+              )}
             </li>
           ))}
         </ul>
@@ -123,7 +206,7 @@ export function Navigation({ onOpenTickets }: NavigationProps) {
             </button>
           </li>
         </ul>
-        <details className={styles.moreLinks}>
+        <details className={styles.moreLinks} name="global-navigation-sections">
           <summary>
             Más <ChevronDown aria-hidden="true" size={15} strokeWidth={2} />
           </summary>

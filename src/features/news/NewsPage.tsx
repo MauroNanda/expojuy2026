@@ -53,9 +53,11 @@ function NewsArticle({ item }: { item: OfficialNewsItem }) {
 
 export function NewsPage() {
   return (
-    <div className={styles.page}>
+    <div className={styles.page} role="region" aria-labelledby="news-page-name">
       <header className={styles.header}>
-        <p className={styles.sectionLabel}>Noticias</p>
+        <p id="news-page-name" className={styles.sectionLabel}>
+          Noticias
+        </p>
         <h1>Novedades de ExpoJuy 2026</h1>
         <p className={styles.intro}>
           Una selección de novedades publicadas sobre la Expo. Cada una enlaza a
@@ -76,8 +78,12 @@ export function NewsPage() {
         </p>
       )}
 
-      <section aria-labelledby="channels-title" className={styles.channels}>
-        <h2 id="channels-title">Dónde se publican las actualizaciones</h2>
+      <section
+        id="canales-oficiales"
+        aria-labelledby="channels-title"
+        className={styles.channels}
+      >
+        <h2 id="channels-title">Canales oficiales</h2>
         <p>
           La organización publica sus novedades en estos canales. Este prototipo
           no se conecta a ellos: las novedades no se incorporan de forma

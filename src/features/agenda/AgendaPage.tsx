@@ -38,8 +38,10 @@ export function AgendaPage() {
   );
 
   return (
-    <section className={styles.agenda} aria-labelledby="agenda-title">
-      <p className={styles.eyebrow}>Agenda</p>
+    <section className={styles.agenda} aria-labelledby="agenda-name">
+      <p id="agenda-name" className={styles.eyebrow}>
+        Agenda
+      </p>
       <h1 id="agenda-title">Planificá tu visita</h1>
       <p className={styles.confirmedPeriod}>
         <span className={styles.confirmedLabel}>Fecha confirmada</span>

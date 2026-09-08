@@ -63,8 +63,10 @@ export function VenueMapPage() {
   }
 
   return (
-    <section className={styles.mapPage} aria-labelledby="map-title">
-      <p className={styles.eyebrow}>Mapa del predio</p>
+    <section className={styles.mapPage} aria-labelledby="map-name">
+      <p id="map-name" className={styles.eyebrow}>
+        Mapa
+      </p>
       <h1 id="map-title">Explorá la Expo por zonas</h1>
       <p>
         Seleccioná una zona para conocer las propuestas demostrativas asociadas.

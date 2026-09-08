@@ -88,13 +88,11 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
 
   return (
     <div className={styles.home}>
-      <section
-        className={styles.hero}
-        id="expojuy"
-        aria-labelledby="hero-title"
-      >
+      <section className={styles.hero} id="expojuy" aria-labelledby="hero-name">
         <div className={styles.heroHeading}>
-          <p className={styles.eyebrow}>ExpoJuy 2026</p>
+          <p id="hero-name" className={styles.eyebrow}>
+            ExpoJuy
+          </p>
           <h1 id="hero-title">
             Jujuy conecta producción, ideas y{" "}
             <span className={styles.heroEmphasis}>oportunidades.</span>
@@ -139,8 +137,10 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         </ul>
       </section>
 
-      <section id="sectores" aria-labelledby="sectors-title">
-        <p className={styles.sectionLabel}>Sectores y Recorrido</p>
+      <section id="sectores" aria-labelledby="sectors-name">
+        <p id="sectors-name" className={styles.sectionLabel}>
+          Sectores
+        </p>
         <h2 id="sectors-title">¿Qué venís a descubrir en ExpoJuy?</h2>
         <p className={styles.discoveryLead}>
           Elegí tu objetivo de visita para desplegar un recorrido sugerido paso
@@ -329,10 +329,12 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
       <section
         id="polos-productivos"
         className={styles.polesSection}
-        aria-labelledby="poles-title"
+        aria-labelledby="poles-name"
       >
         <div className={styles.sectionHeader}>
-          <p className={styles.sectionLabel}>Protagonistas del Ecosistema</p>
+          <p id="poles-name" className={styles.sectionLabel}>
+            Protagonistas del Ecosistema
+          </p>
           <h2 id="poles-title">
             De Jujuy al Corredor Bioceánico: los polos que mueven la Expo
           </h2>
@@ -501,7 +503,9 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         aria-label="Actividad y experiencia"
       >
         <div>
-          <p className={styles.sectionLabel}>Agenda</p>
+          <p id="agenda" tabIndex={-1} className={styles.sectionLabel}>
+            Agenda
+          </p>
           <h2>Momentos para compartir</h2>
           <DemoNotice />
           <ul className={styles.agendaList}>
@@ -518,7 +522,9 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         </div>
         <div className={styles.raPanel}>
           <ScanLine aria-hidden="true" size={32} />
-          <p className={styles.sectionLabel}>Experiencia RA</p>
+          <p id="experiencia-ra" tabIndex={-1} className={styles.sectionLabel}>
+            Experiencia RA
+          </p>
           <h2>Una capa por descubrir</h2>
           <p>
             Simulá el escaneo del isologotipo y descubrí cómo se revela una
@@ -530,8 +536,10 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         </div>
       </section>
 
-      <section aria-labelledby="news-title">
-        <p className={styles.sectionLabel}>Noticias</p>
+      <section id="noticias" aria-labelledby="news-name">
+        <p id="news-name" className={styles.sectionLabel}>
+          Noticias
+        </p>
         <h2 id="news-title">Lo que se activa en la Expo</h2>
         <ul className={styles.newsList}>
           {officialNews.slice(0, 2).map((news) => (
@@ -549,8 +557,10 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         </Link>
       </section>
 
-      <section id="sponsors" aria-labelledby="sponsors-title">
-        <p className={styles.sectionLabel}>Sponsors</p>
+      <section id="sponsors" aria-labelledby="sponsors-name">
+        <p id="sponsors-name" className={styles.sectionLabel}>
+          Sponsors
+        </p>
         <h2 id="sponsors-title">Espacios de vinculación</h2>
         <DemoNotice />
         <ul className={styles.sponsorList}>
@@ -560,8 +570,14 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         </ul>
       </section>
 
-      <section className={styles.planning} aria-labelledby="planning-title">
-        <p className={styles.sectionLabel}>Planificá tu visita</p>
+      <section
+        id="planifica"
+        className={styles.planning}
+        aria-labelledby="planning-name"
+      >
+        <p id="planning-name" className={styles.sectionLabel}>
+          Planificá tu visita
+        </p>
         <h2 id="planning-title">Guardá estos puntos de entrada</h2>
         <div className={styles.planningActions}>
           <Link to={routePaths.map}>
@@ -583,9 +599,11 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
       <section
         id="contacto"
         className={styles.contact}
-        aria-labelledby="contact-title"
+        aria-labelledby="contact-name"
       >
-        <p className={styles.sectionLabel}>Contacto y preguntas</p>
+        <p id="contact-name" className={styles.sectionLabel}>
+          Contacto
+        </p>
         <h2 id="contact-title">Información institucional</h2>
         <PendingData>
           Canales de contacto, teléfono y correo institucional de la
