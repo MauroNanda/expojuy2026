@@ -163,7 +163,9 @@ export function Navigation({
           ) : (
             <Moon aria-hidden="true" size={18} />
           )}
-          <span>{theme === "dark" ? "Modo claro" : "Modo oscuro"}</span>
+          <span className={styles.themeToggleLabel}>
+            {theme === "dark" ? "Modo claro" : "Modo oscuro"}
+          </span>
         </button>
         <ul className={styles.primaryLinks}>
           {editorialNavigation.map(({ label, anchor }) => (
