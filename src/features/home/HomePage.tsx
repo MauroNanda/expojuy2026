@@ -31,6 +31,11 @@ import { routePaths } from "../../navigation/routePaths";
 import { DemoNotice } from "../../shared/ui/DemoNotice";
 import { PendingData } from "../../shared/ui/PendingData";
 import heroIllustration from "../../assets/demostrativos/recorrido-descubrimiento-hero.png";
+import poloBioceanicoImg from "../../assets/polos/polo_bioceanico.jpg";
+import poloPunaImg from "../../assets/polos/polo_puna.jpg";
+import poloQuebradaImg from "../../assets/polos/polo_quebrada.jpg";
+import poloYungasImg from "../../assets/polos/polo_yungas.jpg";
+import poloVallesImg from "../../assets/polos/polo_valles.jpg";
 import styles from "./HomePage.module.css";
 
 interface HomePageProps {
@@ -49,6 +54,21 @@ function getPoleIcon(theme: DemoPole["theme"]) {
       return Sprout;
     case "valles":
       return Lightbulb;
+  }
+}
+
+function getPoleImage(theme: DemoPole["theme"]) {
+  switch (theme) {
+    case "bioceanico":
+      return poloBioceanicoImg;
+    case "puna":
+      return poloPunaImg;
+    case "quebrada":
+      return poloQuebradaImg;
+    case "yungas":
+      return poloYungasImg;
+    case "valles":
+      return poloVallesImg;
   }
 }
 
@@ -355,6 +375,7 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
           {demoPoles.map((pole) => {
             const isExpanded = pole.id === activePoleId;
             const Icon = getPoleIcon(pole.theme);
+            const poleImg = getPoleImage(pole.theme);
             const poleExhibitors = demoExhibitors.filter((exhibitor) =>
               pole.exhibitorIds.includes(exhibitor.id),
             );
@@ -366,6 +387,16 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
                 data-active={isExpanded || undefined}
                 data-theme={pole.theme}
               >
+                {/* Capa de fondo con fotografía inmersiva de la región */}
+                <div
+                  className={styles.poleBgLayer}
+                  style={{ backgroundImage: `url(${poleImg})` }}
+                  aria-hidden="true"
+                />
+                {/* Capas envolventes: gradiente cromático y trama andina de marca */}
+                <div className={styles.poleDuoToneOverlay} aria-hidden="true" />
+                <div className={styles.polePatternOverlay} aria-hidden="true" />
+
                 {/* Botón disparador del panel / barra colapsada */}
                 <button
                   type="button"
@@ -375,7 +406,7 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
                   aria-controls={`pole-content-${pole.id}`}
                   onClick={() => setActivePoleId(pole.id)}
                 >
-                  <span className={styles.poleNumber}>{pole.number}</span>
+                  <span className={styles.poleNumberBadge}>{pole.number}</span>
                   <span className={styles.poleIconWrapper}>
                     <Icon aria-hidden="true" size={20} />
                   </span>
