@@ -46,10 +46,16 @@ test("simulates logo detection before presenting a local video without camera ac
     new URL("src/assets/ar/expojuy-ra-demo.mp4", appRoot),
     constants.R_OK,
   );
-  assert.match(page, /"idle" \| "scanning" \| "detected" \| "playing"/);
+  assert.match(
+    page,
+    /"idle"\s*\|\s*"startingCamera"\s*\|\s*"scanning"\s*\|\s*"detected"\s*\|\s*"playing"/,
+  );
   assert.match(page, /Iniciar demostración/);
   assert.match(page, /Target detectado/);
-  assert.match(page, /Demostración visual: no utiliza la cámara/);
+  assert.match(
+    page,
+    /Podés elegir entre una demostración visual y una experiencia con cámara/,
+  );
   assert.match(page, /aria-live="polite"/);
   assert.match(page, /playsInline/);
   assert.doesNotMatch(page, /<video[^>]*\bcontrols\b/);

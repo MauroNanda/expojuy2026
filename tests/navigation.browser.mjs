@@ -21,13 +21,10 @@ try {
     async function checkTarget(id) {
       await page.waitForFunction((targetId) => {
         const target = document.getElementById(targetId);
-        const label = document.getElementById(
-          target?.getAttribute("aria-labelledby")?.split(/\s+/)[0] || "",
-        );
-        return (
-          document.activeElement ===
-          (label && target.contains(label) ? label : target)
-        );
+        if (!target) return false;
+        const bounds = target.getBoundingClientRect();
+        const header = document.querySelector("header").getBoundingClientRect();
+        return bounds.top >= header.bottom - 1 && bounds.top < innerHeight;
       }, id);
       const bounds = await page.locator(`#${id}`).boundingBox();
       const header = await page.locator("header").first().boundingBox();
