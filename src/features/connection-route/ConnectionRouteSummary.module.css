@@ -3,8 +3,8 @@
   gap: var(--space-md);
   padding: clamp(1.25rem, 3vw, 2rem);
   border-top: 0.3rem solid var(--color-brand-violet);
-  background: var(--color-ink);
-  color: var(--color-surface);
+  background: var(--color-surface-inverse);
+  color: var(--color-on-dark);
 }
 
 .heading {
@@ -51,7 +51,7 @@
 
 .demoNotice {
   border-color: var(--color-brand-cyan);
-  color: var(--color-surface);
+  color: var(--color-on-dark);
 }
 
 .mapAction {
@@ -114,7 +114,7 @@
 .clearAction {
   border: 0;
   background: transparent;
-  color: var(--color-surface);
+  color: var(--color-on-dark);
   font: inherit;
   font-weight: var(--font-weight-semibold);
   cursor: pointer;

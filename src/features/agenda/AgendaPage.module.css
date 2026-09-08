@@ -77,14 +77,14 @@
   padding: var(--space-sm) var(--space-md);
   border: 1px solid var(--color-brand-violet);
   background: var(--color-brand-violet);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
 }
 .scheduleAction:hover {
   border-color: var(--color-brand-indigo);
   background: var(--color-brand-indigo);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
 }
 .scheduleAction svg {
   flex: none;
