@@ -129,7 +129,10 @@ test("marks institutional data the organisation has not provided", async () => {
   const home = await readProjectFile("src/features/home/HomePage.tsx");
 
   assert.match(pending, /Dato a confirmar/);
-  assert.match(home, /PendingData/);
+  assert.match(home, /ContactGuidance/);
+  const contact = await readProjectFile("src/features/contact/ContactGuidance.tsx");
+  assert.match(contact, /pendientes de confirmación/);
+  assert.match(contact, /correo y teléfono/);
 });
 
 test("communicates the confirmed period from the home page", async () => {

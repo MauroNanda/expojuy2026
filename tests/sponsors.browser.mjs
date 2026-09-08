@@ -106,6 +106,23 @@ try {
     );
     await page.close();
   }
+  const dark = await browser.newPage({
+    viewport: { width: 375, height: 1000 },
+    colorScheme: "dark",
+  });
+  await dark.goto("http://127.0.0.1:5173/expojuy2026/#sponsors");
+  await dark
+    .locator("#sponsors")
+    .screenshot({ path: "../.browser-tools/sponsors-dark.png" });
+  await dark
+    .locator("#contacto")
+    .screenshot({ path: "../.browser-tools/contact-dark.png" });
+  assert(
+    await dark.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  );
+  await dark.close();
   const page = await browser.newPage();
   await page.route("**/assets/sponsors/banco-comafi.jpg", (route) =>
     route.abort(),

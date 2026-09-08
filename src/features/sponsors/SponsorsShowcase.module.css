@@ -23,6 +23,9 @@
   line-height: 1.5;
 }
 .grid {
+  /* Original logos retain a light plate in both themes. */
+  --color-brand-violet: #820cd0;
+  --color-ink: #4b4b4d;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
