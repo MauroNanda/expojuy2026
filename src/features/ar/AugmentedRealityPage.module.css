@@ -53,6 +53,7 @@
   color: white;
   display: grid;
   gap: clamp(1rem, 4vw, 3rem);
+  grid-template-columns: 1fr;
   overflow: hidden;
   padding: clamp(1rem, 4vw, 3.5rem);
   position: relative;
@@ -86,27 +87,30 @@
   align-items: center;
   display: grid;
   justify-items: center;
-  min-height: min(62vw, 28rem);
+  min-height: 0;
 }
 
 .targetCard,
 .videoViewport {
   align-items: center;
-  aspect-ratio: 1;
+  aspect-ratio: 16 / 9;
   background: white;
   box-shadow:
     0 0 0 0.75rem color-mix(in srgb, white 12%, transparent),
     0 1.5rem 4rem rgb(0 0 0 / 35%);
   display: grid;
   justify-items: center;
-  padding: clamp(1.5rem, 7vw, 4rem);
-  width: min(70vw, 20rem);
+  padding: clamp(1rem, 4vw, 2rem);
+  width: min(100%, 42rem);
 }
 
 .targetCard img,
 .videoViewport video {
-  height: auto;
+  height: 100%;
+  max-height: 100%;
   max-width: 100%;
+  object-fit: contain;
+  width: 100%;
 }
 
 .videoViewport {
@@ -124,8 +128,8 @@
 
 .arViewport {
   background: black;
-  height: min(79vw, 24rem);
-  width: min(79vw, 24rem);
+  aspect-ratio: 16 / 9;
+  width: min(100%, 42rem);
   overflow: hidden;
   position: relative;
   box-shadow:
@@ -142,7 +146,7 @@
   left: 0;
   height: 100% !important;
   width: 100% !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
 }
 
 .arViewport > a-scene,
@@ -162,9 +166,10 @@
   box-shadow:
     0 0 0 0.35rem color-mix(in srgb, var(--ar-cyan) 18%, transparent),
     inset 0 0 1.75rem color-mix(in srgb, var(--ar-cyan) 22%, transparent);
-  height: min(79vw, 24rem);
+  aspect-ratio: 16 / 9;
+  height: auto;
   position: absolute;
-  width: min(79vw, 24rem);
+  width: min(100%, 42rem);
 }
 
 .frame::before,
@@ -324,9 +329,20 @@
   }
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 64rem) {
   .experience {
     grid-template-columns: minmax(0, 1.1fr) minmax(15rem, 0.7fr);
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .modeActions,
+  .videoActions,
+  .primaryAction,
+  .secondaryAction,
+  .videoActions button,
+  .videoFallback button {
+    width: 100%;
   }
 }
 

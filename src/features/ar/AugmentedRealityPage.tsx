@@ -7,8 +7,8 @@ import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
 
 import arDemoVideo from "../../assets/ar/expojuy-ra-demo.mp4";
+import expojuyTarget from "../../assets/ar/expojuy26_isologotipo.jpg";
 import arTarget from "../../assets/ar/targets.mind?url";
-import expojuyIsologotype from "../../assets/brand/expojuy26_isologotipo.png";
 import styles from "./AugmentedRealityPage.module.css";
 
 type ExperiencePhase = "idle" | "scanning" | "detected" | "playing";
@@ -319,8 +319,8 @@ export function AugmentedRealityPage() {
           ) : (
             <div className={styles.targetCard}>
               <img
-                alt="Isologotipo oficial de ExpoJuy"
-                src={expojuyIsologotype}
+                alt="Imagen target del isologotipo de ExpoJuy"
+                src={expojuyTarget}
               />
             </div>
           )}
