@@ -253,7 +253,11 @@ export function AugmentedRealityPage() {
       </header>
 
       <div className={styles.experience} data-phase={phase}>
-        <div className={styles.targetStage}>
+        <div
+          className={`${styles.targetStage} ${
+            mode === "muestra" ? styles.targetStageMuestra : ""
+          }`}
+        >
           {mode === "camara" ? (
             <div className={styles.arViewport}>
               {hasCameraError ? (
@@ -284,7 +288,7 @@ export function AugmentedRealityPage() {
                     mindar-image={`imageTargetSrc: ${arTarget}; autoStart: false; uiLoading: no; uiScanning: no; uiError: no;`}
                     color-space="sRGB"
                     renderer="alpha: true; colorManagement: true; physicallyCorrectLights: true"
-                    vr-mode-ui="enabled: false"
+                    xr-mode-ui="enabled: false"
                     device-orientation-permission-ui="enabled: false"
                   >
                     {/* @ts-expect-error a-camera is a custom element */}

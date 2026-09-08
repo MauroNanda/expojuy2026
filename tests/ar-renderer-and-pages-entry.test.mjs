@@ -16,6 +16,16 @@ test("uses a transparent A-Frame renderer with valid component syntax", async ()
   );
 });
 
+test("deshabilita la UI de fullscreen que A-Frame inyecta en el visor embebido", async () => {
+  const arPage = await readFile(
+    new URL("src/features/ar/AugmentedRealityPage.tsx", appRoot),
+    "utf8",
+  );
+
+  assert.match(arPage, /xr-mode-ui="enabled: false"/);
+  assert.doesNotMatch(arPage, /vr-mode-ui=/);
+});
+
 test("preserva el encuadre de la cámara y apila el visor antes de escritorio", async () => {
   const stylesheet = await readFile(
     new URL("src/features/ar/AugmentedRealityPage.module.css", appRoot),
@@ -65,5 +75,21 @@ test("mantiene el Reel vertical sin alterar el target ni el encuadre de cámara"
   assert.match(
     page,
     /<a-video src="#ar-video-asset" position="0 0 0" width="0\.5625" height="1">/,
+  );
+});
+
+test("presenta el target sin un segundo panel blanco y lo acota solo en escritorio", async () => {
+  const stylesheet = await readFile(
+    new URL("src/features/ar/AugmentedRealityPage.module.css", appRoot),
+    "utf8",
+  );
+
+  assert.match(
+    stylesheet,
+    /\.targetCard\s*\{[\s\S]*background:\s*transparent[\s\S]*padding:\s*0/,
+  );
+  assert.match(
+    stylesheet,
+    /\.targetStageMuestra\s+\.targetCard,[\s\S]*\.targetStageMuestra\s+\.frame\s*\{[\s\S]*width:\s*min\(100%,\s*34rem\)/,
   );
 });

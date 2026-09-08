@@ -93,14 +93,16 @@
 .targetCard {
   align-items: center;
   aspect-ratio: 16 / 9;
-  background: white;
-  box-shadow:
-    0 0 0 0.75rem color-mix(in srgb, white 12%, transparent),
-    0 1.5rem 4rem rgb(0 0 0 / 35%);
+  background: transparent;
   display: grid;
   justify-items: center;
-  padding: clamp(1rem, 4vw, 2rem);
+  padding: 0;
   width: min(100%, 42rem);
+}
+
+.targetStageMuestra .targetCard,
+.targetStageMuestra .frame {
+  width: min(100%, 34rem);
 }
 
 .videoViewport {
