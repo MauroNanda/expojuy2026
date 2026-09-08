@@ -399,7 +399,7 @@ p {
 @media (min-width: 54rem) {
   .accordionContainer {
     flex-direction: row;
-    min-height: 520px;
+    height: 540px;
     align-items: stretch;
   }
 }
@@ -411,7 +411,7 @@ p {
   overflow: hidden;
   background: var(--color-surface);
   transition:
-    flex 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    flex 0.65s cubic-bezier(0.25, 1, 0.5, 1),
     border-color 0.4s ease,
     box-shadow 0.4s ease;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
@@ -423,7 +423,7 @@ p {
   background-size: cover;
   background-position: center;
   transition:
-    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.25, 1, 0.5, 1),
     filter 0.5s ease;
 }
 .poleDuoToneOverlay {
@@ -431,8 +431,8 @@ p {
   inset: 0;
   z-index: -2;
   transition:
-    opacity 0.6s ease,
-    background 0.6s ease;
+    opacity 0.5s ease,
+    background 0.5s ease;
 }
 .polePatternOverlay {
   position: absolute;
@@ -460,7 +460,7 @@ p {
     40px 40px;
   mix-blend-mode: overlay;
   opacity: 0.65;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease;
 }
 .polePanel[data-theme="bioceanico"] {
   --pole-accent: var(--color-brand-cyan);
@@ -606,7 +606,7 @@ p {
 }
 .poleTrigger {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   border: none;
   background: transparent;
@@ -623,28 +623,41 @@ p {
 }
 @media (min-width: 54rem) {
   .polePanel[data-active="true"] .poleTrigger {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s;
   }
   .polePanel:not([data-active="true"]) .poleTrigger {
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: var(--space-lg) var(--space-xs);
+    justify-content: flex-end;
+    padding: var(--space-2xl) var(--space-xs) var(--space-xl);
+    gap: var(--space-lg);
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 0.35s ease 0.15s,
+      visibility 0.35s 0.15s;
   }
   .poleVerticalTitle {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     font-weight: var(--font-weight-bold);
-    font-size: 1rem;
-    letter-spacing: 0.05em;
+    font-size: 1.0625rem;
+    letter-spacing: 0.06em;
     color: #ffffff;
     white-space: nowrap;
     margin-block: auto;
     text-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.65),
-      0 0 12px rgba(0, 0, 0, 0.35);
+      0 2px 8px rgba(0, 0, 0, 0.7),
+      0 0 16px rgba(0, 0, 0, 0.4);
   }
 }
 @media (max-width: 53.99rem) {
@@ -671,102 +684,51 @@ p {
     transform: rotate(90deg);
   }
 }
-.poleNumberBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.2rem 0.6rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  color: #ffffff;
-  font-weight: var(--font-weight-bold);
-  font-size: 0.8125rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-.polePanel[data-active="true"] .poleNumberBadge {
-  background: var(--color-brand-indigo);
-  color: #ffffff;
-  border-color: var(--color-brand-indigo);
-  text-shadow: none;
-}
-.poleIconWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  color: #ffffff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
-  transition:
-    transform 0.3s ease,
-    background 0.3s ease,
-    box-shadow 0.3s ease;
-}
-.polePanel[data-active="true"] .poleIconWrapper {
-  background: color-mix(
-    in srgb,
-    var(--pole-accent, var(--color-brand-indigo)) 18%,
-    transparent
-  );
-  color: var(--pole-accent, var(--color-brand-indigo));
-  border-color: color-mix(
-    in srgb,
-    var(--pole-accent, var(--color-brand-indigo)) 40%,
-    transparent
-  );
-  box-shadow: none;
-}
 .poleExpandHint {
   color: rgba(255, 255, 255, 0.9);
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
   transition:
-    transform 0.3s ease,
+    transform 0.4s ease,
     color 0.2s ease;
 }
 .polePanel[data-active="true"] .poleExpandHint {
   color: var(--color-brand-indigo);
   filter: none;
 }
-@keyframes poleContentFadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 .poleContent {
   position: relative;
   z-index: 2;
-  display: none;
-}
-.polePanel[data-active="true"] .poleContent {
-  display: flex;
-  flex-direction: column;
-  animation: poleContentFadeIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @media (min-width: 54rem) {
+  .polePanel:not([data-active="true"]) .poleContent {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+  }
   .polePanel[data-active="true"] .poleContent {
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
     padding: var(--space-xl);
     overflow-y: auto;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+      opacity 0.45s ease 0.18s,
+      visibility 0.45s 0.18s;
   }
 }
 @media (max-width: 53.99rem) {
+  .poleContent {
+    display: none;
+  }
   .polePanel[data-active="true"] .poleContent {
+    display: block;
     padding: var(--space-md);
   }
 }

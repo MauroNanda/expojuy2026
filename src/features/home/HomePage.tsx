@@ -2,14 +2,9 @@ import {
   ArrowRight,
   ArrowUpRight,
   ChevronRight,
-  Globe,
-  Lightbulb,
   MapPinned,
-  Mountain,
   ScanLine,
-  Sprout,
   Ticket,
-  Zap,
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -40,21 +35,6 @@ import styles from "./HomePage.module.css";
 
 interface HomePageProps {
   onOpenTickets: () => void;
-}
-
-function getPoleIcon(theme: DemoPole["theme"]) {
-  switch (theme) {
-    case "bioceanico":
-      return Globe;
-    case "puna":
-      return Zap;
-    case "quebrada":
-      return Mountain;
-    case "yungas":
-      return Sprout;
-    case "valles":
-      return Lightbulb;
-  }
 }
 
 function getPoleImage(theme: DemoPole["theme"]) {
@@ -374,7 +354,6 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         >
           {demoPoles.map((pole) => {
             const isExpanded = pole.id === activePoleId;
-            const Icon = getPoleIcon(pole.theme);
             const poleImg = getPoleImage(pole.theme);
             const poleExhibitors = demoExhibitors.filter((exhibitor) =>
               pole.exhibitorIds.includes(exhibitor.id),
@@ -406,10 +385,6 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
                   aria-controls={`pole-content-${pole.id}`}
                   onClick={() => setActivePoleId(pole.id)}
                 >
-                  <span className={styles.poleNumberBadge}>{pole.number}</span>
-                  <span className={styles.poleIconWrapper}>
-                    <Icon aria-hidden="true" size={20} />
-                  </span>
                   <span className={styles.poleVerticalTitle}>
                     {pole.shortName}
                   </span>
@@ -429,9 +404,6 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
                     <div className={styles.poleHeader}>
                       <div className={styles.poleMeta}>
                         <span className={styles.poleBadge}>{pole.badge}</span>
-                        <span className={styles.poleNumberLarge}>
-                          {pole.number}
-                        </span>
                       </div>
                       <h3 className={styles.poleTitle}>{pole.name}</h3>
                       <p className={styles.poleTagline}>{pole.tagline}</p>
