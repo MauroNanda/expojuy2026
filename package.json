@@ -33,6 +33,7 @@
     "aframe": "^1.8.0",
     "lucide-react": "^1.39.0",
     "mind-ar": "^1.2.5",
+    "pdf-lib": "^1.17.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.3",

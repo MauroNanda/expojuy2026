@@ -26,6 +26,10 @@
   gap: var(--space-xs);
 }
 .zoneList button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
   border: 1px solid var(--color-neutral);
   background: var(--color-surface);
   color: var(--color-ink);
@@ -49,6 +53,25 @@
   border-color: var(--color-brand-cyan);
   box-shadow: inset 0 0 0 1px var(--color-brand-cyan);
 }
+.zoneNumberBadge {
+  align-items: center;
+  background: color-mix(in srgb, var(--color-brand-cyan) 25%, transparent);
+  border: 1px solid var(--color-brand-cyan);
+  border-radius: var(--radius-sm, 4px);
+  color: var(--color-ink);
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: var(--font-weight-bold, 700);
+  justify-content: center;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 0.15rem 0.38rem;
+}
+.zoneList button[data-in-route="true"] .zoneNumberBadge {
+  background: var(--color-brand-violet);
+  border-color: var(--color-brand-violet);
+  color: #ffffff;
+}
 .planWrap {
   position: relative;
   width: 100%;
@@ -67,15 +90,40 @@
   max-width: 100%;
 }
 .hotspot {
+  align-items: center;
   background: color-mix(in srgb, var(--color-brand-cyan) 26%, transparent);
   border: 2px solid color-mix(in srgb, var(--color-surface) 85%, transparent);
   border-radius: 0.4rem;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 0;
   position: absolute;
   transition:
     background 220ms ease,
     border-color 220ms ease,
     box-shadow 220ms ease;
+}
+.pinBadge {
+  align-items: center;
+  background: var(--color-brand-violet);
+  border: 1.5px solid #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+  display: inline-flex;
+  font-size: clamp(0.6rem, 1.1vw, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  justify-content: center;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 0.15rem 0.42rem;
+  pointer-events: none;
+  z-index: 2;
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
 }
 .hotspot[data-kind="covered"] {
   background: color-mix(in srgb, var(--color-brand-indigo) 28%, transparent);
@@ -104,6 +152,13 @@
 }
 .hotspot[data-in-route="true"] {
   border-color: var(--color-brand-cyan);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--color-brand-cyan) 50%, transparent);
+}
+.hotspot[data-selected="true"] .pinBadge {
+  background: var(--color-brand-cyan);
+  border-color: #ffffff;
+  color: #0d1528;
   box-shadow: 0 0 0 3px
     color-mix(in srgb, var(--color-brand-cyan) 50%, transparent);
 }
@@ -225,15 +280,169 @@
   border-top: 2px solid var(--color-brand-indigo);
   background: var(--color-surface);
 }
+.routeHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 0.45rem);
+}
+.routeIndexBadge {
+  align-items: center;
+  background: var(--color-brand-violet);
+  border-radius: var(--radius-sm, 4px);
+  color: #ffffff;
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: var(--font-weight-bold, 700);
+  justify-content: center;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 0.18rem 0.35rem;
+}
 .routePanel li span {
   color: var(--color-brand-indigo);
   font-size: 0.8125rem;
 }
-.routePanel > a {
+.routePanel li .activityNotice {
+  color: var(--color-ink);
+  font-size: 0.775rem;
+  opacity: 0.85;
+}
+.actionsGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+.downloadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-brand-violet);
+  color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm, 4px);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+.downloadButton:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-brand-violet) 85%, #000000);
+  transform: translateY(-1px);
+}
+.downloadButton:focus-visible {
+  outline: 2px solid var(--color-brand-cyan);
+  outline-offset: 2px;
+}
+.downloadButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+.spinner {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+.editAction {
   width: fit-content;
   color: var(--color-brand-indigo);
   font-weight: var(--font-weight-semibold);
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
+.editAction:hover {
+  color: var(--color-brand-violet);
+}
+.exportStatus {
+  font-size: 0.85rem;
+  color: var(--color-brand-indigo);
+  margin: 0;
+}
+.errorBanner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: color-mix(in srgb, #ff4d4f 12%, var(--color-surface));
+  border: 1px solid color-mix(in srgb, #ff4d4f 40%, transparent);
+  border-radius: var(--radius-sm, 4px);
+  color: #d9363e;
+  font-size: 0.875rem;
+}
+.errorBanner button {
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm, 4px);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-semibold);
+  padding: 0.2rem 0.5rem;
+}
+.errorBanner button:hover {
+  background: color-mix(in srgb, #ff4d4f 15%, transparent);
+}
+.mapsAction {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 0.45rem);
+  width: fit-content;
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid color-mix(in srgb, var(--color-brand-indigo) 35%, transparent);
+  background: color-mix(in srgb, var(--color-brand-indigo) 6%, transparent);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+.mapsAction:hover {
+  background: color-mix(in srgb, var(--color-brand-indigo) 14%, transparent);
+  border-color: var(--color-brand-indigo);
+  color: var(--color-brand-violet);
+}
+.emptyRouteNotice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: color-mix(in srgb, var(--color-neutral) 10%, var(--color-surface));
+  border-left: 3px solid var(--color-brand-indigo);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+.emptyRouteNotice p {
+  margin: 0;
+}
+.emptyRouteNotice p a {
+  color: var(--color-brand-violet);
+  font-weight: var(--font-weight-semibold);
+}
+
 @media (min-width: 64rem) {
   .layout {
     grid-template-columns: minmax(14rem, 0.45fr) minmax(0, 1fr);
