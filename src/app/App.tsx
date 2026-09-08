@@ -12,39 +12,44 @@ import { routePaths } from "../navigation/routePaths";
 import { ApplicationShell } from "../shared/ui/ApplicationShell";
 import { NavigationArrival } from "../navigation/NavigationArrival";
 import { ThemeProvider } from "../shared/ui/ThemeProvider";
+import { AccessibilityButton } from "../shared/ui/AccessibilityButton";
+import { AccessibilityProvider } from "../shared/ui/AccessibilityProvider";
 
 export function App() {
   const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
   return (
     <ThemeProvider>
-      <ConnectionRouteProvider>
-        <ApplicationShell onOpenTickets={() => setIsTicketDialogOpen(true)}>
-          <NavigationArrival />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <HomePage onOpenTickets={() => setIsTicketDialogOpen(true)} />
-              }
+      <AccessibilityProvider>
+        <ConnectionRouteProvider>
+          <ApplicationShell onOpenTickets={() => setIsTicketDialogOpen(true)}>
+            <NavigationArrival />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <HomePage onOpenTickets={() => setIsTicketDialogOpen(true)} />
+                }
+              />
+              <Route path={routePaths.agenda} element={<AgendaPage />} />
+              <Route
+                path={routePaths.exhibitors}
+                element={<ExhibitorDirectoryPage />}
+              />
+              <Route path={routePaths.map} element={<VenueMapPage />} />
+              <Route
+                path={routePaths.realityAugmented}
+                element={<AugmentedRealityPage />}
+              />
+              <Route path={routePaths.news} element={<NewsPage />} />
+            </Routes>
+            <TicketDialog
+              isOpen={isTicketDialogOpen}
+              onClose={() => setIsTicketDialogOpen(false)}
             />
-            <Route path={routePaths.agenda} element={<AgendaPage />} />
-            <Route
-              path={routePaths.exhibitors}
-              element={<ExhibitorDirectoryPage />}
-            />
-            <Route path={routePaths.map} element={<VenueMapPage />} />
-            <Route
-              path={routePaths.realityAugmented}
-              element={<AugmentedRealityPage />}
-            />
-            <Route path={routePaths.news} element={<NewsPage />} />
-          </Routes>
-          <TicketDialog
-            isOpen={isTicketDialogOpen}
-            onClose={() => setIsTicketDialogOpen(false)}
-          />
-        </ApplicationShell>
-      </ConnectionRouteProvider>
+          </ApplicationShell>
+          <AccessibilityButton />
+        </ConnectionRouteProvider>
+      </AccessibilityProvider>
     </ThemeProvider>
   );
 }
