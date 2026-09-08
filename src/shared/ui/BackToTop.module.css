@@ -2,7 +2,7 @@
   position: fixed;
   z-index: 3;
   right: var(--space-md);
-  bottom: var(--space-md);
+  bottom: max(var(--space-md), env(safe-area-inset-bottom));
   display: grid;
   width: 2.75rem;
   height: 2.75rem;
@@ -14,6 +14,15 @@
   box-shadow: 0 0.5rem 1.25rem
     color-mix(in srgb, var(--color-ink) 18%, transparent);
   cursor: pointer;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.control[data-visible="false"] {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(0.75rem);
 }
 
 .control:hover {
@@ -21,9 +30,20 @@
   color: var(--color-on-brand);
 }
 
+.control:focus-visible {
+  outline: 3px solid var(--color-brand-cyan);
+  outline-offset: 0.2rem;
+}
+
 @media (min-width: 64rem) {
   .control {
     right: var(--space-xl);
     bottom: var(--space-xl);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .control {
+    transition: none;
   }
 }

@@ -19,10 +19,6 @@ export function BackToTop() {
     return () => window.removeEventListener("scroll", updateVisibility);
   }, []);
 
-  if (!isVisible) {
-    return null;
-  }
-
   const returnToTop = () => {
     const reducesMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -34,7 +30,11 @@ export function BackToTop() {
   return (
     <button
       aria-label="Volver al inicio"
+      aria-hidden={!isVisible}
       className={styles.control}
+      data-visible={isVisible}
+      disabled={!isVisible}
+      tabIndex={isVisible ? 0 : -1}
       title="Volver al inicio"
       type="button"
       onClick={returnToTop}
