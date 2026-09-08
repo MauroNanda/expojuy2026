@@ -70,7 +70,7 @@
 .zoneList button[data-in-route="true"] .zoneNumberBadge {
   background: var(--color-brand-violet);
   border-color: var(--color-brand-violet);
-  color: #ffffff;
+  color: var(--color-on-brand);
 }
 .planWrap {
   position: relative;
@@ -107,10 +107,10 @@
 .pinBadge {
   align-items: center;
   background: var(--color-brand-violet);
-  border: 1.5px solid #ffffff;
+  border: 1.5px solid var(--color-surface);
   border-radius: 999px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
-  color: #ffffff;
+  color: var(--color-on-brand);
   display: inline-flex;
   font-size: clamp(0.6rem, 1.1vw, 0.75rem);
   font-weight: var(--font-weight-bold, 700);
@@ -157,8 +157,8 @@
 }
 .hotspot[data-selected="true"] .pinBadge {
   background: var(--color-brand-cyan);
-  border-color: #ffffff;
-  color: #0d1528;
+  border-color: var(--color-surface);
+  color: var(--color-surface-inverse);
   box-shadow: 0 0 0 3px
     color-mix(in srgb, var(--color-brand-cyan) 50%, transparent);
 }
@@ -289,7 +289,7 @@
   align-items: center;
   background: var(--color-brand-violet);
   border-radius: var(--radius-sm, 4px);
-  color: #ffffff;
+  color: var(--color-on-brand);
   display: inline-flex;
   font-size: 0.72rem;
   font-weight: var(--font-weight-bold, 700);
@@ -320,7 +320,7 @@
   gap: var(--space-xs);
   padding: var(--space-xs) var(--space-md);
   background: var(--color-brand-violet);
-  color: #ffffff;
+  color: var(--color-on-brand);
   border: 1px solid transparent;
   border-radius: var(--radius-sm, 4px);
   font-size: 0.9375rem;

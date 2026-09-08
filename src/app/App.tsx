@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { AgendaPage } from "../features/agenda/AgendaPage";
 import { ConnectionRouteProvider } from "../features/connection-route/ConnectionRouteProvider";
 import { ExhibitorDirectoryPage } from "../features/exhibitors/ExhibitorDirectoryPage";
@@ -41,6 +41,7 @@ export function App() {
                 element={<AugmentedRealityPage />}
               />
               <Route path={routePaths.news} element={<NewsPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
             <TicketDialog
               isOpen={isTicketDialogOpen}
