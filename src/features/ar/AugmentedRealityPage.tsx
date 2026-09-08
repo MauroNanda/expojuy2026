@@ -7,8 +7,8 @@ import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
 
 import arDemoVideo from "../../assets/ar/expojuy-ra-demo.mp4";
+import expojuyTarget from "../../assets/ar/expojuy26_isologotipo.jpg";
 import arTarget from "../../assets/ar/targets.mind?url";
-import expojuyIsologotype from "../../assets/brand/expojuy26_isologotipo.png";
 import styles from "./AugmentedRealityPage.module.css";
 
 type ExperiencePhase = "idle" | "scanning" | "detected" | "playing";
@@ -65,7 +65,7 @@ export function AugmentedRealityPage() {
   const [phase, setPhase] = useState<ExperiencePhase>("idle");
   const [hasVideoError, setHasVideoError] = useState(false);
   const [hasCameraError, setHasCameraError] = useState(false);
-  const [needsManualPlayback, setNeedsManualPlayback] = useState(false);
+  const [isAudioPlaybackBlocked, setIsAudioPlaybackBlocked] = useState(false);
   const [isVideoPaused, setIsVideoPaused] = useState(false);
   
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -79,6 +79,7 @@ export function AugmentedRealityPage() {
   };
 
   const cleanupCamera = useCallback(() => {
+    videoRef.current?.pause();
     arVideoRef.current?.pause();
 
     const system = sceneRef.current?.systems?.["mindar-image-system"];
@@ -93,6 +94,7 @@ export function AugmentedRealityPage() {
   const switchToMuestra = () => {
     setMode("muestra");
     setHasCameraError(false);
+    setIsAudioPlaybackBlocked(false);
     setPhase("idle");
     cleanupCamera();
   };
@@ -101,7 +103,7 @@ export function AugmentedRealityPage() {
     clearTimers();
     setHasCameraError(false);
     setHasVideoError(false);
-    setNeedsManualPlayback(false);
+    setIsAudioPlaybackBlocked(false);
     setIsVideoPaused(false);
     setMode("camara");
     setPhase("scanning");
@@ -110,7 +112,7 @@ export function AugmentedRealityPage() {
   const startDemo = () => {
     clearTimers();
     setHasVideoError(false);
-    setNeedsManualPlayback(false);
+    setIsAudioPlaybackBlocked(false);
     setIsVideoPaused(false);
     
     if (mode === "muestra") {
@@ -127,13 +129,20 @@ export function AugmentedRealityPage() {
     }
   };
 
+  const playWithSound = useCallback(() => {
+    setIsAudioPlaybackBlocked(false);
+    const video = mode === "muestra" ? videoRef.current : arVideoRef.current;
+    if (!video) return;
+
+    void video.play().catch(() => setIsAudioPlaybackBlocked(true));
+  }, [mode]);
+
   const replayVideo = () => {
-    setNeedsManualPlayback(false);
     const video = mode === "muestra" ? videoRef.current : arVideoRef.current;
     if (!video) return;
 
     video.currentTime = 0;
-    void video.play().catch(() => setNeedsManualPlayback(true));
+    playWithSound();
   };
 
   const togglePlayback = () => {
@@ -141,8 +150,7 @@ export function AugmentedRealityPage() {
     if (!video) return;
 
     if (video.paused) {
-      setNeedsManualPlayback(false);
-      void video.play().catch(() => setNeedsManualPlayback(true));
+      playWithSound();
       return;
     }
     video.pause();
@@ -161,6 +169,7 @@ export function AugmentedRealityPage() {
 
     const onTargetLost = () => {
       setPhase("scanning");
+      setIsAudioPlaybackBlocked(false);
       if (arVideoRef.current) {
         arVideoRef.current.pause();
       }
@@ -220,12 +229,12 @@ export function AugmentedRealityPage() {
 
   useEffect(() => {
     if (phase !== "playing" || hasVideoError) return;
-    
+
     const video = mode === "muestra" ? videoRef.current : arVideoRef.current;
     if (video) {
-      void video.play().catch(() => setNeedsManualPlayback(true));
+      void video.play().catch(() => setIsAudioPlaybackBlocked(true));
     }
-  }, [hasVideoError, phase, mode]);
+  }, [hasVideoError, mode, phase]);
 
   return (
     <section className={styles.page} aria-labelledby="ar-title">
@@ -262,7 +271,6 @@ export function AugmentedRealityPage() {
                     src={arDemoVideo}
                     loop={false}
                     crossOrigin="anonymous"
-                    muted
                     playsInline
                     style={{ display: "none" }}
                     onError={() => setHasVideoError(true)}
@@ -305,7 +313,6 @@ export function AugmentedRealityPage() {
                 <video
                   ref={videoRef}
                   autoPlay
-                  muted
                   playsInline
                   onError={() => setHasVideoError(true)}
                   onPause={() => setIsVideoPaused(true)}
@@ -319,8 +326,8 @@ export function AugmentedRealityPage() {
           ) : (
             <div className={styles.targetCard}>
               <img
-                alt="Isologotipo oficial de ExpoJuy"
-                src={expojuyIsologotype}
+                alt="Imagen target del isologotipo de ExpoJuy"
+                src={expojuyTarget}
               />
             </div>
           )}
@@ -369,12 +376,12 @@ export function AugmentedRealityPage() {
                 El video representa la capa audiovisual que aparecería sobre el
                 isologotipo.
               </p>
-              {needsManualPlayback && (
-                <button type="button" onClick={replayVideo}>
-                  <Play aria-hidden="true" size={18} /> Reproducir video
+              {isAudioPlaybackBlocked && (
+                <button type="button" onClick={playWithSound}>
+                  <Play aria-hidden="true" size={18} /> Reproducir con sonido
                 </button>
               )}
-              {!needsManualPlayback && (
+              {!isAudioPlaybackBlocked && (
                 <button
                   aria-label={isVideoPaused ? "Reanudar video" : "Pausar video"}
                   type="button"
