@@ -28,7 +28,11 @@ test("preserva el encuadre de la cámara y apila el visor antes de escritorio", 
   );
   assert.match(
     stylesheet,
-    /\.arViewport video,[\s\S]*object-fit:\s*contain\s*!important/,
+    /\.arViewport > video\s*\{[^}]*z-index:\s*0\s*!important/,
+  );
+  assert.doesNotMatch(
+    stylesheet,
+    /\.arViewport > video\s*\{[^}]*?(?:height|width|object-fit):/,
   );
   assert.match(
     stylesheet,
