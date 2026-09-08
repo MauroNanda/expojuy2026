@@ -996,6 +996,14 @@ p {
   margin: 0;
   font-size: 1.25rem;
 }
+.newsList h3 a {
+  color: var(--color-brand-violet);
+  text-decoration: none;
+}
+.newsList h3 a:hover,
+.newsList h3 a:focus-visible {
+  text-decoration: underline;
+}
 .newsList p {
   margin: var(--space-sm) 0 0;
   line-height: 1.45;
