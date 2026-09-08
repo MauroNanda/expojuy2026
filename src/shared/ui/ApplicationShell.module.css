@@ -1,4 +1,5 @@
 .shell {
+  --shell-gutter: clamp(1rem, 4vw, 2.5rem);
   --header-offset: calc(
     clamp(2.5rem, 6vw, 3.25rem) +
       (2 * clamp(var(--space-sm), 2vw, var(--space-md))) + var(--space-xs)
@@ -17,15 +18,14 @@
   z-index: 3;
 }
 
+.headerContent,
 .main,
 .footer {
-  width: min(100% - 2rem, 75rem);
+  width: min(calc(100% - (2 * var(--shell-gutter))), 75rem);
   margin-inline: auto;
 }
 
 .headerContent {
-  width: min(100% - 2rem, 75rem);
-  margin-inline: auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -54,17 +54,26 @@
 }
 
 .main {
-  padding-block: var(--space-2xl);
+  padding-block: clamp(var(--space-xl), 5vw, var(--space-2xl));
 }
 
 .footer {
   display: grid;
-  gap: var(--space-sm);
-  padding-block: var(--space-lg);
+  gap: clamp(var(--space-lg), 4vw, var(--space-2xl));
+  padding-block: clamp(var(--space-xl), 5vw, 3.5rem) var(--space-lg);
   border-top: 1px solid
     color-mix(in srgb, var(--color-neutral) 65%, transparent);
+  background: var(--color-surface);
   color: var(--color-ink);
   font-size: 0.875rem;
+}
+
+.footerIdentity,
+.footerNavigation,
+.footerChannels {
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
 }
 
 .footerLogo {
@@ -76,6 +85,61 @@
 
 .footer p {
   margin: 0;
+}
+
+.footer h2 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footerLinks {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.footerLinks li + li {
+  margin-top: 0.4rem;
+}
+
+.footer a {
+  width: fit-content;
+  color: var(--color-brand-indigo);
+  font-weight: var(--font-weight-semibold);
+}
+
+.footer a:hover {
+  color: var(--color-brand-violet);
+}
+
+.footer a:focus-visible {
+  outline: 3px solid var(--color-brand-cyan);
+  outline-offset: 0.2rem;
+}
+
+.footerCredit {
+  grid-column: 1 / -1;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-neutral);
+  color: color-mix(in srgb, var(--color-ink) 76%, var(--color-neutral));
+  font-size: 0.8125rem;
+}
+
+.footerPending {
+  max-width: 30ch;
+  color: color-mix(in srgb, var(--color-ink) 76%, var(--color-neutral));
+  font-size: 0.8125rem;
+}
+
+@media (min-width: 48rem) {
+  .footer {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.75fr) minmax(0, 1fr);
+    align-items: start;
+  }
 }
 
 @media (min-width: 64rem) {
