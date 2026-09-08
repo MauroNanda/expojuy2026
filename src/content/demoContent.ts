@@ -11,6 +11,7 @@ export interface DemoExhibitor {
   id: string;
   name: string;
   sectorId: string;
+  territory?: string;
   venueZoneId: string;
   visual?: DemoExhibitorVisual;
 }
@@ -44,6 +45,19 @@ export interface DemoInterest {
   sectorId: string;
   sectorName: string;
   venueZoneId: string;
+}
+
+export interface DemoPole {
+  badge: string;
+  description: string;
+  exhibitorIds: string[];
+  highlights: string[];
+  id: string;
+  name: string;
+  number: string;
+  shortName: string;
+  tagline: string;
+  theme: "bioceanico" | "puna" | "quebrada" | "yungas" | "valles";
 }
 
 /**
@@ -270,12 +284,94 @@ export const demoInterests: DemoInterest[] = [
   },
 ];
 
+export const demoPoles: DemoPole[] = [
+  {
+    id: "corredor-bioceanico",
+    number: "01",
+    name: "Corredor Bioceánico & Logística Internacional",
+    shortName: "Corredor Bioceánico",
+    tagline: "El eje transcontinental que une el Atlántico con el Pacífico",
+    description:
+      "Jujuy como nodo estratégico de integración comercial, conectando Brasil, Paraguay y el norte chileno a través del Paso de Jama y la Zona Franca Perico.",
+    badge: "Eje Internacional",
+    highlights: ["Paso de Jama", "Zona Franca Perico", "Rondas Comerciales"],
+    theme: "bioceanico",
+    exhibitorIds: ["mercado-del-valle"],
+  },
+  {
+    id: "puna-altiplano",
+    number: "02",
+    name: "Puna & Altiplano: Litio y Energías Limpias",
+    shortName: "Puna & Altiplano",
+    tagline: "El corazón de la transición energética y saberes ancestrales",
+    description:
+      "Minería responsable de litio, parques solares a 4.000 msnm como Cauchari, telemetría ambiental y comunidades productoras de fibras finas de camélidos.",
+    badge: "Energía & Origen",
+    highlights: [
+      "Cadena del Litio",
+      "Parque Solar Cauchari",
+      "Hilados Andinos",
+    ],
+    theme: "puna",
+    exhibitorIds: ["laboratorio-andino", "manos-de-la-puna"],
+  },
+  {
+    id: "quebrada-humahuaca",
+    number: "03",
+    name: "Quebrada de Humahuaca: Sabores y Altura",
+    shortName: "Quebrada de Humahuaca",
+    tagline: "Patrimonio de la humanidad, enoturismo e innovación sostenible",
+    description:
+      "Vinos de extrema altura reconocidos internacionalmente, tecnología aplicada a desafíos de montaña, agroecología y preservación cultural.",
+    badge: "Patrimonio & Altura",
+    highlights: ["Vitivinicultura de Altura", "Software Andino", "Enoturismo"],
+    theme: "quebrada",
+    exhibitorIds: ["taller-quebrada"],
+  },
+  {
+    id: "yungas-san-francisco",
+    number: "04",
+    name: "Yungas & Ramal: Agroindustria Sostenible",
+    shortName: "Yungas & Ramal",
+    tagline: "La potencia agroindustrial, bioplásticos y bioenergías",
+    description:
+      "Producción de caña de azúcar, papel, bioetanol sustentable, citricultura de exportación y bioinsumos derivados de la biodiversidad de las Yungas.",
+    badge: "Bioeconomía",
+    highlights: [
+      "Bioetanol y Bioplásticos",
+      "Cultivos del Ramal",
+      "Agroindustria",
+    ],
+    theme: "yungas",
+    exhibitorIds: ["proyecto-del-norte"],
+  },
+  {
+    id: "valles-san-salvador",
+    number: "05",
+    name: "Valles Centrales: Conocimiento y Negocios",
+    shortName: "Valles Centrales",
+    tagline: "Economía del conocimiento, servicios e inversión",
+    description:
+      "Polo tecnológico y de vinculación en San Salvador de Jujuy: desarrollo de software, startups de base científica, metalmecánica y redes de financiamiento.",
+    badge: "Innovación & Hub",
+    highlights: [
+      "Economía del Conocimiento",
+      "Redes Emprendedoras",
+      "Servicios",
+    ],
+    theme: "valles",
+    exhibitorIds: ["red-emprende"],
+  },
+];
+
 export const demoExhibitors: DemoExhibitor[] = [
   {
     id: "proyecto-del-norte",
     name: "Proyecto del Norte",
     category: "Producción local",
-    description: "Una propuesta demostrativa vinculada a saberes y territorio.",
+    territory: "Valle de San Francisco",
+    description:
+      "Agroindustria sostenible y bioinsumos basados en cultivos del Ramal jujeño.",
     sectorId: "produccion-local",
     agendaItemId: "encuentro-apertura",
     venueZoneId: "stands-cubiertos",
@@ -284,8 +380,9 @@ export const demoExhibitors: DemoExhibitor[] = [
     id: "manos-de-la-puna",
     name: "Manos de la Puna",
     category: "Producción local",
+    territory: "Puna Jujeña & Yavi",
     description:
-      "Un recorrido demostrativo de oficios, saberes y producción del territorio.",
+      "Oficios tradicionales, hilados finos de camélidos y saberes ancestrales del altiplano.",
     sectorId: "produccion-local",
     agendaItemId: "encuentro-apertura",
     venueZoneId: "artesanos",
@@ -294,8 +391,9 @@ export const demoExhibitors: DemoExhibitor[] = [
     id: "laboratorio-andino",
     name: "Laboratorio Andino",
     category: "Tecnología aplicada",
+    territory: "Altiplano & Minería Sostenible",
     description:
-      "Un protagonista demostrativo para explorar innovación aplicada.",
+      "Telemetría ambiental, sensores IoT y tecnología aplicada a la cadena de valor del litio.",
     sectorId: "tecnologia-aplicada",
     agendaItemId: "ronda-descubrimiento",
     venueZoneId: "stands-cubiertos",
@@ -304,8 +402,9 @@ export const demoExhibitors: DemoExhibitor[] = [
     id: "taller-quebrada",
     name: "Taller Quebrada",
     category: "Tecnología aplicada",
+    territory: "Quebrada de Humahuaca",
     description:
-      "Una propuesta demostrativa para imaginar herramientas aplicadas a desafíos locales.",
+      "Soluciones de software agropecuario, energía solar comunitaria y conectividad de altura.",
     sectorId: "tecnologia-aplicada",
     agendaItemId: "ronda-descubrimiento",
     venueZoneId: "descubiertos",
@@ -314,8 +413,9 @@ export const demoExhibitors: DemoExhibitor[] = [
     id: "red-emprende",
     name: "Red Emprende",
     category: "Vinculación empresarial",
+    territory: "San Salvador & Nodo Central",
     description:
-      "Un espacio demostrativo de encuentro entre proyectos y oportunidades.",
+      "Plataforma de vinculación entre pymes, fondos de inversión y ecosistemas de innovación.",
     sectorId: "vinculacion-empresarial",
     agendaItemId: "experiencias-ecosistema",
     venueZoneId: "stands-cubiertos",
@@ -324,8 +424,9 @@ export const demoExhibitors: DemoExhibitor[] = [
     id: "mercado-del-valle",
     name: "Mercado del Valle",
     category: "Vinculación empresarial",
+    territory: "Corredor Bioceánico & Perico",
     description:
-      "Un espacio demostrativo para acercar propuestas, redes y oportunidades de intercambio.",
+      "Articulación comercial y logística transfronteriza conectando Jujuy con Chile, Paraguay y Brasil.",
     sectorId: "vinculacion-empresarial",
     agendaItemId: "experiencias-ecosistema",
     venueZoneId: "descubiertos",

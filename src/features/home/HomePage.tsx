@@ -1,4 +1,16 @@
-import { ArrowRight, MapPinned, ScanLine, Ticket } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronRight,
+  Globe,
+  Lightbulb,
+  MapPinned,
+  Mountain,
+  ScanLine,
+  Sprout,
+  Ticket,
+  Zap,
+} from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -6,6 +18,8 @@ import {
   demoAgenda,
   demoExhibitors,
   demoInterests,
+  demoPoles,
+  type DemoPole,
   demoSectors,
   demoSponsors,
   formatEventPeriod,
@@ -23,7 +37,23 @@ interface HomePageProps {
   onOpenTickets: () => void;
 }
 
+function getPoleIcon(theme: DemoPole["theme"]) {
+  switch (theme) {
+    case "bioceanico":
+      return Globe;
+    case "puna":
+      return Zap;
+    case "quebrada":
+      return Mountain;
+    case "yungas":
+      return Sprout;
+    case "valles":
+      return Lightbulb;
+  }
+}
+
 export function HomePage({ onOpenTickets }: HomePageProps) {
+  const [activePoleId, setActivePoleId] = useState<string>(demoPoles[0].id);
   const [selectedInterestId, setSelectedInterestId] = useState(
     demoInterests[0].id,
   );
@@ -296,21 +326,171 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         </div>
       </section>
 
-      <section aria-labelledby="exhibitors-title">
-        <p className={styles.sectionLabel}>Protagonistas</p>
-        <h2 id="exhibitors-title">Expositores destacados</h2>
-        <DemoNotice />
-        <ul className={styles.compactList}>
-          {demoExhibitors.map((exhibitor) => (
-            <li key={exhibitor.name}>
-              <span>{exhibitor.category}</span>
-              <strong>{exhibitor.name}</strong>
-            </li>
-          ))}
-        </ul>
-        <Link className={styles.textAction} to={routePaths.exhibitors}>
-          Ver expositores
-        </Link>
+      <section
+        id="polos-productivos"
+        className={styles.polesSection}
+        aria-labelledby="poles-title"
+      >
+        <div className={styles.sectionHeader}>
+          <p className={styles.sectionLabel}>Protagonistas del Ecosistema</p>
+          <h2 id="poles-title">
+            De Jujuy al Corredor Bioceánico: los polos que mueven la Expo
+          </h2>
+          <p className={styles.sectionLead}>
+            Explorá las fuerzas productivas de las cuatro regiones y el nodo
+            bioceánico internacional que se dan cita en Ciudad Cultural.
+          </p>
+          <DemoNotice>
+            Polos y expositores representativos de la matriz productiva
+            regional; datos demostrativos.
+          </DemoNotice>
+        </div>
+
+        {/* Acordeón Cinemático de Polos */}
+        <div
+          className={styles.accordionContainer}
+          role="region"
+          aria-label="Polos productivos de Jujuy y el Corredor Bioceánico"
+        >
+          {demoPoles.map((pole) => {
+            const isExpanded = pole.id === activePoleId;
+            const Icon = getPoleIcon(pole.theme);
+            const poleExhibitors = demoExhibitors.filter((exhibitor) =>
+              pole.exhibitorIds.includes(exhibitor.id),
+            );
+
+            return (
+              <div
+                key={pole.id}
+                className={styles.polePanel}
+                data-active={isExpanded || undefined}
+                data-theme={pole.theme}
+              >
+                {/* Botón disparador del panel / barra colapsada */}
+                <button
+                  type="button"
+                  id={`pole-tab-${pole.id}`}
+                  className={styles.poleTrigger}
+                  aria-expanded={isExpanded}
+                  aria-controls={`pole-content-${pole.id}`}
+                  onClick={() => setActivePoleId(pole.id)}
+                >
+                  <span className={styles.poleNumber}>{pole.number}</span>
+                  <span className={styles.poleIconWrapper}>
+                    <Icon aria-hidden="true" size={20} />
+                  </span>
+                  <span className={styles.poleVerticalTitle}>
+                    {pole.shortName}
+                  </span>
+                  <span className={styles.poleExpandHint}>
+                    <ChevronRight aria-hidden="true" size={18} />
+                  </span>
+                </button>
+
+                {/* Contenido expandido del polo */}
+                <div
+                  id={`pole-content-${pole.id}`}
+                  role="region"
+                  aria-labelledby={`pole-tab-${pole.id}`}
+                  className={styles.poleContent}
+                >
+                  <div className={styles.poleContentInner}>
+                    <div className={styles.poleHeader}>
+                      <div className={styles.poleMeta}>
+                        <span className={styles.poleBadge}>{pole.badge}</span>
+                        <span className={styles.poleNumberLarge}>
+                          {pole.number}
+                        </span>
+                      </div>
+                      <h3 className={styles.poleTitle}>{pole.name}</h3>
+                      <p className={styles.poleTagline}>{pole.tagline}</p>
+                      <p className={styles.poleDescription}>
+                        {pole.description}
+                      </p>
+
+                      <div className={styles.poleHighlights}>
+                        {pole.highlights.map((item) => (
+                          <span key={item} className={styles.highlightPill}>
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className={styles.poleExhibitorsBlock}>
+                      <h4 className={styles.exhibitorsBlockTitle}>
+                        Referentes en Ciudad Cultural:
+                      </h4>
+                      <div className={styles.standCardsGrid}>
+                        {poleExhibitors.map((exhibitor) => {
+                          const zone = venueMapZones.find(
+                            (z) => z.id === exhibitor.venueZoneId,
+                          );
+
+                          return (
+                            <article
+                              key={exhibitor.id}
+                              className={styles.standCard}
+                            >
+                              <div className={styles.standHeader}>
+                                <span className={styles.standBadge}>
+                                  <MapPinned aria-hidden="true" size={13} />
+                                  {zone ? zone.label : "Stand Oficial"}
+                                </span>
+                                <span className={styles.standSectorTag}>
+                                  {exhibitor.category}
+                                </span>
+                              </div>
+
+                              <strong className={styles.standName}>
+                                {exhibitor.name}
+                              </strong>
+                              <p className={styles.standDescription}>
+                                {exhibitor.description}
+                              </p>
+
+                              <div className={styles.standActions}>
+                                {zone && (
+                                  <Link
+                                    to={`${routePaths.map}?zone=${zone.id}`}
+                                    className={styles.standMapLink}
+                                    title={`Ubicar ${exhibitor.name} en ${zone.label}`}
+                                  >
+                                    <MapPinned aria-hidden="true" size={14} />
+                                    <span>Ver en mapa</span>
+                                  </Link>
+                                )}
+                                <Link
+                                  to={`${routePaths.exhibitors}?actor=${exhibitor.id}&sector=${exhibitor.sectorId}`}
+                                  className={styles.standProfileLink}
+                                >
+                                  <span>Ficha completa</span>
+                                  <ArrowUpRight aria-hidden="true" size={14} />
+                                </Link>
+                              </div>
+                            </article>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Pie de sección hacia el catálogo general */}
+        <div className={styles.sectionFooter}>
+          <p className={styles.footerSummary}>
+            Conocé a los 200+ expositores y delegaciones previstos para esta 17°
+            edición.
+          </p>
+          <Link className={styles.fullDirectoryLink} to={routePaths.exhibitors}>
+            Explorar catálogo completo de expositores{" "}
+            <ArrowRight aria-hidden="true" size={16} />
+          </Link>
+        </div>
       </section>
 
       <section
