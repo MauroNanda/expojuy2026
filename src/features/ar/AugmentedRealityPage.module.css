@@ -94,7 +94,7 @@
 
 .targetCard {
   align-items: center;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2056 / 1422;
   background: transparent;
   display: grid;
   justify-items: center;
@@ -103,7 +103,7 @@
 }
 
 .targetStageMuestra .targetCard,
-.targetStageMuestra .frame {
+.targetStageMuestra .frame[data-frame="target"] {
   width: min(100%, 34rem);
 }
 
@@ -168,6 +168,15 @@
   height: auto;
   position: absolute;
   width: min(100%, 42rem);
+}
+
+.frame[data-frame="video"] {
+  aspect-ratio: 9 / 16;
+  width: min(100%, 20rem);
+}
+
+.frame[data-frame="target"] {
+  aspect-ratio: 2056 / 1422;
 }
 
 .frame::before,

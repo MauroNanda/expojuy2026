@@ -66,7 +66,7 @@ test("mantiene el Reel vertical sin alterar el target ni el encuadre de cámara"
 
   assert.match(
     stylesheet,
-    /\.targetCard\s*\{[\s\S]*aspect-ratio:\s*16\s*\/\s*9/,
+    /\.targetCard\s*\{[\s\S]*aspect-ratio:\s*2056\s*\/\s*1422/,
   );
   assert.match(
     stylesheet,
@@ -90,6 +90,38 @@ test("presenta el target sin un segundo panel blanco y lo acota solo en escritor
   );
   assert.match(
     stylesheet,
-    /\.targetStageMuestra\s+\.targetCard,[\s\S]*\.targetStageMuestra\s+\.frame\s*\{[\s\S]*width:\s*min\(100%,\s*34rem\)/,
+    /\.targetStageMuestra\s+\.targetCard,[\s\S]*\.targetStageMuestra\s+\.frame\[data-frame="target"\]\s*\{[\s\S]*width:\s*min\(100%,\s*34rem\)/,
+  );
+});
+
+test("ajusta el marco al video de Muestra y explica los dos modos de experiencia", async () => {
+  const [stylesheet, page] = await Promise.all([
+    readFile(
+      new URL("src/features/ar/AugmentedRealityPage.module.css", appRoot),
+      "utf8",
+    ),
+    readFile(
+      new URL("src/features/ar/AugmentedRealityPage.tsx", appRoot),
+      "utf8",
+    ),
+  ]);
+
+  assert.match(page, /Podés elegir entre una demostración visual y una experiencia con cámara\./);
+  assert.match(page, /Iniciando cámara/);
+  assert.match(page, /const frameFormat =/);
+  assert.match(
+    page,
+    /\? "video"\s*:\s*mode === "muestra"\s*\?\s*"target"\s*:\s*"landscape"/,
+  );
+  assert.match(page, /Salir de demostración/);
+  assert.match(page, /onClick=\{exitDemo\}/);
+  assert.match(page, /data-frame=\{frameFormat\}/);
+  assert.match(
+    stylesheet,
+    /\.frame\[data-frame="video"\]\s*\{[\s\S]*aspect-ratio:\s*9\s*\/\s*16/,
+  );
+  assert.match(
+    stylesheet,
+    /\.frame\[data-frame="target"\]\s*\{[\s\S]*aspect-ratio:\s*2056\s*\/\s*1422/,
   );
 });
