@@ -19,7 +19,12 @@ import expojuyTarget from "../../assets/ar/expojuy26_isologotipo.jpg";
 import arTarget from "../../assets/ar/targets.mind?url";
 import styles from "./AugmentedRealityPage.module.css";
 
-type ExperiencePhase = "idle" | "scanning" | "detected" | "playing";
+type ExperiencePhase =
+  | "idle"
+  | "startingCamera"
+  | "scanning"
+  | "detected"
+  | "playing";
 type ExperienceMode = "muestra" | "camara";
 
 type MindarSystem = {
@@ -36,6 +41,7 @@ type MindarScene = HTMLElement & {
 
 const phaseCopy: Record<ExperiencePhase, string> = {
   idle: "Listo para iniciar la demostración.",
+  startingCamera: "Iniciando cámara…",
   scanning: "Buscando isologotipo ExpoJuy…",
   detected: "Target detectado.",
   playing: "Proyección activa.",
@@ -114,7 +120,7 @@ export function AugmentedRealityPage() {
     setIsAudioPlaybackBlocked(false);
     setIsVideoPaused(false);
     setMode("camara");
-    setPhase("scanning");
+    setPhase("startingCamera");
   };
 
   const startDemo = () => {
@@ -137,6 +143,15 @@ export function AugmentedRealityPage() {
       // For camera mode, A-Frame/MindAR handles the detection, we just reset state
       setPhase("scanning");
     }
+  };
+
+  const exitDemo = () => {
+    clearTimers();
+    videoRef.current?.pause();
+    setHasVideoError(false);
+    setIsAudioPlaybackBlocked(false);
+    setIsVideoPaused(false);
+    setPhase("idle");
   };
 
   const playWithSound = useCallback(() => {
@@ -208,6 +223,7 @@ export function AugmentedRealityPage() {
       targetEl.addEventListener("targetFound", onTargetFound);
       targetEl.addEventListener("targetLost", onTargetLost);
       sceneEl.addEventListener("arError", onArError);
+      setPhase("scanning");
       system.start();
       system.video?.style.setProperty("z-index", "0");
     };
@@ -246,6 +262,13 @@ export function AugmentedRealityPage() {
     }
   }, [hasVideoError, mode, phase]);
 
+  const frameFormat =
+    mode === "muestra" && phase === "playing"
+      ? "video"
+      : mode === "muestra"
+        ? "target"
+        : "landscape";
+
   return (
     <section className={styles.page} aria-labelledby="ar-name">
       <header className={styles.intro}>
@@ -258,9 +281,9 @@ export function AugmentedRealityPage() {
           pantalla recrea ese momento para la muestra.
         </p>
         <p className={styles.demoNotice}>
-          {mode === "muestra"
-            ? "Demostración visual: no utiliza la cámara."
-            : "Requiere HTTPS, cámara web, WebGL y navegador compatible."}
+          Podés elegir entre una demostración visual y una experiencia con cámara.
+          {mode === "camara" &&
+            " Cámara Real requiere HTTPS, cámara web, WebGL y navegador compatible."}
         </p>
       </header>
 
@@ -355,7 +378,11 @@ export function AugmentedRealityPage() {
             </div>
           )}
 
-          <div aria-hidden="true" className={styles.frame} />
+              <div
+                aria-hidden="true"
+                className={styles.frame}
+                data-frame={frameFormat}
+              />
           {phase === "scanning" && (
             <div aria-hidden="true" className={styles.scanLine} />
           )}
@@ -391,8 +418,19 @@ export function AugmentedRealityPage() {
             </div>
           )}
 
-          {phase === "scanning" && <p>Enfocando el target demostrativo…</p>}
+          {phase === "scanning" && mode === "muestra" && (
+            <p>Enfocando el target demostrativo…</p>
+          )}
           {phase === "detected" && <strong>Target detectado</strong>}
+          {mode === "muestra" && phase !== "idle" && (
+            <button
+              className={styles.secondaryAction}
+              type="button"
+              onClick={exitDemo}
+            >
+              <X aria-hidden="true" size={19} /> Salir de demostración
+            </button>
+          )}
           {phase === "playing" && !hasVideoError && (
             <div className={styles.videoActions}>
               <p>
