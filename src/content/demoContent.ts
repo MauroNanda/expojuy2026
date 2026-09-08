@@ -616,8 +616,3 @@ export const officialChannels: OfficialNewsSource[] = [
     url: "https://camcomexjujuy.com.ar/",
   },
 ];
-
-export const demoSponsors = [
-  "Espacio para sponsors",
-  "Alianzas por confirmar",
-] as const;

@@ -1,0 +1,125 @@
+.showcase {
+  border-top: 3px solid var(--color-brand-violet);
+  padding-top: var(--space-xl);
+}
+.heading {
+  display: block;
+}
+.heading h2 {
+  width: fit-content;
+}
+.heading p {
+  max-width: 52ch;
+  margin: 0 0 var(--space-lg);
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+.notice {
+  max-width: 65ch;
+  margin: 0 0 var(--space-xl);
+  padding-left: var(--space-md);
+  border-left: 3px solid var(--color-brand-cyan);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+}
+.grid li {
+  min-width: 0;
+  border-bottom: 1px solid var(--color-neutral);
+}
+.brand {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 10rem;
+  padding: var(--space-md);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.logoArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+.brand img {
+  display: block;
+  width: 100%;
+  max-height: 90px;
+  height: auto;
+  object-fit: contain;
+}
+.external {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding-top: var(--space-sm);
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  color: var(--color-brand-violet);
+}
+a.brand:hover {
+  outline: 1px solid var(--color-brand-violet);
+  outline-offset: -1px;
+}
+.brand:focus-visible,
+.contact:focus-visible {
+  outline: 3px solid var(--color-brand-violet);
+  outline-offset: 3px;
+}
+.fallback {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+.invitation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-xl) 0;
+}
+.invitation h3 {
+  margin: 0 0 var(--space-xs);
+  font-size: 1.5rem;
+  letter-spacing: -0.025em;
+}
+.invitation p {
+  max-width: 48ch;
+  margin: 0;
+  line-height: 1.5;
+}
+.contact {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: 44px;
+  color: var(--color-brand-violet);
+  font-weight: var(--font-weight-semibold);
+  text-underline-offset: 0.2em;
+}
+.contact svg {
+  flex-shrink: 0;
+}
+@media (min-width: 48rem) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .brand {
+    height: 12rem;
+    padding: var(--space-lg);
+  }
+}

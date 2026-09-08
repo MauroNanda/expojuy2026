@@ -27,8 +27,13 @@ export function NavigationArrival() {
         ? document.getElementById(anchor)
         : document.querySelector<HTMLElement>("main");
       if (!target) return;
-      target.setAttribute("tabindex", "-1");
-      target.focus({ preventScroll: true });
+      // Focus the visible label, not the entire region. Keep scrolling to the anchor.
+      const labelId = target.getAttribute("aria-labelledby")?.split(/\s+/)[0];
+      const label = labelId ? document.getElementById(labelId) : null;
+      const focusTarget = label && target.contains(label) ? label : target;
+      focusTarget.setAttribute("tabindex", "-1");
+      focusTarget.setAttribute("data-arrival-focus", "true");
+      focusTarget.focus({ preventScroll: true });
       const header = document.querySelector("header");
       const offset = (header?.getBoundingClientRect().height ?? 0) + 16;
       window.scrollTo({

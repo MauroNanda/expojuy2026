@@ -976,8 +976,7 @@ p {
 }
 
 .agendaList,
-.newsList,
-.sponsorList {
+.newsList {
   display: grid;
   gap: var(--space-sm);
   padding: 0;
@@ -1036,14 +1035,6 @@ p {
 .raPanel .textAction {
   color: var(--color-brand-cyan);
 }
-.sponsorList {
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-}
-.sponsorList li {
-  padding: var(--space-lg);
-  border: 1px dashed var(--color-neutral);
-  color: var(--color-ink);
-}
 .planning {
   padding: var(--space-xl);
   background: var(--color-brand-lilac);
@@ -1060,14 +1051,6 @@ p {
 .planningActions button {
   border-color: var(--color-ink);
   background: var(--color-ink);
-}
-.contact {
-  padding-bottom: var(--space-2xl);
-}
-.contact p:not(.sectionLabel) {
-  max-width: 40rem;
-  margin: 0;
-  line-height: 1.5;
 }
 @media (min-width: 64rem) {
   .hero {

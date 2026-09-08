@@ -2,7 +2,11 @@
 
 Las herramientas de inteligencia artificial pueden utilizarse como apoyo para investigación, documentación, diseño, código, pruebas y validación.
 
-## Criterios
+## Registro de entrega: Sponsors y Contacto
+
+Codex asistió en investigación de referencias, implementación React/CSS modular, documentación OpenSpec y pruebas con Playwright. La skill frontend-design orientó jerarquía, equilibrio óptico e iconografía. El equipo validó visualmente la entrega. Los logos son recursos de referencia, no generados por IA; su procedencia y límites constan en `src/assets/sponsors/README.md`.
+
+## Criterios de revisión
 
 - Toda salida generada debe recibir revisión humana antes de incorporarse.
 - Las herramientas usadas y su finalidad deben registrarse cuando formen parte de una entrega.

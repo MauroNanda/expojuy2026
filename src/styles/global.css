@@ -82,6 +82,10 @@ select {
   outline-offset: 0.1875rem;
 }
 
+[data-arrival-focus="true"]:focus-visible {
+  outline-color: var(--color-brand-violet);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

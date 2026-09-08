@@ -16,7 +16,6 @@ import {
   demoPoles,
   type DemoPole,
   demoSectors,
-  demoSponsors,
   formatEventPeriod,
   officialEventPeriod,
   officialNews,
@@ -24,7 +23,6 @@ import {
 } from "../../content/demoContent";
 import { routePaths } from "../../navigation/routePaths";
 import { DemoNotice } from "../../shared/ui/DemoNotice";
-import { PendingData } from "../../shared/ui/PendingData";
 import heroIllustration from "../../assets/demostrativos/recorrido-descubrimiento-hero.png";
 import poloBioceanicoImg from "../../assets/polos/polo_bioceanico.jpg";
 import poloPunaImg from "../../assets/polos/polo_puna.jpg";
@@ -32,6 +30,8 @@ import poloQuebradaImg from "../../assets/polos/polo_quebrada.jpg";
 import poloYungasImg from "../../assets/polos/polo_yungas.jpg";
 import poloVallesImg from "../../assets/polos/polo_valles.jpg";
 import styles from "./HomePage.module.css";
+import { SponsorsShowcase } from "../sponsors/SponsorsShowcase";
+import { ContactGuidance } from "../contact/ContactGuidance";
 
 interface HomePageProps {
   onOpenTickets: () => void;
@@ -557,19 +557,6 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         </Link>
       </section>
 
-      <section id="sponsors" aria-labelledby="sponsors-name">
-        <p id="sponsors-name" className={styles.sectionLabel}>
-          Sponsors
-        </p>
-        <h2 id="sponsors-title">Espacios de vinculación</h2>
-        <DemoNotice />
-        <ul className={styles.sponsorList}>
-          {demoSponsors.map((sponsor) => (
-            <li key={sponsor}>{sponsor}</li>
-          ))}
-        </ul>
-      </section>
-
       <section
         id="planifica"
         className={styles.planning}
@@ -596,24 +583,9 @@ export function HomePage({ onOpenTickets }: HomePageProps) {
         </div>
       </section>
 
-      <section
-        id="contacto"
-        className={styles.contact}
-        aria-labelledby="contact-name"
-      >
-        <p id="contact-name" className={styles.sectionLabel}>
-          Contacto
-        </p>
-        <h2 id="contact-title">Información institucional</h2>
-        <PendingData>
-          Canales de contacto, teléfono y correo institucional de la
-          organización.
-        </PendingData>
-        <p>
-          Este prototipo incorporará los canales oficiales cuando sean
-          provistos. No se completan con datos de fuentes no oficiales.
-        </p>
-      </section>
+      <SponsorsShowcase />
+
+      <ContactGuidance />
     </div>
   );
 }

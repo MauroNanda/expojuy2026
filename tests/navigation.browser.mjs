@@ -21,10 +21,16 @@ try {
       if (await button.isVisible()) await button.click();
     }
     async function checkTarget(id) {
-      await page.waitForFunction(
-        (targetId) => document.activeElement?.id === targetId,
-        id,
-      );
+      await page.waitForFunction((targetId) => {
+        const target = document.getElementById(targetId);
+        const label = document.getElementById(
+          target?.getAttribute("aria-labelledby")?.split(/\s+/)[0] || "",
+        );
+        return (
+          document.activeElement ===
+          (label && target.contains(label) ? label : target)
+        );
+      }, id);
       const bounds = await page.locator(`#${id}`).boundingBox();
       const header = await page.locator("header").first().boundingBox();
       assert(
