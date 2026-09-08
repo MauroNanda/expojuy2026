@@ -90,8 +90,7 @@
   min-height: 0;
 }
 
-.targetCard,
-.videoViewport {
+.targetCard {
   align-items: center;
   aspect-ratio: 16 / 9;
   background: white;
@@ -104,24 +103,26 @@
   width: min(100%, 42rem);
 }
 
+.videoViewport {
+  align-items: center;
+  aspect-ratio: 9 / 16;
+  background: black;
+  box-shadow:
+    0 0 0 0.75rem color-mix(in srgb, white 12%, transparent),
+    0 1.5rem 4rem rgb(0 0 0 / 35%);
+  display: grid;
+  justify-items: center;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  width: min(100%, 20rem);
+}
+
 .targetCard img,
 .videoViewport video {
   height: 100%;
   max-height: 100%;
   max-width: 100%;
-  object-fit: contain;
-  width: 100%;
-}
-
-.videoViewport {
-  background: black;
-  overflow: hidden;
-  padding: 0;
-  position: relative;
-}
-
-.videoViewport video {
-  height: 100%;
   object-fit: contain;
   width: 100%;
 }
